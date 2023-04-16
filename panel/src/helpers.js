@@ -82,7 +82,11 @@ export async function getStocks(symbols) {
 
 // Get weather data
 export async function getWeather(city, country, days) {
+
+  return "";
+  
   let forecast = undefined;
+
   try {
     const forecast_call = await fetch(
       `//api.openweathermap.org/data/2.5/forecast?q=${city},${country}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&cnt=${days}&units=metric`

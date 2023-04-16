@@ -4,11 +4,12 @@ import CardContent from "@material-ui/core/CardContent";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
+import { useAuthProviver } from "../../components/AppProvider/AuthProvider";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -51,6 +52,23 @@ const useStyles = makeStyles(theme => ({
 
 const Signin = () => {
   const classes = useStyles();
+  const { login } = useAuthProviver();
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: ""
+  });
+
+  const onChangeInput = (event) => {
+    const { name, value } = event.target;
+    setCredentials({ ...credentials, [name]: value });
+  }
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const response = await login(credentials);
+    console.log(response);
+  }
+
   return (
     <div className={classNames(classes.session, classes.background)}>
       <div className={classes.content}>
@@ -61,18 +79,22 @@ const Signin = () => {
                 <div
                   className={classNames(classes.logo, `text-xs-center pb-xs`)}
                 >
-                  <img
+                  {/* <img
                     src={`${process.env.PUBLIC_URL}/static/images/logo-dark.svg`}
                     alt=""
                     className="block"
-                  />
+                  /> */}
+                  <h3>EPINMADA</h3>
                   <Typography variant="caption">
                     Sign in with your app id to continue.
                   </Typography>
                 </div>
                 <TextField
-                  id="username"
-                  label="Username"
+                  id="email"
+                  label="email"
+                  name="email"
+                  value={credentials.email}
+                  onChange={onChangeInput}
                   className={classes.textField}
                   fullWidth
                   margin="normal"
@@ -80,6 +102,9 @@ const Signin = () => {
                 <TextField
                   id="password"
                   label="Password"
+                  name="password"
+                  value={credentials.password}
+                  onChange={onChangeInput}
                   className={classes.textField}
                   type="password"
                   fullWidth
@@ -95,6 +120,7 @@ const Signin = () => {
                   color="primary"
                   fullWidth
                   type="submit"
+                  onClick={(e)=>handleLogin(e)}
                 >
                   Login
                 </Button>
