@@ -1,55 +1,60 @@
 import { createContext, useContext, useState } from "react";
-import { http } from "../../helper/makeRequest";
-import axios from "axios";
+import http from "../../helper/makeRequest";
+import { Redirect, useHistory } from "react-router-dom";
 
 export const AuthContext = createContext({
     user: null,
-    isAuthenticated: false
+    isAuthenticated: false,
+    token: null,
+    setUser: () => { },
+    setIsAuthenticated: () => { }
 })
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState({});
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState(localStorage.getItem("user"));
+    const checkAuth = localStorage.getItem("user") != null && localStorage.getItem("token") != null;
+    const [isAuthenticated, setIsAuthenticated] = useState(checkAuth);
+    const token = localStorage.getItem("token");
 
-    return <AuthContext.Provider value={{ user, setUser, isAuthenticated, setIsAuthenticated }}>
+    return <AuthContext.Provider value={{ user, setUser,token, isAuthenticated, setIsAuthenticated }}>
         {children}
     </AuthContext.Provider>
 }
 
 export const useAuthProviver = () => {
-    const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
-
+    const { user, setUser, isAuthenticated,token, setIsAuthenticated } = useContext(AuthContext);
+    
     const login = async (params) => {
-        
-        return await axios.post(`http://localhost:8000/login`, params)
-            .then(({ data }) => {
-                if (data.user) {
-                    setUser(data.user);
-                    setIsAuthenticated(true);
-                    localStorage.setItem("user", JSON.stringify(data.user));
-                }
-                else {
-                    logout();
-                }
+        const data = await http.post(`/login`, params)
+            .then(({ data }) => data)
+            .catch((error) => error);
 
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            .finally((data) => data)
+        if (data?.user) {
+            setUser(data.user);
+            setIsAuthenticated(true);
+            localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("token", data.token);
+            return <Redirect to="/" />;
+        }
+
+        return data;
     }
 
     const logout = () => {
         setUser(null);
         setIsAuthenticated(false);
         localStorage.removeItem("user");
+        localStorage.removeItem("token");
+
+        window.location.href="/signin";
     }
 
     return {
         user,
-        setUser,
         isAuthenticated,
+        setUser,
         login,
-        logout
+        logout,
+        token
     }
 }

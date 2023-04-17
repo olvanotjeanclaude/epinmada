@@ -1,11 +1,14 @@
 import axios from "axios"
 
-export const http = async() => {
-const http= axios.create({
-        baseURL: "http://localhost:8000",
-    });
-   
-    await  http.get("/sanctum/csrf-cookie");
+const http = axios.create({
+    baseURL: process.env.REACT_APP_BACKEND_URL,
+    headers: {
+        "Accept": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+        "withCredentials": true,
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+});
 
-    return http;
-}
+export default http;

@@ -3,7 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -51,12 +51,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Signin = () => {
+  const { login, isAuthenticated } = useAuthProviver();
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />
+  }
+
   const classes = useStyles();
-  const { login } = useAuthProviver();
-  const [credentials, setCredentials] = useState({
-    email: "",
-    password: ""
-  });
+
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({ email: "", password: "", message: "" });
 
   const onChangeInput = (event) => {
     const { name, value } = event.target;
@@ -65,8 +69,26 @@ const Signin = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const response = await login(credentials);
-    console.log(response);
+    setErrors({ email: "", password: "", message: "" });
+
+    const { response } = await login(credentials);
+    const resData = response?.data;
+
+    if (response?.status == 422) {
+      const allError = resData?.errors ?? {};
+      setErrors({
+        email: allError?.email ?? "",
+        password: allError?.password ?? "",
+      });
+    }
+
+    if (response?.status == 404) {
+      setErrors(prev => ({
+        email: "", password: "",
+        message: resData?.message
+      }));
+    }
+
   }
 
   return (
@@ -84,25 +106,31 @@ const Signin = () => {
                     alt=""
                     className="block"
                   /> */}
-                  <h3>EPINMADA</h3>
-                  <Typography variant="caption">
-                    Sign in with your app id to continue.
+                  <h1>EPINMADA</h1>
+                  <Typography color="secondary" align="left">
+                    {errors.message}
                   </Typography>
                 </div>
                 <TextField
                   id="email"
-                  label="email"
+                  label="Email"
                   name="email"
+                  error={errors.email ? true : false}
+                  helperText={errors.email}
                   value={credentials.email}
                   onChange={onChangeInput}
                   className={classes.textField}
                   fullWidth
                   margin="normal"
+
                 />
                 <TextField
+                required
                   id="password"
-                  label="Password"
+                  label="Mot de passe"
                   name="password"
+                  error={errors.email ? true : false}
+                  helperText={errors.password}
                   value={credentials.password}
                   onChange={onChangeInput}
                   className={classes.textField}
@@ -110,29 +138,26 @@ const Signin = () => {
                   fullWidth
                   margin="normal"
                 />
-                <FormControlLabel
+                {/* <FormControlLabel
                   control={<Checkbox value="checkedA" />}
                   label="Stayed logged in"
                   className={classes.fullWidth}
-                />
+                /> */}
                 <Button
                   variant="contained"
                   color="primary"
                   fullWidth
                   type="submit"
-                  onClick={(e)=>handleLogin(e)}
+                  onClick={handleLogin}
                 >
-                  Login
+                  Connexion
                 </Button>
-                <div className="pt-1 text-md-center">
+                {/* <div className="pt-1 d-none text-md-center">
                   <Link to="/forgot">
-                    <Button>Forgot password?</Button>
+                    <Button>Mot de passe oublié?</Button>
                   </Link>
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  <Link to="/signup">
-                    <Button>Create new account.</Button>
-                  </Link>
-                </div>
+                </div> */}
               </form>
             </CardContent>
           </Card>

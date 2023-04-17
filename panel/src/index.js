@@ -14,6 +14,8 @@ import React from "react";
 import registerServiceWorker from "./registerServiceWorker";
 import { render } from "react-dom";
 import { AuthProvider } from "./components/AppProvider/AuthProvider";
+import Users from "./pages/Users/Users";
+import Layout from "./containers/Layout";
 
 render(
   <AppProvider>
@@ -26,7 +28,8 @@ render(
           <Route exact path="/forgot" component={PasswordReset} />
           <Route exact path="/signin" component={Signin} />
           <Route exact path="/signup" component={Signup} />
-          <Route path="/" component={Dashboard} />
+          <Route exact path="/utilisateurs" component={Users} />
+          <Route  path="/" component={Layout} />
         </Switch>
       </BrowserRouter>
     </AuthProvider>

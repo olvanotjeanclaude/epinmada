@@ -14,5 +14,12 @@ export default {
       icon: ExploreIcon,
       component: Home
     },
+    {
+      path: "/utilisateurs",
+      nam:"utilisateurs",
+      type: 'link',
+      icon: ExploreIcon,
+      component: Home
+    }
   ]
 };

@@ -17,6 +17,10 @@ class LoginController extends Controller
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
+        ],[
+            "email.required" =>"Le champ email est obligatoire.",
+            "email.email" =>"L'e-mail doit être une adresse e-mail valide.",
+            "password.required" =>"Le champ mot de passe est obligatoire."
         ]);
 
         if (Auth::attempt($credentials)) {
@@ -24,12 +28,12 @@ class LoginController extends Controller
             $token = $user->createToken('spa')->plainTextToken;
 
             return response()->json([
-                'access_token' => $token,
+                'token' => $token,
                 "user" => $user,
                 'token_type' => 'Bearer',
             ]);
         }
 
-        return response()->json(['message' => 'Invalid credentials'], 401);
+        return response()->json(['message' => "les informations d'identification invalides"], 404);
     }
 }

@@ -22,6 +22,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Toolbar from '@material-ui/core/Toolbar';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
+import { useAuthProviver } from '../AppProvider/AuthProvider';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -95,6 +96,7 @@ const Header = ({
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchExpanded, setSearchExpanded] = useState(false);
+  const { logout } = useAuthProviver();
 
   const handleSettingdToggle = event => setAnchorEl(event.currentTarget);
 
@@ -208,7 +210,7 @@ const Header = ({
             <ListItemIcon>
               <ExitToAppIcon />
             </ListItemIcon>
-            <ListItemText primary="Sign out" />
+            <ListItemText onClick={() => logout()} primary="Sign out" />
           </MenuItem>
         </Menu>
       </Toolbar>
