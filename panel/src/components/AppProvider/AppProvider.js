@@ -8,6 +8,7 @@ import indigo from '@material-ui/core/colors/indigo';
 import red from '@material-ui/core/colors/red';
 import rtl from 'jss-rtl';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { green } from '@material-ui/core/colors';
 
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
@@ -38,12 +39,15 @@ const AppProvider = ({ children }) => {
 
   const theme = createMuiTheme({
     direction: state.direction,
-    palette: {
-      type: state.type,
-      primary: indigo,
-      secondary: red,
-      error: red
-    },
+    // palette: {
+    //   type: state.type,
+    //   primary: indigo,
+    //   secondary: red,
+    //   error: red,
+    //   success: {
+    //     main: '#4caf50',
+    //   },
+    // },
     typography: {
       headline: {
         fontSize: '1rem'

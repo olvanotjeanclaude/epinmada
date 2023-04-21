@@ -1,6 +1,8 @@
 <?php
 
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get("clear_cache",function(){
+  Artisan::call("optimize");
+  echo "cache cleared";
+});
 
 Route::post("/login",[\App\Http\Controllers\Auth\LoginController::class, "login"] );
-Route::get("/login",[\App\Http\Controllers\Auth\LoginController::class, "showLoginForm"] );
+Route::get("/login",[\App\Http\Controllers\Auth\LoginController::class, "showLoginForm"] )->name("login");
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(["middleware" =>"auth:sanctum"],function(){
+    Route::resource("users", App\Http\Controllers\admin\UserController::class);
+    Route::resource("products", App\Http\Controllers\admin\ProductController::class);
 });

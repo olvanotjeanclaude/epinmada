@@ -62,6 +62,7 @@ import Tooltips from './Material/tooltips';
 import Widgets from './Widgets/Widgets';
 
 import User from "./Users/Users";
+import ProductList from './Products/ProductList';
 
 export {
   Home,
@@ -114,5 +115,7 @@ export {
   Tabs,
   TextFields,
   Tooltips,
-  User
+  // ok
+  User,
+  ProductList,
 };

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     public function showLoginForm(){
-        return "login form";
+        return response()->json("Login Form");
     }
 
     public function login(Request $request)

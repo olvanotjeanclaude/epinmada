@@ -33,6 +33,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends= ["typeText"];
+
     /**
      * The attributes that should be cast.
      *
@@ -41,4 +43,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getTypeTextAttribute(){
+        switch ($this->type) {
+            case self::TYPES["admin"]:
+                $type ="Admin";
+                break;
+            case self::TYPES["staff"]:
+                $type ="Personel";
+                break;
+            case self::TYPES["customer"]:
+                $type ="Client";
+                break;
+            
+            default:
+                $type ="Inconnu";
+                break;
+        }
+
+        return $type;
+    }
 }
