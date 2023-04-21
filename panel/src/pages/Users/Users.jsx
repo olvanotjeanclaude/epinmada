@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import { Wrapper } from '../../components';
 
-function Users() {
-  return (
-    <div>Users</div>
-  )
-}
+const Users = () => (
+  <Wrapper>
+    <p>Users</p>
+  </Wrapper>
+);
 
-export default Users
+export default Users;

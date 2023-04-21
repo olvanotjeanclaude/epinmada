@@ -9,12 +9,10 @@ import {
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import AppProvider from "./components/AppProvider/AppProvider";
-import Dashboard from "./containers/Dashboard";
 import React from "react";
 import registerServiceWorker from "./registerServiceWorker";
 import { render } from "react-dom";
 import { AuthProvider } from "./components/AppProvider/AuthProvider";
-import Users from "./pages/Users/Users";
 import Layout from "./containers/Layout";
 
 render(
@@ -28,7 +26,7 @@ render(
           <Route exact path="/forgot" component={PasswordReset} />
           <Route exact path="/signin" component={Signin} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/utilisateurs" component={Users} />
+          {/* <Route exact path="/utilisateurs" component={Users} /> */}
           <Route  path="/" component={Layout} />
         </Switch>
       </BrowserRouter>

@@ -1,9 +1,9 @@
 // Pages
-import { Home } from './pages';
+import { Home, User } from './pages';
 
 // Icons
 import ExploreIcon from '@material-ui/icons/Explore';
-
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 
 export default {
   items: [
@@ -16,10 +16,10 @@ export default {
     },
     {
       path: "/utilisateurs",
-      nam:"utilisateurs",
+      name:"utilisateurs",
       type: 'link',
-      icon: ExploreIcon,
-      component: Home
+      icon: PeopleAltIcon,
+      component: User
     }
   ]
 };

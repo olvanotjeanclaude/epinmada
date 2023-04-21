@@ -61,6 +61,8 @@ import Tooltips from './Material/tooltips';
 // Widgets
 import Widgets from './Widgets/Widgets';
 
+import User from "./Users/Users";
+
 export {
   Home,
   Calendar,
@@ -111,5 +113,6 @@ export {
   Tables,
   Tabs,
   TextFields,
-  Tooltips
+  Tooltips,
+  User
 };
