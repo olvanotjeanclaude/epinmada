@@ -61,6 +61,13 @@ import Tooltips from './Material/tooltips';
 // Widgets
 import Widgets from './Widgets/Widgets';
 
+// Customer
+import MyOrders from "./Customers/Order/MyOrders";
+import Offer from './Customers/Offer/Offer';
+import MyAccount from './Customers/Profile/MyAccount';
+import MyBasket from './Customers/Basket/MyBasket';
+import MyQuestion from './Customers/AidCenter/MyQuestion';
+
 import User from "./Users/Users";
 import ProductList from './Products/ProductList';
 
@@ -115,6 +122,14 @@ export {
   Tabs,
   TextFields,
   Tooltips,
+
+  // customer
+  MyOrders,
+  Offer,
+  MyAccount,
+  MyBasket,
+  MyQuestion,
+
   // ok
   User,
   ProductList,
