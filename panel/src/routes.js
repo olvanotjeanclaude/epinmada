@@ -49,13 +49,13 @@ export default {
       icon: ContactPageIcon,
       component: MyAccount
     },
-    { 
-      path: '/my-questions',
-      name: 'Mes Questions',
-      type: 'link',
-      icon: LiveHelp,
-      component: MyQuestion
-    },
+    // { 
+    //   path: '/my-questions',
+    //   name: 'Mes Questions',
+    //   type: 'link',
+    //   icon: LiveHelp,
+    //   component: MyQuestion
+    // },
     // ADMİN
     {
       path: "/utilisateurs",

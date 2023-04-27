@@ -60,8 +60,8 @@ const AppProvider = ({ children }) => {
         textTransform: 'initial'
       },
       body1: {
-        fontSize: '0.875rem'
-      }
+        fontSize: '0.875rem',
+      },
     },
     shape: {
       borderRadius: 4
