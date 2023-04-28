@@ -10,6 +10,10 @@ import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 import { useAuthProviver } from "../../components/AppProvider/AuthProvider";
+import { Box } from "@mui/material";
+import GoogleAuthLogin from "./GoogleAuthLogin";
+import FacebookAuthLogin from "./FacebookAuthLogin";
+import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -23,7 +27,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column"
   },
   background: {
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
+    backgroundImage: "url('https://img.freepik.com/free-vector/white-abstract-background-design_23-2148825582.jpg')",
   },
   content: {
     padding: `40px ${theme.spacing(1)}px`,
@@ -52,43 +57,30 @@ const useStyles = makeStyles(theme => ({
 
 const Signin = () => {
   const { login, isAuthenticated } = useAuthProviver();
-
+  const { handleSubmit, register, formState: { errors } } = useForm();
+  const [message, setMessage] = useState("");
   if (isAuthenticated) {
-    return <Redirect to="/" />
+    window.location.href = "/";
   }
 
   const classes = useStyles();
 
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState({ email: "", password: "", message: "" });
-
-  const onChangeInput = (event) => {
-    const { name, value } = event.target;
-    setCredentials({ ...credentials, [name]: value });
-  }
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setErrors({ email: "", password: "", message: "" });
-
-    const { response } = await login(credentials);
+  const handleLogin = async (data) => {
+    setMessage("");
+    const { response } = await login(data);
     const resData = response?.data;
+
+    if (response?.status == 200) {
+      window.location.href = "/";
+    }
 
     if (response?.status == 422) {
       const allError = resData?.errors ?? {};
-      setErrors({
-        email: allError?.email ?? "",
-        password: allError?.password ?? "",
-      });
     }
 
     if (response?.status == 404) {
-      setErrors(prev => ({
-        email: "", password: "",
-        message: resData?.message
-      }));
+      setMessage(resData?.message);
     }
-
   }
 
   return (
@@ -97,7 +89,7 @@ const Signin = () => {
         <div className={classes.wrapper}>
           <Card>
             <CardContent>
-              <form>
+              <form method="post" onSubmit={handleSubmit(handleLogin)}>
                 <div
                   className={classNames(classes.logo, `text-xs-center pb-xs`)}
                 >
@@ -108,35 +100,31 @@ const Signin = () => {
                   /> */}
                   <h1>EPINMADA</h1>
                   <Typography color="secondary" align="left">
-                    {errors.message}
+                    {message ?? ""}
                   </Typography>
                 </div>
                 <TextField
                   id="email"
                   label="Email"
-                  name="email"
-                  error={errors.email ? true : false}
-                  helperText={errors.email}
-                  value={credentials.email}
-                  onChange={onChangeInput}
                   className={classes.textField}
                   fullWidth
                   margin="normal"
-
+                  error={errors.email ? true : false}
+                  onFocus={() => setMessage("")}
+                  {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+                  helperText={errors.email ? "S'il vous plaît, mettez une adresse email valide." : ""}
                 />
                 <TextField
-                required
                   id="password"
                   label="Mot de passe"
-                  name="password"
-                  error={errors.email ? true : false}
-                  helperText={errors.password}
-                  value={credentials.password}
-                  onChange={onChangeInput}
+                  {...register("password", { required: true })}
+                  error={errors.password ? true : false}
+                  helperText={errors.password ? "S'il vous plaît entrer le mot de passe" : ""}
                   className={classes.textField}
                   type="password"
                   fullWidth
                   margin="normal"
+                  onFocus={() => setMessage("")}
                 />
                 {/* <FormControlLabel
                   control={<Checkbox value="checkedA" />}
@@ -148,16 +136,19 @@ const Signin = () => {
                   color="primary"
                   fullWidth
                   type="submit"
-                  onClick={handleLogin}
                 >
                   Connexion
                 </Button>
-                {/* <div className="pt-1 d-none text-md-center">
-                  <Link to="/forgot">
-                    <Button>Mot de passe oublié?</Button>
+
+                <Box mt={2}>
+                  <GoogleAuthLogin />
+                  <FacebookAuthLogin />
+                </Box>
+                <div className="pt-1 text-md-center">
+                  <Link to="/signup">
+                    <Button>S'inscrire</Button>
                   </Link>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                </div> */}
+                </div>
               </form>
             </CardContent>
           </Card>

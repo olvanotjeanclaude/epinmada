@@ -7,8 +7,10 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
-import GoogleLogin from "react-google-login";
 import { Box } from "@mui/material";
+import GoogleAuthLogin from "./GoogleAuthLogin";
+import FacebookAuthLogin from "./FacebookAuthLogin";
+import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -56,22 +58,24 @@ const useStyles = makeStyles(theme => ({
 
 const Signup = () => {
   const classes = useStyles();
+  const { handleSubmit, register, watch, formState: { errors } } = useForm();
   
-  const onSuccessGoogle = (response) => {
-    console.log(response);
+  const password = watch("password");
+
+  const onSubmit = (data) => {
+    console.log(data);
+    console.log({
+      errors
+    })
   }
-  
-  const onFailureGoogle = (response) => {
-    console.log(response);
-  }
-  
+
   return (
     <div className={classNames(classes.session, classes.background)}>
       <div className={classes.content}>
         <div className={classes.wrapper}>
           <Card>
             <CardContent>
-              <form method="post">
+              <form method="post" onSubmit={handleSubmit(onSubmit)}>
                 <div
                   className={classNames(classes.logo, `text-xs-center pb-xs`)}
                 >
@@ -83,40 +87,56 @@ const Signup = () => {
                 </div>
                 <TextField
                   id="name"
+                  // error={errors.name}
                   label="Nom"
+                  {...register("name", { required: true })}
                   className={classes.textField}
                   fullWidth
+                  error={errors.name ? true : false}
+                  helperText={errors.name ? "le champ de nom ne peut pas être vide" : ""}
                   margin="normal"
                 />
                 <TextField
                   id="surname"
+                  {...register("surname", { required: true })}
                   label="Prénom"
                   className={classes.textField}
                   fullWidth
                   margin="normal"
+                  error={errors.surname ? true : false}
+                  helperText={errors.surname ? "le champ de prenom ne peut pas être vide" : ""}
                 />
                 <TextField
                   id="email"
                   label="Email"
                   className={classes.textField}
                   fullWidth
+                  error={errors.email ? true : false}
+                  {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+                  helperText={errors.email ? "S'il vous plaît, mettez une adresse email valide." : ""}
                   margin="normal"
                 />
                 <TextField
                   id="password"
+                  {...register("password", { required: true })}
                   label="Mot De Passe"
                   className={classes.textField}
                   type="password"
+                  error={errors.password ? true : false}
+                  helperText={errors.password ? "le champ mot de passe ne peut pas être vide" : ""}
                   fullWidth
                   margin="normal"
                 />
                 <TextField
                   id="cpassword"
+                  {...register("cpassword", { required: true, validate: (value) => value === password || "Le mot de passe ne correspond pas", })}
                   label="Confirmez le mot de passe"
                   className={classes.textField}
                   type="password"
                   fullWidth
                   margin="normal"
+                  error={errors.cpassword ? true : false}
+                  helperText={errors.cpassword ? errors.cpassword.message : ""}
                 />
                 <Button
                   variant="contained"
@@ -127,14 +147,8 @@ const Signup = () => {
                   Créez votre compte
                 </Button>
                 <Box mt={2}>
-                  <GoogleLogin
-                    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                    buttonText="Se connecter avec google"
-                    // className={classes.textField}
-                    onSuccess={onSuccessGoogle}
-                    onFailure={onFailureGoogle}
-                    cookiePolicy={'single_host_origin'}
-                  />
+                  <GoogleAuthLogin />
+                  <FacebookAuthLogin />
                 </Box>
                 <div className="pt-1 text-xs-center">
                   <Link to="/forgot">

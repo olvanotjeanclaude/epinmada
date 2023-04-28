@@ -16,14 +16,14 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(checkAuth);
     const token = localStorage.getItem("token");
 
-    return <AuthContext.Provider value={{ user, setUser,token, isAuthenticated, setIsAuthenticated }}>
+    return <AuthContext.Provider value={{ user, setUser, token, isAuthenticated, setIsAuthenticated }}>
         {children}
     </AuthContext.Provider>
 }
 
 export const useAuthProviver = () => {
-    const { user, setUser, isAuthenticated,token, setIsAuthenticated } = useContext(AuthContext);
-    
+    const { user, setUser, isAuthenticated, token, setIsAuthenticated } = useContext(AuthContext);
+
     const login = async (params) => {
         const data = await http.post(`/login`, params)
             .then(({ data }) => data)
@@ -34,7 +34,7 @@ export const useAuthProviver = () => {
             setIsAuthenticated(true);
             localStorage.setItem("user", JSON.stringify(data.user));
             localStorage.setItem("token", data.token);
-            return <Redirect to="/" />;
+            window.location.href = "/";
         }
 
         return data;
@@ -46,7 +46,7 @@ export const useAuthProviver = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
 
-        window.location.href="/signin";
+        window.location.href = "/signin";
     }
 
     return {
