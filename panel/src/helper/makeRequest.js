@@ -7,8 +7,13 @@ const http = axios.create({
         "X-Requested-With": "XMLHttpRequest",
         "withCredentials": true,
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
     }
 });
+
+export const getCsrfCoockie = async () => {
+    return await axios.get(`${process.env.REACT_APP_BACKEND_DOMAIN}/api/test`)
+        .then(res => res)
+};
 
 export default http;

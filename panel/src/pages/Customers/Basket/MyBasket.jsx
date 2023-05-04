@@ -17,7 +17,7 @@ export default function MyBasket() {
 
   for (let index = 0; index < 5; index++) {
     cards.push(
-      <Card sx={{ mt: 1 }}>
+      <Card sx={{ mt: 1 }} key={index}>
         <CardContent sx={{ mt: 1 }}>
           <Grid container>
             <Grid item xs={12} sm={6}>

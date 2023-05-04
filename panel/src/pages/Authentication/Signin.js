@@ -1,15 +1,13 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { Link, Redirect } from "react-router-dom";
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
-import { useAuthProviver } from "../../components/AppProvider/AuthProvider";
+import { useAuthProvider } from "../../components/AppProvider/AuthProvider";
 import { Box } from "@mui/material";
 import GoogleAuthLogin from "./GoogleAuthLogin";
 import FacebookAuthLogin from "./FacebookAuthLogin";
@@ -56,9 +54,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Signin = () => {
-  const { login, isAuthenticated } = useAuthProviver();
+  const { login, isAuthenticated } = useAuthProvider();
   const { handleSubmit, register, formState: { errors } } = useForm();
   const [message, setMessage] = useState("");
+
   if (isAuthenticated) {
     window.location.href = "/";
   }
@@ -66,7 +65,9 @@ const Signin = () => {
   const classes = useStyles();
 
   const handleLogin = async (data) => {
+
     setMessage("");
+
     const { response } = await login(data);
     const resData = response?.data;
 
@@ -76,10 +77,7 @@ const Signin = () => {
 
     if (response?.status == 422) {
       const allError = resData?.errors ?? {};
-    }
-
-    if (response?.status == 404) {
-      setMessage(resData?.message);
+      setMessage(resData?.message ?? "");
     }
   }
 
@@ -141,8 +139,8 @@ const Signin = () => {
                 </Button>
 
                 <Box mt={2}>
-                  <GoogleAuthLogin />
-                  <FacebookAuthLogin />
+                  <GoogleAuthLogin setMessage={setMessage} />
+                  {/* <FacebookAuthLogin /> */}
                 </Box>
                 <div className="pt-1 text-md-center">
                   <Link to="/signup">

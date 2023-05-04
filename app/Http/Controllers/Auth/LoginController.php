@@ -34,6 +34,6 @@ class LoginController extends Controller
             ]);
         }
 
-        return response()->json(['message' => "les informations d'identification invalides"], 404);
+        return response()->json(['message' => "les informations d'identification invalides"], 422);
     }
 }

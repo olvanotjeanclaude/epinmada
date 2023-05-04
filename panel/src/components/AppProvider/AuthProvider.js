@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
 import http from "../../helper/makeRequest";
-import { Redirect, useHistory } from "react-router-dom";
 
 export const AuthContext = createContext({
     user: null,
@@ -21,21 +20,29 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
 }
 
-export const useAuthProviver = () => {
+export const useAuthProvider = () => {
     const { user, setUser, isAuthenticated, token, setIsAuthenticated } = useContext(AuthContext);
 
-    const login = async (params) => {
-        const data = await http.post(`/login`, params)
-            .then(({ data }) => data)
-            .catch((error) => error);
-
+    const userIsLoggedIn = (data) => {
         if (data?.user) {
             setUser(data.user);
             setIsAuthenticated(true);
             localStorage.setItem("user", JSON.stringify(data.user));
             localStorage.setItem("token", data.token);
             window.location.href = "/";
+
+            return data;
         }
+
+        return null;
+    }
+
+    const login = async (params) => {
+        const data = await http.post(`/login`, params)
+            .then(({ data }) => data)
+            .catch((error) => error);
+
+        userIsLoggedIn(data);
 
         return data;
     }
@@ -46,15 +53,30 @@ export const useAuthProviver = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
 
+        logoutGoogle();
+
         window.location.href = "/signin";
+    }
+
+    const logoutGoogle = () => {
+        setTimeout(() => {
+            const auth2 = window.gapi.auth2.getAuthInstance();
+          
+            if (auth2 != null) {
+                auth2.signOut().then(auth2.disconnect())
+            }
+
+        }, 1000);
     }
 
     return {
         user,
+        token,
         isAuthenticated,
+        userIsLoggedIn,
         setUser,
         login,
         logout,
-        token
+        logoutGoogle,
     }
 }

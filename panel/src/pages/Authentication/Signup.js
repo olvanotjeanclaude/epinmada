@@ -148,7 +148,7 @@ const Signup = () => {
                 </Button>
                 <Box mt={2}>
                   <GoogleAuthLogin />
-                  <FacebookAuthLogin />
+                  {/* <FacebookAuthLogin /> */}
                 </Box>
                 <div className="pt-1 text-xs-center">
                   <Link to="/forgot">

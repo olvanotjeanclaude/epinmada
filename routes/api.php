@@ -17,9 +17,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("clear_cache",function(){
+  Artisan::call("cache:clear");
+  Artisan::call("config:cache");
   Artisan::call("optimize");
   echo "cache cleared";
 });
+
+Route::get('/token', function (Request $request) {
+  return $request->session()->token();
+});
+
+Route::post("auth-social/{social}",[\App\Http\Controllers\Auth\SocialController::class,"authSocial"]);
 
 Route::post("/login",[\App\Http\Controllers\Auth\LoginController::class, "login"] );
 Route::get("/login",[\App\Http\Controllers\Auth\LoginController::class, "showLoginForm"] )->name("login");

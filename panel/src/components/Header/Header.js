@@ -22,7 +22,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Toolbar from '@material-ui/core/Toolbar';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
-import { useAuthProviver } from '../AppProvider/AuthProvider';
+import { useAuthProvider } from '../AppProvider/AuthProvider';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -96,7 +96,7 @@ const Header = ({
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchExpanded, setSearchExpanded] = useState(false);
-  const { logout } = useAuthProviver();
+  const { logout } = useAuthProvider();
 
   const handleSettingdToggle = event => setAnchorEl(event.currentTarget);
 

@@ -26,11 +26,16 @@ class User extends Authenticatable
         'phone',
         'email',
         'password',
+        "google_id",
+        "image",
+        "facebook_id",
+        "social_value"
     ];
     
     protected $hidden = [
         'password',
         'remember_token',
+        "social_value"
     ];
 
     protected $appends= ["typeText"];

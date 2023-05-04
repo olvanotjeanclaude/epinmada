@@ -26,6 +26,9 @@ return new class extends Migration
             $table->string("phone")->nullable();
             $table->string('email')->unique();
             $table->string("image")->nullable();
+            $table->string("google_id")->nullable();
+            $table->string("facebook_id")->nullable();
+            $table->json("social_value")->nullable();
             $table->string('password');
             $table->timestamps();
         });
