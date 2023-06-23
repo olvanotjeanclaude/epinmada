@@ -10,7 +10,7 @@
     <!-- End slider section -->
 
     <!-- Start image with text section -->
-    @include('homepage.image-text')
+    {{-- @include('homepage.image-text') --}}
     <!-- End image with text section -->
 
     <!-- Start service section -->
@@ -18,7 +18,7 @@
     <!-- End service section -->
 
     <!-- Start about section -->
-    @include('homepage.about')
+    {{-- @include('homepage.about') --}}
     <!-- End about section -->
 
     <!-- Start product details section -->
@@ -26,7 +26,7 @@
     <!-- End product details section -->
 
     <!-- Start banner section -->
-    @include('homepage.banner')
+    {{-- @include('homepage.banner') --}}
     <!-- End banner section -->
 
     <!-- Start team members section -->

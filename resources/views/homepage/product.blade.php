@@ -1,216 +1,27 @@
 <section class="product__details--section section--padding">
     <div class="container">
         <div class="section__heading text-center mb-50">
-            <h2 class="section__heading--maintitle text__secondary mb-10">Featured Trending Now</h2>
-            <p class="section__heading--desc">Beyond more stoic this along goodness this sed wow manatee mongos
-                flusterd impressive man farcrud opened.</p>
+            <h2 class="section__heading--maintitle text__secondary mb-10">Tendance Maintenant</h2>
+            <p class="section__heading--desc">Achetez UC au meilleur prix !</p>
         </div>
         <div class="product__details--inner">
             <div class="row row-cols-lg-2 row-cols-md-2">
                 <div class="col">
                     <div class="product__details--media d-flex">
-                        <div class="product__media--nav swiper">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="product__media--nav__items">
-                                        <img class="product__media--nav__items--img"
-                                            src="assets/img/product/small-product1.webp" alt="product-nav-img">
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="product__media--nav__items">
-                                        <img class="product__media--nav__items--img"
-                                            src="assets/img/product/small-product2.webp" alt="product-nav-img">
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="product__media--nav__items">
-                                        <img class="product__media--nav__items--img"
-                                            src="assets/img/product/small-product3.webp" alt="product-nav-img">
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="product__media--nav__items">
-                                        <img class="product__media--nav__items--img"
-                                            src="assets/img/product/small-product4.webp" alt="product-nav-img">
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="product__media--nav__items">
-                                        <img class="product__media--nav__items--img"
-                                            src="assets/img/product/small-product1.webp" alt="product-nav-img">
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="product__media--nav__items">
-                                        <img class="product__media--nav__items--img"
-                                            src="assets/img/product/small-product2.webp" alt="product-nav-img">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="product__media--right">
                             <div class="product__media--preview  swiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="product__media--preview__items">
-                                            <a class="product__media--preview__items--link glightbox"
-                                                data-gallery="product-media-preview"
-                                                href="assets/img/product/big-product1.webp"><img
-                                                    class="product__media--preview__items--img"
-                                                    src="assets/img/product/big-product1.webp"
-                                                    alt="product-media-img"></a>
+                                            <img class="product__media--preview__items--img"
+                                                src="https://cdn.epinium.net/epinium/files/www.foxepin.com/categories/pubg-mobile.jpg"
+                                                alt="product-media-img">
                                             <div class="product__badge">
-                                                <span class="product__badge--items sale">New</span>
-                                            </div>
-                                            <div class="product__media--view__icon">
-                                                <a class="product__media--view__icon--link glightbox"
-                                                    href="assets/img/product/big-product1.webp"
-                                                    data-gallery="product-media-preview">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="18"
-                                                        height="18" viewBox="0 0 18 18">
-                                                        <image width="18" height="18"
-                                                            xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAVhJREFUOE/llLtKA0EUhjdY+BD6ABaW3tIYTWEhiKKCCGIgqGhCgqXvoQFRQdBGERQvUaJFgilVRHwF8RWCWqzfD7OyjrPZ7R342HP2nP1n58yZSfm+/+F53ivUoAseoALtxirBIXiHLPSlEHrBaMGyEYzR+BXuwduHTgltYNzBKSxAM6HSAHknMAf9EqpjjEIGzmAK7mPE0sSrRkQ/cSWhIkZQE4kdwzxoAteQiCbMgeqqsSIhO3nEJK7xPLKC0/h7oT/5CbuEFByDCShDeKZNfC3lwp49SihiVdGv/6GQdm4WSlaxt/AvQ9vedteCZlsn68Aqr/pLPfenaVVsHcBt80HQbIv4txF75GravIQafKClDMKNq9kcgspXd0+CjlM1OLTXZu1LPNVwScYwSYcwA2kJPWJ8QQGekyiEcnqxd6BDQp8YupPOoRueYDdGME9c18gbjMv+BiJYeHc6xpjnAAAAAElFTkSuQmCC" />
-                                                    </svg>
-                                                    <span class="visually-hidden">Media Gallery</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="product__media--preview__items">
-                                            <a class="product__media--preview__items--link glightbox"
-                                                data-gallery="product-media-preview"
-                                                href="assets/img/product/big-product1.webp"><img
-                                                    class="product__media--preview__items--img"
-                                                    src="assets/img/product/big-product1.webp"
-                                                    alt="product-media-img"></a>
-                                            <div class="product__badge">
-                                                <span class="product__badge--items sale">New</span>
-                                            </div>
-                                            <div class="product__media--view__icon">
-                                                <a class="product__media--view__icon--link glightbox"
-                                                    href="assets/img/product/big-product1.webp"
-                                                    data-gallery="product-media-preview">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="18"
-                                                        height="18" viewBox="0 0 18 18">
-                                                        <image width="18" height="18"
-                                                            xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAVhJREFUOE/llLtKA0EUhjdY+BD6ABaW3tIYTWEhiKKCCGIgqGhCgqXvoQFRQdBGERQvUaJFgilVRHwF8RWCWqzfD7OyjrPZ7R342HP2nP1n58yZSfm+/+F53ivUoAseoALtxirBIXiHLPSlEHrBaMGyEYzR+BXuwduHTgltYNzBKSxAM6HSAHknMAf9EqpjjEIGzmAK7mPE0sSrRkQ/cSWhIkZQE4kdwzxoAteQiCbMgeqqsSIhO3nEJK7xPLKC0/h7oT/5CbuEFByDCShDeKZNfC3lwp49SihiVdGv/6GQdm4WSlaxt/AvQ9vedteCZlsn68Aqr/pLPfenaVVsHcBt80HQbIv4txF75GravIQafKClDMKNq9kcgspXd0+CjlM1OLTXZu1LPNVwScYwSYcwA2kJPWJ8QQGekyiEcnqxd6BDQp8YupPOoRueYDdGME9c18gbjMv+BiJYeHc6xpjnAAAAAElFTkSuQmCC" />
-                                                    </svg>
-                                                    <span class="visually-hidden">Media Gallery</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="product__media--preview__items">
-                                            <a class="product__media--preview__items--link glightbox"
-                                                data-gallery="product-media-preview"
-                                                href="assets/img/product/big-product1.webp"><img
-                                                    class="product__media--preview__items--img"
-                                                    src="assets/img/product/big-product1.webp"
-                                                    alt="product-media-img"></a>
-                                            <div class="product__badge">
-                                                <span class="product__badge--items sale">New</span>
-                                            </div>
-                                            <div class="product__media--view__icon">
-                                                <a class="product__media--view__icon--link glightbox"
-                                                    href="assets/img/product/big-product1.webp"
-                                                    data-gallery="product-media-preview">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="18"
-                                                        height="18" viewBox="0 0 18 18">
-                                                        <image width="18" height="18"
-                                                            xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAVhJREFUOE/llLtKA0EUhjdY+BD6ABaW3tIYTWEhiKKCCGIgqGhCgqXvoQFRQdBGERQvUaJFgilVRHwF8RWCWqzfD7OyjrPZ7R342HP2nP1n58yZSfm+/+F53ivUoAseoALtxirBIXiHLPSlEHrBaMGyEYzR+BXuwduHTgltYNzBKSxAM6HSAHknMAf9EqpjjEIGzmAK7mPE0sSrRkQ/cSWhIkZQE4kdwzxoAteQiCbMgeqqsSIhO3nEJK7xPLKC0/h7oT/5CbuEFByDCShDeKZNfC3lwp49SihiVdGv/6GQdm4WSlaxt/AvQ9vedteCZlsn68Aqr/pLPfenaVVsHcBt80HQbIv4txF75GravIQafKClDMKNq9kcgspXd0+CjlM1OLTXZu1LPNVwScYwSYcwA2kJPWJ8QQGekyiEcnqxd6BDQp8YupPOoRueYDdGME9c18gbjMv+BiJYeHc6xpjnAAAAAElFTkSuQmCC" />
-                                                    </svg>
-                                                    <span class="visually-hidden">Media Gallery</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="product__media--preview__items">
-                                            <a class="product__media--preview__items--link glightbox"
-                                                data-gallery="product-media-preview"
-                                                href="assets/img/product/big-product1.webp"><img
-                                                    class="product__media--preview__items--img"
-                                                    src="assets/img/product/big-product1.webp"
-                                                    alt="product-media-img"></a>
-                                            <div class="product__badge">
-                                                <span class="product__badge--items sale">New</span>
-                                            </div>
-                                            <div class="product__media--view__icon">
-                                                <a class="product__media--view__icon--link glightbox"
-                                                    href="assets/img/product/big-product1.webp"
-                                                    data-gallery="product-media-preview">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="18"
-                                                        height="18" viewBox="0 0 18 18">
-                                                        <image width="18" height="18"
-                                                            xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAVhJREFUOE/llLtKA0EUhjdY+BD6ABaW3tIYTWEhiKKCCGIgqGhCgqXvoQFRQdBGERQvUaJFgilVRHwF8RWCWqzfD7OyjrPZ7R342HP2nP1n58yZSfm+/+F53ivUoAseoALtxirBIXiHLPSlEHrBaMGyEYzR+BXuwduHTgltYNzBKSxAM6HSAHknMAf9EqpjjEIGzmAK7mPE0sSrRkQ/cSWhIkZQE4kdwzxoAteQiCbMgeqqsSIhO3nEJK7xPLKC0/h7oT/5CbuEFByDCShDeKZNfC3lwp49SihiVdGv/6GQdm4WSlaxt/AvQ9vedteCZlsn68Aqr/pLPfenaVVsHcBt80HQbIv4txF75GravIQafKClDMKNq9kcgspXd0+CjlM1OLTXZu1LPNVwScYwSYcwA2kJPWJ8QQGekyiEcnqxd6BDQp8YupPOoRueYDdGME9c18gbjMv+BiJYeHc6xpjnAAAAAElFTkSuQmCC" />
-                                                    </svg>
-                                                    <span class="visually-hidden">Media Gallery</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="product__media--preview__items">
-                                            <a class="product__media--preview__items--link glightbox"
-                                                data-gallery="product-media-preview"
-                                                href="assets/img/product/big-product1.webp"><img
-                                                    class="product__media--preview__items--img"
-                                                    src="assets/img/product/big-product1.webp"
-                                                    alt="product-media-img"></a>
-                                            <div class="product__badge">
-                                                <span class="product__badge--items sale">New</span>
-                                            </div>
-                                            <div class="product__media--view__icon">
-                                                <a class="product__media--view__icon--link glightbox"
-                                                    href="assets/img/product/big-product1.webp"
-                                                    data-gallery="product-media-preview">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="18"
-                                                        height="18" viewBox="0 0 18 18">
-                                                        <image width="18" height="18"
-                                                            xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAVhJREFUOE/llLtKA0EUhjdY+BD6ABaW3tIYTWEhiKKCCGIgqGhCgqXvoQFRQdBGERQvUaJFgilVRHwF8RWCWqzfD7OyjrPZ7R342HP2nP1n58yZSfm+/+F53ivUoAseoALtxirBIXiHLPSlEHrBaMGyEYzR+BXuwduHTgltYNzBKSxAM6HSAHknMAf9EqpjjEIGzmAK7mPE0sSrRkQ/cSWhIkZQE4kdwzxoAteQiCbMgeqqsSIhO3nEJK7xPLKC0/h7oT/5CbuEFByDCShDeKZNfC3lwp49SihiVdGv/6GQdm4WSlaxt/AvQ9vedteCZlsn68Aqr/pLPfenaVVsHcBt80HQbIv4txF75GravIQafKClDMKNq9kcgspXd0+CjlM1OLTXZu1LPNVwScYwSYcwA2kJPWJ8QQGekyiEcnqxd6BDQp8YupPOoRueYDdGME9c18gbjMv+BiJYeHc6xpjnAAAAAElFTkSuQmCC" />
-                                                    </svg>
-                                                    <span class="visually-hidden">Media Gallery</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="product__media--preview__items">
-                                            <a class="product__media--preview__items--link glightbox"
-                                                data-gallery="product-media-preview"
-                                                href="assets/img/product/big-product1.webp"><img
-                                                    class="product__media--preview__items--img"
-                                                    src="assets/img/product/big-product1.webp"
-                                                    alt="product-media-img"></a>
-                                            <div class="product__badge">
-                                                <span class="product__badge--items sale">New</span>
-                                            </div>
-                                            <div class="product__media--view__icon">
-                                                <a class="product__media--view__icon--link glightbox"
-                                                    href="assets/img/product/big-product1.webp"
-                                                    data-gallery="product-media-preview">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="18"
-                                                        height="18" viewBox="0 0 18 18">
-                                                        <image width="18" height="18"
-                                                            xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAVhJREFUOE/llLtKA0EUhjdY+BD6ABaW3tIYTWEhiKKCCGIgqGhCgqXvoQFRQdBGERQvUaJFgilVRHwF8RWCWqzfD7OyjrPZ7R342HP2nP1n58yZSfm+/+F53ivUoAseoALtxirBIXiHLPSlEHrBaMGyEYzR+BXuwduHTgltYNzBKSxAM6HSAHknMAf9EqpjjEIGzmAK7mPE0sSrRkQ/cSWhIkZQE4kdwzxoAteQiCbMgeqqsSIhO3nEJK7xPLKC0/h7oT/5CbuEFByDCShDeKZNfC3lwp49SihiVdGv/6GQdm4WSlaxt/AvQ9vedteCZlsn68Aqr/pLPfenaVVsHcBt80HQbIv4txF75GravIQafKClDMKNq9kcgspXd0+CjlM1OLTXZu1LPNVwScYwSYcwA2kJPWJ8QQGekyiEcnqxd6BDQp8YupPOoRueYDdGME9c18gbjMv+BiJYeHc6xpjnAAAAAElFTkSuQmCC" />
-                                                    </svg>
-                                                    <span class="visually-hidden">Media Gallery</span>
-                                                </a>
+                                                <span class="product__badge--items sale">Nouveau</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="swiper__nav--btn swiper-button-next"></div>
-                                <div class="swiper__nav--btn swiper-button-prev"></div>
                             </div>
                         </div>
                     </div>

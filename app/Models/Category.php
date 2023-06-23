@@ -15,9 +15,21 @@ class Category extends Model
     ];
 
     const DEFAULTS = [
-        "1" =>  ["name" => "EPIN", "user_id" => 1],
-        "2" => ["name" => "NETFLIX", "user_id" => 1],
-        "3" => ["name" => "SPOTIFY", "user_id" => 1],
+        [
+            "name" => "EPIN",
+            "description" => "Achetez toujours les produits des jeux les plus populaires de tous les temps au meilleur prix !",
+            "image" => ""
+        ],
+        [
+            "name" => "NETFLIX",
+            "description" => "Regardez des films  en ligne directement sur votre PC, Mac, mobile, tablette et plus encore.",
+            "image" => "",
+        ],
+        [
+            "name" => "SPOTIFY",
+            "description" => "Accès à des millions de chansons et autres contenus de créateurs du monde entier.",
+            "image" => "",
+        ],
     ];
 
     public function products()

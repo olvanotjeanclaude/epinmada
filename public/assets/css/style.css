@@ -4831,7 +4831,8 @@ input[type="number"]::-webkit-outer-spin-button {
     8. Services CSS
 */
 .services__section--bg {
-  background: url(../img/other/bg-shape1.webp);
+  background: #f8f8f8;
+  /* background: url("https://www.pubgmobile.com/images/event/home/part6.jpg"); */
 }
 
 .services__card {

@@ -2,7 +2,7 @@
     <div id="ctn-preloader" class="ctn-preloader">
         <div class="animation-preloader">
             <div class="spinner"></div>
-            <div class="txt-loading">
+            {{-- <div class="txt-loading">
                 <span data-text-preloader="L" class="letters-loading">
                     L
                 </span>
@@ -30,7 +30,7 @@
                 <span data-text-preloader="G" class="letters-loading">
                     G
                 </span>
-            </div>
+            </div> --}}
         </div>
 
         <div class="loader-section section-left"></div>
