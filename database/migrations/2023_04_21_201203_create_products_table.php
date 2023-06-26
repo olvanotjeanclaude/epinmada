@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->boolean("status")->default(true);
             $table->string("name");
+            $table->string("slug");
             $table->decimal("price");
             $table->string("image_url")->nullable();
             $table->unsignedBigInteger("category_id");

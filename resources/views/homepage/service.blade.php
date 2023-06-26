@@ -8,10 +8,10 @@
         </div>
         <div class="services__inner">
             <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-2 row-cols-2 mb--n30">
-                @foreach (\App\Models\Category::DEFAULTS as $index => $category)
+                @foreach ($categories as $index => $category)
                     <div class="col custom-col mb-30">
                         <article class="services__card">
-                            <a class="services__card--link" href="product-details.html">
+                            <a class="services__card--link" href="{{ route('front.getProducts', $category->slug) }}">
                                 <div class="services__card--topbar d-flex justify-content-between">
                                     <div class="services__card--icon mb-20">
                                         <img class="display-block services__card--primary__icon"
@@ -20,7 +20,7 @@
                                             src="assets/img/icon/service-icon1-white.webp" alt="services-icon">
                                     </div>
                                     <div class="services__card--number">
-                                        <span class="services__card--number__text"> {{ $index + 1 }} </span>
+                                        <span class="services__card--number__text"> {{ $category->id }} </span>
                                     </div>
                                 </div>
                                 <div class="services__card--content">

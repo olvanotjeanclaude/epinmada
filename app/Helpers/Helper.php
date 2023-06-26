@@ -2,22 +2,10 @@
 
 use Illuminate\Support\Facades\Auth;
 
-if (!function_exists("delete_image")) {
-    function delete_image($image)
-    {
-        if ($image && file_exists($image)) {
-            unlink($image);
-            return true;
-        }
-        return false;
-    }
-}
-
 function currenUser()
 {
     return request()->user();
 }
-
 
 function deleteImage($image)
 {
@@ -31,23 +19,21 @@ function deleteImage($image)
 
 function formatPrice($price)
 {
-    $price = str_replace([".", ","], ["", "."], $price);
+    $price = intval($price);
 
     if (is_numeric($price)) {
-        $price =  number_format($price, 2, ",", ".");
-        $array = explode(",", $price);
-        $price = isset($array[1]) && $array[1] > 0 ? $price : $array[0];
-        return $price . " ₺";
+        return $price . " Ariary";
     }
 
-    return "Belirtilmemiş";
+    return "0 arairy";
 }
 
 function getImage($image)
 {
-    if(!str_contains($image,"http")){
-        return $image && file_exists($image) ? asset($image) : asset("assets/image/not-found.jpg");
-    }
+    
+    // if (!str_contains($image, "http")) {
+    //     return $image && file_exists($image) ? asset($image) : asset("assets/image/not-found.jpg");
+    // }
 
     return $image;
 }
@@ -113,30 +99,4 @@ function currentUser()
     if (Auth::check()) {
         return request()->user();
     }
-}
-
-function getUserPemission()
-{
-    return request()->user()->getUserPemission();
-}
-
-function getMenuName($url, $requestPath, $icon, $normal = "", $myNormal = "")
-{
-    $text = "";
-    $isActive = request()->is($requestPath) ? 'active' : '';
-
-    if (auth()->user()->is_company || currenUser()->is_personel) {
-        $text = $myNormal;
-    } else {
-        $text = $normal;
-    }
-
-    $html = "<a href='$url' class='nav-link $isActive'>
-                <i class='nav-icon $icon'></i>
-                <p>
-                    $text
-                </p>
-            </a>";
-
-    return $html;
 }

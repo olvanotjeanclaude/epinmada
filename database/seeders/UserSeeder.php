@@ -28,6 +28,22 @@ class UserSeeder extends Seeder
                 "email" => "bona@gmail.com",
                 "password" => Hash::make("123456")
             ],
+            [
+                "name" => "Jess",
+                "surname" => "Jess",
+                "type" => User::TYPES["staff"],
+                "phone" => "0541000000",
+                "email" => "jess@gmail.com",
+                "password" => Hash::make("123456")
+            ],
+            [
+                "name" => "Ivanna",
+                "surname" => "Trecha",
+                "type" => User::TYPES["staff"],
+                "phone" => "0541000000",
+                "email" => "ivanna@gmail.com",
+                "password" => Hash::make("123456")
+            ],
         ];
 
         foreach ($users as $key => $user) {

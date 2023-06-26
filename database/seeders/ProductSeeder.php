@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ProductSeeder extends Seeder
 {
@@ -14,42 +15,42 @@ class ProductSeeder extends Seeder
             [
                 "name" => "Elite Pass Plus Paketi (M21)",
                 "price" => rand(200, 500),
-                "image_url" => "assets/images/products/01.png",
+                "image_url" => "https://assetsio.reedpopcdn.com/PUBG-mobile.jfif?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp",
                 "category_id" => 1,
                 "user_id" => 1
             ],
             [
                 "name" => "Royal Pass Paketi (M21)",
                 "price" => rand(200, 500),
-                "image_url" => "assets/images/products/02.png",
+                "image_url" => "https://www.pubgmobile.com/images/event/home/part6.jpg",
                 "category_id" => 1,
                 "user_id" => 1
             ],
             [
                 "name" => "PUBG Mobile 63 UC",
                 "price" => rand(200, 500),
-                "image_url" => "assets/images/products/03.png",
+                "image_url" => "https://www.pubgmobile.com/images/event/home/part4.jpg",
                 "category_id" => 1,
                 "user_id" => 1
             ],
             [
                 "name" => "Pubg Mobile 340 UC",
                 "price" => rand(200, 500),
-                "image_url" => "assets/images/products/04.png",
+                "image_url" => "https://www.pubgmobile.com/images/event/home/part3.jpg",
                 "category_id" => 1,
                 "user_id" => 1
             ],
             [
                 "name" => "PUBG Mobile 690 UC",
                 "price" => rand(200, 500),
-                "image_url" => "assets/images/products/04.png",
+                "image_url" => "https://www.pubgmobile.com/images/event/home/part2.jpg",
                 "category_id" => 1,
                 "user_id" => 1
             ],
             [
                 "name" => "PUBG Mobile 4000 UC",
                 "price" => rand(200, 500),
-                "image_url" => "assets/images/products/05.png",
+                "image_url" => "https://www.pubgmobile.com/images/event/home/kv.jpg",
                 "category_id" => 1,
                 "user_id" => 1
             ],
@@ -70,6 +71,8 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($products as $key => $product) {
+            $product["slug"] = Str::slug($product["name"]);
+            
             Product::create($product);
         }
     }

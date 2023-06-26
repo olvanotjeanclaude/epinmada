@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('index');
+
+Route::group(["as" => "front."], function () {
+    Route::get('/', [\App\Http\Controllers\HomepageController::class, "index"])->name("index");
+    Route::get('/{slug}', [\App\Http\Controllers\HomepageController::class, "getProducts"])->name("getProducts");
+    Route::get('/epin/{slug}', [\App\Http\Controllers\HomepageController::class, "getEpin"])->name("getEpin");
 });

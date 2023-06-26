@@ -19,7 +19,7 @@
                 </div>
                 <div class="main__logo">
                     <h1 class="main__logo--title">
-                        <a class="main__logo--link" href="index.html">
+                        <a class="main__logo--link" href="/">
                             <img class="main__logo--img" src="{{ asset('assets/img/logo/nav-logo.webp') }}"
                                 alt="logo-img">
                         </a>
@@ -28,10 +28,6 @@
                 <div class="header__menu d-none d-lg-block">
                     <nav class="header__menu--navigation">
                         <ul class="d-flex">
-                            <li class="header__menu--items">
-                                <a class="header__menu--link" href="#">Page D'Accueil</a>
-                            </li>
-
                             <li class="header__menu--items">
                                 <a class="header__menu--link" href="#">A Propos</a>
                             </li>

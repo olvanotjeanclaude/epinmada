@@ -7581,7 +7581,7 @@ span.info__list--item-content {
    17. Breadcrumb Css
 */
 .breadcrumb__bg {
-  background: url(../img/banner/breadcrumb-bg.webp);
+  background: url("http://suarego.com/front_assets/image/bg-search.jpg");
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: 5%;

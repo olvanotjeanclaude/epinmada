@@ -12,6 +12,7 @@ class Product extends Model
     protected $fillable = [
         "status",
         "name",
+        "slug",
         "price",
         "image_url",
         "category_id",
@@ -25,6 +26,10 @@ class Product extends Model
 
     public function getPriceAttribute($value){
         return floatval($value);
+    }
+
+    public function getFormattedPriceAttribute(){
+        return formatPrice($this->price);
     }
 
     public function getImageUrlAttribute($value){
