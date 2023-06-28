@@ -7087,11 +7087,12 @@ span.info__list--item-content {
    23. Footer Page Css
 */
 .footer__bg {
-  background: url(../img/other/footer-bg.webp);
+  background: var(--primary-color);
+  /* background: url(../img/other/footer-bg.webp);
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
-  background-size: cover;
+  background-size: cover; */
 }
 
 @media only screen and (max-width: 991px) {
@@ -7581,7 +7582,8 @@ span.info__list--item-content {
    17. Breadcrumb Css
 */
 .breadcrumb__bg {
-  background: url("http://suarego.com/front_assets/image/bg-search.jpg");
+  /* background: url("http://suarego.com/front_assets/image/bg-search.jpg"); */
+  background: url("http://suarego.com/slider/14.jpg");
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: 5%;

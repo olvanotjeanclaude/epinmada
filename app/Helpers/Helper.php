@@ -22,6 +22,7 @@ function formatPrice($price)
     $price = intval($price);
 
     if (is_numeric($price)) {
+        $price =  number_format($price, 0, ',', ' ');
         return $price . " Ariary";
     }
 
@@ -30,7 +31,7 @@ function formatPrice($price)
 
 function getImage($image)
 {
-    
+
     // if (!str_contains($image, "http")) {
     //     return $image && file_exists($image) ? asset($image) : asset("assets/image/not-found.jpg");
     // }

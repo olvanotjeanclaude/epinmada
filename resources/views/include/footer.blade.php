@@ -1,6 +1,6 @@
 <footer class="footer__section footer__bg">
     <div class="container">
-        <div class="main__footer section--padding">
+        <div class="main__footer section--padding d-none">
             <div class="row">
                 <div class="col-lg-4 col-md-6">
                     <div class="footer__widget">
@@ -169,10 +169,12 @@
             </div>
         </div>
         <div class="footer__bottom d-flex justify-content-between align-items-center">
-            <p class="copyright__content  m-0">Copyright © 2022 <a class="copyright__content--link"
-                    href="index.html">Rokon</a> . All Rights Reserved.</p>
-            <p class="footer__bottom--desc"><a href="privacy-policy.html">Term & condition</a> , <a
-                    href="privacy-policy.html">Privacy Policy</a></p>
+            <p class="copyright__content  m-0">Copyright © 2023 <a class="copyright__content--link"
+                    href="/">Rokon</a> . All Rights Reserved.</p>
+            <p class="footer__bottom--desc small">
+                Developed By
+                <a href="#">Olvanot Jean Claude Rakotonirina</a>
+            </p>
         </div>
     </div>
 </footer>

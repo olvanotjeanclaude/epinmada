@@ -15,7 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(["as" => "front."], function () {
-    Route::get('/', [\App\Http\Controllers\HomepageController::class, "index"])->name("index");
-    Route::get('/{slug}', [\App\Http\Controllers\HomepageController::class, "getProducts"])->name("getProducts");
-    Route::get('/epin/{slug}', [\App\Http\Controllers\HomepageController::class, "getEpin"])->name("getEpin");
+    Route::get('/', [\App\Http\Controllers\FrontController::class, "index"])->name("index");
+    Route::get('/contact', [\App\Http\Controllers\FrontController::class, "getContact"])->name("getContact");
+    Route::get('/propos-de-nous', [\App\Http\Controllers\FrontController::class, "getAboutUs"])->name("getAboutUs");
+    Route::get('/boutiques', [\App\Http\Controllers\FrontController::class, "allServices"])->name("allServices");
+    Route::get('/{slug}', [\App\Http\Controllers\FrontController::class, "getProducts"])->name("getProducts");
+    Route::get('/boutiques/epin/{slug}', [\App\Http\Controllers\FrontController::class, "getEpin"])->name("getEpin");
 });

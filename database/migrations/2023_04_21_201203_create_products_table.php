@@ -21,6 +21,10 @@ return new class extends Migration
             $table->decimal("price");
             $table->string("image_url")->nullable();
             $table->unsignedBigInteger("category_id");
+            $table->boolean("is_top")->default(false);
+            $table->text("short_description")->nullable();
+            $table->longText("long_description")->nullable();
+            $table->integer("rating")->default(0);
             $table->unsignedBigInteger("user_id");
             $table->timestamps();
         });

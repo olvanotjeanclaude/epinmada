@@ -37,4 +37,9 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function scopeHasProducts($query)
+    {
+        return $query->has("products")->get();
+    }
 }

@@ -19,7 +19,7 @@
                                         </p>
                                         <div
                                             class="slider__content--footer d-flex align-items-center justify-content-center">
-                                            <a class="slider__content--btn primary__btn" href="shop.html">Achetez maintenant</a>
+                                            <a class="slider__content--btn primary__btn" href="/netflix">Achetez maintenant</a>
                                         </div>
                                     </div>
                                 </div>
