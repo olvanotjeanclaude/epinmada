@@ -19,6 +19,7 @@ Route::group(["as" => "front."], function () {
     Route::get('/contact', [\App\Http\Controllers\FrontController::class, "getContact"])->name("getContact");
     Route::get('/propos-de-nous', [\App\Http\Controllers\FrontController::class, "getAboutUs"])->name("getAboutUs");
     Route::get('/boutiques', [\App\Http\Controllers\FrontController::class, "allServices"])->name("allServices");
-    Route::get('/{slug}', [\App\Http\Controllers\FrontController::class, "getProducts"])->name("getProducts");
     Route::get('/boutiques/epin/{slug}', [\App\Http\Controllers\FrontController::class, "getEpin"])->name("getEpin");
+    Route::resource("baskets", \App\Http\Controllers\BasketController::class);
+    Route::get('/{slug}', [\App\Http\Controllers\FrontController::class, "getProducts"])->name("getProducts");
 });

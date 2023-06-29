@@ -9,8 +9,11 @@ class Product extends Model
 {
     use HasFactory;
 
+    public $primaryKey = "unique_id";
+
     protected $fillable = [
         "status",
+        "unique_id",
         "name",
         "slug",
         "price",
@@ -23,7 +26,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, "category_id");
+        return $this->belongsTo(Category::class);
     }
 
     public function getPriceAttribute($value)

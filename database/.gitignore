@@ -1,1 +1,5 @@
 *.sqlite*
+./rokon/*
+./unikit/*
+/resources/views/rokon/*
+/resources/views/unikit/*

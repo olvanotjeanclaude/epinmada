@@ -32,7 +32,7 @@
                                         aria-label="quantity value" value="Increase Value">+</button>
                                 </div>
 
-                                <button class="quickview__cart--btn primary__btn" type="submit">
+                                <button class="quickview__cart--btn primary__btn" type="button">
                                     Ajouter AuPanier
                                 </button>
 

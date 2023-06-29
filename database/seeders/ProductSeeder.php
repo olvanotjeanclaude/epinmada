@@ -70,6 +70,14 @@ class ProductSeeder extends Seeder
                 "name" => "PAQUET SPOTIFY",
                 "price" => rand(10000, 15000),
                 "image_url" => "https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/folder_920_201707260845-1.png",
+                "short_description" =>"<p>Découvrez la bande son de votre vie avec Spotify, la plateforme de streaming musical ultime. 
+                                       Plongez-vous dans un univers infini de musique, des derniers succès aux classiques intemporels. 
+                                       Créez vos propres playlists personnalisées pour chaque occasion, que ce soit pour vous détendre, 
+                                       vous motiver ou vous échapper du quotidien.</p>
+                                       
+                                       <p>Avec Spotify, explorez de nouveaux genres, suivez vos artistes préférés et découvrez des 
+                                       recommandations sur mesure rien que pour vous.
+                                       </p>",
                 "category_id" => 3,
                 "user_id" => 1
             ],
@@ -77,7 +85,7 @@ class ProductSeeder extends Seeder
 
         foreach ($products as $key => $product) {
             $product["slug"] = Str::slug($product["name"]);
-
+            $product["unique_id"] = generateNo();
             Product::create($product);
         }
     }

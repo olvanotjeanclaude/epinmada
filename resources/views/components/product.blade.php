@@ -1,4 +1,4 @@
-<article class="product__card">
+<article class="product__card border">
     <a href="{{ $product->route_detail }}" class="d-block">
         <div class="product__card--thumbnail">
             <img class="product__card--thumbnail__img product__primary--img display-block"
@@ -15,8 +15,8 @@
             {{-- <span class="price__divided"></span>
             <span class="old__price"> $356</span> --}}
         </div>
-        <a class="product__card--btn primary__btn" href="#">
+        <button class="product__card--btn primary__btn"  data-product-id="{{ $product->unique_id }}">
             Ajouter Au Panier
-        </a>
+        </button>
     </div>
 </article>

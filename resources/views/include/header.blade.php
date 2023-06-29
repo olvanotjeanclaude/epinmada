@@ -35,7 +35,7 @@
                             </li>
 
                             <li class="header__menu--items">
-                                <a class="header__menu--link" href="{{route('front.allServices')}}">Boutiques</a>
+                                <a class="header__menu--link" href="{{ route('front.allServices') }}">Boutiques</a>
                             </li>
 
                             <li class="header__menu--items">
@@ -82,7 +82,9 @@
                                         d="M16.84,8.082V6.091a4.725,4.725,0,1,0-9.449,0v4.725a.675.675,0,0,0,1.35,0V9.432h5.4V8.082h-5.4V6.091a3.375,3.375,0,0,1,6.75,0v4.691a.675.675,0,1,0,1.35,0V9.433h3.374V21.581H4.017V9.432H6.041V8.082H2.667V21.641a1.289,1.289,0,0,0,1.289,1.29h16.32a1.289,1.289,0,0,0,1.289-1.29V8.082Z"
                                         transform="translate(-2.667 -1.366)" fill="currentColor" />
                                 </svg>
-                                <span class="items__count">02</span>
+                                <span class="items__count" id="countBasket">
+                                    {{ \App\Models\Basket::byCustomer()->count() }}
+                                </span>
                             </a>
                         </li>
                     </ul>
@@ -97,24 +99,24 @@
         <div class="offcanvas__inner">
             <div class="offcanvas__logo">
                 <a class="offcanvas__logo_link" href="/">
-                    <img src="{{asset('assets/img/logo/nav-logo.webp')}}" alt="Rokon Logo">
+                    <img src="{{ asset('assets/img/logo/nav-logo.webp') }}" alt="Rokon Logo">
                 </a>
                 <button class="offcanvas__close--btn" data-offcanvas>close</button>
             </div>
             <nav class="offcanvas__menu">
                 <ul class="offcanvas__menu_ul">
                     <li class="offcanvas__menu_li">
-                        <a class="offcanvas__menu_item"  href="{{ route('front.getAboutUs') }}">
+                        <a class="offcanvas__menu_item" href="{{ route('front.getAboutUs') }}">
                             Qui Sommes-Nous?
                         </a>
                     </li>
                     <li class="offcanvas__menu_li">
-                        <a class="offcanvas__menu_item"  href="{{route('front.allServices')}}">
+                        <a class="offcanvas__menu_item" href="{{ route('front.allServices') }}">
                             Boutiques
                         </a>
                     </li>
                     <li class="offcanvas__menu_li">
-                        <a class="offcanvas__menu_item"  href="{{route('front.getContact')}}">
+                        <a class="offcanvas__menu_item" href="{{ route('front.getContact') }}">
                             Contact
                         </a>
                     </li>

@@ -90,7 +90,7 @@ function roundNumber($number)
 
 
 
-function generateAdvertNo()
+function generateNo()
 {
     return  mt_rand(1000000, 9999999);
 }
