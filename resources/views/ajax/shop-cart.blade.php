@@ -49,8 +49,8 @@
             </div>
         </div>
         <div class="minicart__button d-flex justify-content-center mt-4">
-            <a class="primary__btn minicart__button--link" href="cart.html">Voir le panier</a>
-            <a class="primary__btn minicart__button--link" href="checkout.html">Payer</a>
+            <a class="primary__btn minicart__button--link" href="{{route('front.cart')}}">Voir le panier</a>
+            <a class="primary__btn minicart__button--link" href="#">Payer</a>
         </div>
     @else
         <p>le panier est vide</p>

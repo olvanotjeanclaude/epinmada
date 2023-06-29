@@ -49,7 +49,21 @@ class BasketController extends Controller
         return [
             "html" => view("ajax.shop-cart", compact("baskets"))->render(),
             "count" => $baskets->count(),
-            "baskets" =>$baskets
+            "baskets" => $baskets
         ];
+    }
+
+    public function cart()
+    {
+        $baskets = Basket::ByCustomer();
+
+        return view("cart", compact("baskets"));
+    }
+
+    public function emptyCart()
+    {
+        Basket::where("anonymous_id", $_COOKIE["anonymousID"] ?? null)->delete();
+
+        return back();
     }
 }

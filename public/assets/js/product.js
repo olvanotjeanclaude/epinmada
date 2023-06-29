@@ -29,6 +29,7 @@ function removeProductFromBasket() {
 }
 
 function setShopCardHtml({ data }) {
+    $(".offCanvas__minicart").addClass("active");
     $("#countBasket").text(data.count);
     $("#loadShopCardData").html(data.html)
 }

@@ -38,6 +38,7 @@ class Basket extends Model
             ->join("categories", "categories.id", "products.category_id")
             ->where("anonymous_id", $_COOKIE["anonymousID"]??null)
             ->groupBy("products.unique_id")
+            ->orderByDesc("baskets.id")
             ->get();
     }
 }
