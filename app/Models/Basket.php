@@ -23,22 +23,13 @@ class Basket extends Model
 
     public static function ByCustomer()
     {
-        return DB::table("baskets")
-            ->select([
-                "baskets.id as basket_id",
-                'products.unique_id',
-                'products.name',
-                'products.price',
-                'products.image_url',
-                "categories.name as category",
-                DB::raw('(products.price * SUM(baskets.quantity)) as sub_amount'),
-                DB::raw('SUM(baskets.quantity) as quantity')
-            ])
-            ->join("products", "products.unique_id", "baskets.product_id")
-            ->join("categories", "categories.id", "products.category_id")
-            ->where("anonymous_id", $_COOKIE["anonymousID"]??null)
-            ->groupBy("products.unique_id")
-            ->orderByDesc("baskets.id")
-            ->get();
+        return self::with("product", "product.category")
+            ->where("anonymous_id", $_COOKIE["anonymousID"] ?? null)
+            ->orderByDesc("id");
+    }
+
+    public function getSubAmountAttribute()
+    {
+        return $this->product->price * $this->quantity;
     }
 }

@@ -23,5 +23,6 @@ Route::group(["as" => "front."], function () {
     Route::resource("baskets", \App\Http\Controllers\BasketController::class);
     Route::get('/panier', [\App\Http\Controllers\BasketController::class, "cart"])->name("cart");
     Route::post('/empty-panier', [\App\Http\Controllers\BasketController::class, "emptyCart"])->name("emptyCart");
+    Route::post('/update-quantity/{basket}', [\App\Http\Controllers\BasketController::class, "updateQuantity"])->name("updateQuantity");
     Route::get('/{slug}', [\App\Http\Controllers\FrontController::class, "getProducts"])->name("getProducts");
 });

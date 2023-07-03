@@ -9,11 +9,6 @@
                 </svg>
             </button>
         </div>
-        {{-- <p class="minicart__header--desc">The organic foods products are limited</p> --}}
     </div>
-    <div id="loadShopCardData">
-        @include('ajax.shop-cart', [
-            'baskets' => \App\Models\Basket::ByCustomer(),
-        ])
-    </div>
+    <div id="loadShopCardData"></div>
 </div>

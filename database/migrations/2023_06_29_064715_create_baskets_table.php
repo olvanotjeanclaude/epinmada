@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("anonymous_id");
             $table->unsignedBigInteger("product_id");
-            $table->integer("quantity");
+            $table->integer("quantity")->default(1);
             $table->timestamps();
         });
     }

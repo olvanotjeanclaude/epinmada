@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Basket;
-use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class BasketController extends Controller
 {
     public function index()
     {
+        return $this->reloadingList();
+        
         if (request()->ajax()) {
-            return $this->reloadingList();
         }
 
         return redirect("/");
@@ -20,15 +19,23 @@ class BasketController extends Controller
 
     public function store(Request $request)
     {
-        Product::findOrFail($request->product_id);
+        $data =  $request->validate(["product_id" => "required"]);
 
-        $data =  $request->validate([
-            "anonymous_id" => "required",
-            "product_id" => "required",
-            "quantity" => "required"
-        ]);
+        $data = [
+            "anonymous_id" => $_COOKIE["anonymousID"],
+            "product_id" => $request->product_id,
+        ];
 
-        Basket::create($data);
+        $basket =  Basket::has("product")
+            ->where("anonymous_id", $_COOKIE["anonymousID"] ?? null)
+            ->where("product_id", $request->product_id)
+            ->first();
+
+        if ($basket) {
+            $basket->increment("quantity");
+        } else {
+            Basket::create($data);
+        }
 
         return $this->reloadingList();
     }
@@ -44,10 +51,11 @@ class BasketController extends Controller
 
     private function reloadingList()
     {
-        $baskets = Basket::ByCustomer();
+        $baskets = Basket::ByCustomer()->get();
 
         return [
-            "html" => view("ajax.shop-cart", compact("baskets"))->render(),
+            // "html" => view("ajax.shop-cart", compact("baskets"))->render(),
+            "sum_sub_amount" => formatPrice($baskets->sum("sub_amount")),
             "count" => $baskets->count(),
             "baskets" => $baskets
         ];
@@ -55,7 +63,7 @@ class BasketController extends Controller
 
     public function cart()
     {
-        $baskets = Basket::ByCustomer();
+        $baskets = Basket::ByCustomer()->get();
 
         return view("cart", compact("baskets"));
     }
@@ -65,5 +73,19 @@ class BasketController extends Controller
         Basket::where("anonymous_id", $_COOKIE["anonymousID"] ?? null)->delete();
 
         return back();
+    }
+
+    public function updateQuantity($productID, Request $request)
+    {
+        $request->validate(["quantity" => "required|numeric|min:1"]);
+
+        $basket =  Basket::has("product")
+            ->where("anonymous_id", $_COOKIE["anonymousID"] ?? null)
+            ->where("product_id", $productID)
+            ->firstOrFail();
+
+        $basket->update(["quantity" => $request->quantity]);
+
+        return $this->reloadingList();
     }
 }

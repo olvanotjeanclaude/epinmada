@@ -11,6 +11,8 @@ class Product extends Model
 
     public $primaryKey = "unique_id";
 
+    protected $appends = ["route_detail", "formatted_price"];
+
     protected $fillable = [
         "status",
         "unique_id",
@@ -69,7 +71,7 @@ class Product extends Model
         $other = self::active()
             ->whereHas("category", fn ($query) => $query->where("name", "!=", "EPIN"))
             ->limit(2)->get();
-      
+
         return $epins->merge($other);
     }
 }

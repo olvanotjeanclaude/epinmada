@@ -26,67 +26,11 @@
                                             <th class="cart__table--header__list">Totale</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="cart__table--body">
-                                        @forelse ($baskets as $product)
-                                            <tr class="cart__table--body__items">
-                                                <td class="cart__table--body__list">
-                                                    <div class="cart__product d-flex align-items-center">
-                                                        <button class="cart__remove--btn" aria-label="search button"
-                                                            type="button"><svg fill="currentColor"
-                                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                                width="16px" height="16px">
-                                                                <path
-                                                                    d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z" />
-                                                            </svg></button>
-                                                        <div class="cart__thumbnail">
-                                                            <a href="#">
-                                                                <img class="border-radius-5" src="{{ $product->image_url }}"
-                                                                    alt="cart-product">
-                                                            </a>
-                                                        </div>
-                                                        <div class="cart__content">
-                                                            <h3 class="cart__content--title h4">
-                                                                <a href="product-details.html">
-                                                                    {{ $product->name }}
-                                                                </a>
-                                                            </h3>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="cart__table--body__list">
-                                                    <span class="cart__price">{{ formatPrice($product->price) }}</span>
-                                                </td>
-                                                <td class="cart__table--body__list">
-                                                    <div class="quantity__box">
-                                                        <button type="button"
-                                                            class="quantity__value quickview__value--quantity decrease"
-                                                            aria-label="quantity value" value="Decrease Value">-</button>
-                                                        <label>
-                                                            <input type="number"
-                                                                class="quantity__number quickview__value--number"
-                                                                value="{{ $product->quantity }}" data-counter />
-                                                        </label>
-                                                        <button type="button"
-                                                            class="quantity__value quickview__value--quantity increase"
-                                                            aria-label="quantity value" value="Increase Value">
-                                                            +
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                                <td class="cart__table--body__list">
-                                                    <span class="cart__price end">
-                                                        {{ formatPrice($product->sub_amount) }}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr class="bg-light">
-                                                <td colspan="4">Votre panier est vide!</td>
-                                            </tr>
-                                        @endforelse
+                                    <tbody class="cart__table--body" id="loadBaskets">
+
                                     </tbody>
                                 </table>
-                                <div class="continue__shopping d-flex justify-content-between">
+                                {{-- <div class="continue__shopping d-flex justify-content-between">
                                     <a class="continue__shopping--link" href="{{ route('front.allServices') }}">Continuer
                                         Vos Achats
                                     </a>
@@ -94,7 +38,7 @@
                                     @if (count($baskets))
                                         <button class="continue__shopping--clear" type="submit">Vider Le Panier</button>
                                     @endif
-                                </div>
+                                </div> --}}
                             </div>
                         </form>
                     </div>
@@ -174,9 +118,8 @@
                                 <ul class="product__card--action d-flex align-items-center justify-content-center">
                                     <li class="product__card--action__list">
                                         <a class="product__card--action__btn" title="Wishlist" href="wishlist.html">
-                                            <svg class="product__card--action__btn--svg"
-                                                xmlns="http://www.w3.org/2000/svg" width="25.51" height="22.443"
-                                                viewBox="0 0 512 512">
+                                            <svg class="product__card--action__btn--svg" xmlns="http://www.w3.org/2000/svg"
+                                                width="25.51" height="22.443" viewBox="0 0 512 512">
                                                 <path
                                                     d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"
                                                     fill="none" stroke="currentColor" stroke-linecap="round"
@@ -188,9 +131,8 @@
                                     <li class="product__card--action__list">
                                         <a class="product__card--action__btn" title="Quick View" data-bs-toggle="modal"
                                             data-bs-target="#examplemodal" href="javascript:void(0)">
-                                            <svg class="product__card--action__btn--svg"
-                                                xmlns="http://www.w3.org/2000/svg" width="24.51" height="22.443"
-                                                viewBox="0 0 512 512">
+                                            <svg class="product__card--action__btn--svg" xmlns="http://www.w3.org/2000/svg"
+                                                width="24.51" height="22.443" viewBox="0 0 512 512">
                                                 <path
                                                     d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
                                                     fill="none" stroke="currentColor" stroke-miterlimit="10"
@@ -236,4 +178,8 @@
         </div>
     </section>
     <!-- End product section -->
+@endsection
+
+@section('script')
+    <script src="{{asset('assets/js/basket.js')}}" type="module"></script>
 @endsection

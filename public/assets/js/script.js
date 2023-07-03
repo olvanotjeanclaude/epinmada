@@ -691,37 +691,6 @@ const offcanvasHeader = function () {
 /* Mobile Menu Active */
 offcanvasHeader();
 
-// Increment & Decrement Qunatity Button
-const quantityWrapper = document.querySelectorAll(".quantity__box");
-if (quantityWrapper) {
-  quantityWrapper.forEach(function (singleItem) {
-    let increaseButton = singleItem.querySelector(".increase");
-    let decreaseButton = singleItem.querySelector(".decrease");
-
-    increaseButton.addEventListener("click", function (e) {
-      let input = e.target.previousElementSibling.children[0];
-      if (input.dataset.counter != undefined) {
-        let value = parseInt(input.value, 10);
-        value = isNaN(value) ? 0 : value;
-        value++;
-        input.value = value;
-      }
-    });
-
-    decreaseButton.addEventListener("click", function (e) {
-      let input = e.target.nextElementSibling.children[0];
-      if (input.dataset.counter != undefined) {
-        let value = parseInt(input.value, 10);
-        value = isNaN(value) ? 0 : value;
-        value < 1 ? (value = 1) : "";
-        value--;
-        input.value = value;
-      }
-    });
-  });
-}
-
-
 // Accordion
 function customAccordion(accordionWrapper, singleItem, accordionBody) {
   let accoridonButtons = document.querySelectorAll(accordionWrapper);

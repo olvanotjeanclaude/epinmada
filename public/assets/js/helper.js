@@ -42,3 +42,14 @@ export function setLoading(isLoading = true) {
         console.log("done");
     }
 }
+
+export function formatPrice(price) {
+    price = parseInt(price);
+
+    if (Number.isNumeric(price)) {
+        price = price.toLocaleString('tr-TR');
+        return price + " Ariary";
+    }
+
+    return "0 Ariary";
+}
