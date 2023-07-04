@@ -64,10 +64,9 @@ export function sidebarShopCartHtml({ baskets, sum_sub_amount }) {
 export function basketHtml({ baskets, sum_sub_amount }) {
     let html = "";
 
-    console.log(baskets)
+    // console.log(baskets)
     if (Array.isArray(baskets) && baskets.length) {
         html = "";
-
 
         html += baskets.map(basket => {
             const product = basket.product;
@@ -77,7 +76,7 @@ export function basketHtml({ baskets, sum_sub_amount }) {
             <tr class="cart__table--body__items">
                 <td class="cart__table--body__list">
                     <div class="cart__product d-flex align-items-center">
-                        <button class="cart__remove--btn" aria-label="search button"
+                        <button data-id="${product.unique_id}" class="cart__remove--btn" aria-label="search button"
                             type="button"><svg fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                 width="16px" height="16px">
@@ -122,7 +121,7 @@ export function basketHtml({ baskets, sum_sub_amount }) {
                 </td>
                 <td class="cart__table--body__list">
                     <span class="cart__price end">
-                        ${sum_sub_amount}
+                        ${basket.formatted_sub_amount}
                     </span>
                 </td>
             </tr>`

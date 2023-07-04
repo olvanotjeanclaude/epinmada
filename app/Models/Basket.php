@@ -16,6 +16,8 @@ class Basket extends Model
         "quantity"
     ];
 
+    protected $appends = ["formatted_sub_amount"];
+
     public function product()
     {
         return $this->belongsTo(Product::class, "product_id")->orderByDesc("created_at");
@@ -31,5 +33,10 @@ class Basket extends Model
     public function getSubAmountAttribute()
     {
         return $this->product->price * $this->quantity;
+    }
+
+    public function getFormattedSubAmountAttribute()
+    {
+        return  formatPrice($this->sub_amount);
     }
 }

@@ -35,12 +35,12 @@ export function Axios() {
 };
 
 export function setLoading(isLoading = true) {
-    if (isLoading) {
-        console.log("loading");
-    }
-    else {
-        console.log("done");
-    }
+    // if (isLoading) {
+    //     console.log("loading");
+    // }
+    // else {
+    //     console.log("done");
+    // }
 }
 
 export function formatPrice(price) {

@@ -1,12 +1,13 @@
 import { Axios, settingAnonymousID } from "./helper.js";
 import { sidebarShopCartHtml } from "./basket-template.js";
+import { mountToBasketElement } from "./basket.js";
 
 $(document).ready(function () {
     loadSidebarShopCart();
 
     settingAnonymousID();
 
-    $(".product__card--btn").click(addProductToBasket);
+    $(document).on("click", ".product__card--btn", addProductToBasket);
 
     $(document).on("click", "#loadShopCardData .remove-product", removeProductFromBasket)
 
@@ -27,10 +28,13 @@ export function updateQuantity() {
         quantity,
         action,
         product: unique_id
-    }).then(response => { setShopCardHtml(response) });
+    }).then(response => {
+        setShopCardHtml(response);
+        mountToBasketElement(response);
+    });
 }
 
-function computateQuantity() {
+export function computateQuantity() {
     const input = $(this).parent().find(".quantity__number");
     const isAdding = $(this).hasClass("increase");
 
@@ -63,12 +67,12 @@ function addProductToBasket() {
     Axios().post("/baskets", basket).then(response => setShopCardHtml(response));
 }
 
-export function removeProductFromBasket() {
+function removeProductFromBasket() {
     const product_id = $(this).data("product-id");
     Axios().delete(`/baskets/${product_id}`).then(response => { setShopCardHtml(response) });
 }
 
-function setShopCardHtml({ data }) {
+export function setShopCardHtml({ data }) {
     $(".offCanvas__minicart").addClass("active");
     $("#countBasket").text(data.count);
     $("#loadShopCardData").html(sidebarShopCartHtml(data))
