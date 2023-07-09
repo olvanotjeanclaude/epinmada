@@ -26,3 +26,6 @@ Route::group(["as" => "front."], function () {
     Route::post('/update-quantity/{basket}', [\App\Http\Controllers\BasketController::class, "updateQuantity"])->name("updateQuantity");
     Route::get('/{slug}', [\App\Http\Controllers\FrontController::class, "getProducts"])->name("getProducts");
 });
+
+Route::group(["prefix" =>"admin", "as" => "admin."], function () {
+});

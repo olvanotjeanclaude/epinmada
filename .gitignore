@@ -21,3 +21,5 @@ yarn-error.log
 
 /resources/views/rokon/*
 /resources/views/unikit/*
+/resources/views/templates/*
+/admin/*

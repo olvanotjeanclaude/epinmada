@@ -11,11 +11,11 @@ $(document).ready(function () {
 
     $(document).on("click", "#loadShopCardData .remove-product", removeProductFromBasket)
 
-    $(document).on("click", ".custom-increase", computateQuantity);
+    $(document).on("click", "button.custom-increase", computateQuantity);
 
-    $(document).on("click", ".custom-decrease", computateQuantity);
+    $(document).on("click", "button.custom-decrease", computateQuantity);
 
-    $(document).on("click", ".quantity__value", updateQuantity);
+    $(document).on("click", "button.quantity__value", updateQuantity);
 });
 
 export function updateQuantity() {
@@ -29,15 +29,17 @@ export function updateQuantity() {
         action,
         product: unique_id
     }).then(response => {
-        setShopCardHtml(response);
-        mountToBasketElement(response);
+        setShopCartHtml(response);
+
+        if (hasCartTable()) {
+            mountToBasketElement(response);
+        }
     });
 }
 
 export function computateQuantity() {
     const input = $(this).parent().find(".quantity__number");
     const isAdding = $(this).hasClass("increase");
-
 
     let value = parseInt(input.val());
     value = isNaN(value) ? 0 : value;
@@ -64,23 +66,30 @@ function addProductToBasket() {
         product_id,
     };
 
-    Axios().post("/baskets", basket).then(response => setShopCardHtml(response));
+    Axios().post("/baskets", basket).then(response => setShopCartHtml(response));
 }
 
 function removeProductFromBasket() {
     const product_id = $(this).data("product-id");
-    Axios().delete(`/baskets/${product_id}`).then(response => { setShopCardHtml(response) });
+    Axios().delete(`/baskets/${product_id}`).then(response => { setShopCartHtml(response) });
 }
 
-export function setShopCardHtml({ data }) {
-    $(".offCanvas__minicart").addClass("active");
+export function setShopCartHtml({ data }) {
     $("#countBasket").text(data.count);
     $("#loadShopCardData").html(sidebarShopCartHtml(data))
+
+    if (!hasCartTable()) {
+        $(".offCanvas__minicart").addClass("active");
+    }
 }
 
 function loadSidebarShopCart() {
     Axios().get(`/baskets`).then(response => {
-        setShopCardHtml(response);
+        setShopCartHtml(response);
         $(".offCanvas__minicart").removeClass("active");
     });
+}
+
+function hasCartTable() {
+    return $(".cart__table--body__list").length > 0;
 }

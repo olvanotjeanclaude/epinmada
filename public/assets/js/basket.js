@@ -1,6 +1,6 @@
 import { basketHtml } from "./basket-template.js";
 import { Axios } from "./helper.js";
-import { computateQuantity, setShopCardHtml } from "./product.js";
+import { computateQuantity, setShopCartHtml } from "./product.js";
 
 $(document).ready(function () {
     loadBasket();
@@ -22,8 +22,7 @@ function removeBasket() {
 }
 
 export function mountToBasketElement(response) {
-    setShopCardHtml(response);
-    $(".offCanvas__minicart").removeClass("active");
+    setShopCartHtml(response);
     $("#loadBaskets").html(basketHtml(response.data));
     $(".cart__summary--amount").html(response.data.sum_sub_amount)
 }
