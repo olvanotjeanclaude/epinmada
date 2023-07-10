@@ -3,16 +3,17 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-   
+
     const TYPES = [
         "admin" => 1,
         "staff" => 2,
@@ -31,14 +32,14 @@ class User extends Authenticatable
         "facebook_id",
         "social_value"
     ];
-    
+
     protected $hidden = [
         'password',
         'remember_token',
         "social_value"
     ];
 
-    protected $appends= ["typeText"];
+    protected $appends = ["typeText"];
 
     /**
      * The attributes that should be cast.
@@ -49,23 +50,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getTypeTextAttribute(){
+    public function getTypeTextAttribute()
+    {
         switch ($this->type) {
             case self::TYPES["admin"]:
-                $type ="Admin";
+                $type = "Admin";
                 break;
             case self::TYPES["staff"]:
-                $type ="Personel";
+                $type = "Personel";
                 break;
             case self::TYPES["customer"]:
-                $type ="Client";
+                $type = "Client";
                 break;
-            
+
             default:
-                $type ="Inconnu";
+                $type = "Inconnu";
                 break;
         }
 
         return $type;
+    }
+
+    public function getFullNameAttribute()
+    {
+        return Str::title("$this->name $this->surname");
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Auth::routes();
+
+Route::group(["prefix" => "auth", "as" => "auth.", "middleware" => "auth"], function () {
+    Route::get("/lock-screen", [\App\Http\Controllers\Auth\LoginController::class, "lockScreen"])->name("lockScreen");
+});
+    
+Route::group(["prefix" => "admin", "as" => "admin.", "middleware" => "auth"], function () {
+    Route::get("/", [\App\Http\Controllers\admin\DashboardController::class, "index"])->name("index");
+    Route::get("/profile", [\App\Http\Controllers\admin\ProfileController::class, "profile"])->name("profile");
+    Route::post("/profile", [\App\Http\Controllers\admin\ProfileController::class, "updateProfile"])->name("updateProfile");
+});
 
 Route::group(["as" => "front."], function () {
     Route::get('/', [\App\Http\Controllers\FrontController::class, "index"])->name("index");
@@ -27,9 +40,4 @@ Route::group(["as" => "front."], function () {
     Route::get('/{slug}', [\App\Http\Controllers\FrontController::class, "getProducts"])->name("getProducts");
 });
 
-Route::get("login", [\App\Http\Controllers\Auth\LoginController::class, "login"])->name("login");
-Route::post("login",[\App\Http\Controllers\Auth\LoginController::class, "authenticate"])->name("authenticate");
-
-Route::group(["prefix" => "admin", "as" => "admin."], function () {
-    Route::get("/",[\App\Http\Controllers\admin\DashboardController::class,"index"])->name("index");
-});
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
