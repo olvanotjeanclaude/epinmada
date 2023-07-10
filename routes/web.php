@@ -27,5 +27,9 @@ Route::group(["as" => "front."], function () {
     Route::get('/{slug}', [\App\Http\Controllers\FrontController::class, "getProducts"])->name("getProducts");
 });
 
-Route::group(["prefix" =>"admin", "as" => "admin."], function () {
+Route::get("login", [\App\Http\Controllers\Auth\LoginController::class, "login"])->name("login");
+Route::post("login",[\App\Http\Controllers\Auth\LoginController::class, "authenticate"])->name("authenticate");
+
+Route::group(["prefix" => "admin", "as" => "admin."], function () {
+    Route::get("/",[\App\Http\Controllers\admin\DashboardController::class,"index"])->name("index");
 });
