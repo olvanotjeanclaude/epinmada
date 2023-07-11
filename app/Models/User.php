@@ -17,20 +17,26 @@ class User extends Authenticatable
     const TYPES = [
         "admin" => 1,
         "staff" => 2,
-        "customer" => 3
+        "client" => 3   
     ];
 
     protected $fillable = [
-        'name',
-        'surname',
-        'identity_number',
-        'phone',
-        'email',
-        'password',
-        "google_id",
+        "id",
+        "name",
+        "surname",
+        "province",
+        "district",
+        "neighborhood",
+        "address",
+        "type",
+        "identity_number",
+        "phone",
+        "email",
         "image",
+        "google_id",
         "facebook_id",
-        "social_value"
+        "social_value",
+        "password",
     ];
 
     protected $hidden = [
@@ -59,7 +65,7 @@ class User extends Authenticatable
             case self::TYPES["staff"]:
                 $type = "Personel";
                 break;
-            case self::TYPES["customer"]:
+            case self::TYPES["client"]:
                 $type = "Client";
                 break;
 

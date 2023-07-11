@@ -18,7 +18,7 @@
 
 
                 <li>
-                    <a href="#" class="waves-effect">
+                    <a href="{{ route('admin.utilisateurs.index') }}" class="waves-effect">
                         <i class="bx bx-user-circle"></i>
                         <span key="t-user">Utilisateurs</span>
                     </a>
