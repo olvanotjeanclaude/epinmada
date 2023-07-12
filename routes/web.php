@@ -22,10 +22,12 @@ Route::group(["prefix" => "auth", "as" => "auth.", "middleware" => "auth"], func
 });
 
 Route::group(["prefix" => "admin", "as" => "admin.", "middleware" => "auth"], function () {
-    Route::get("/", [\App\Http\Controllers\admin\DashboardController::class, "index"])->name("index");
-    Route::get("/profile", [\App\Http\Controllers\admin\ProfileController::class, "profile"])->name("profile");
-    Route::post("/profile", [\App\Http\Controllers\admin\ProfileController::class, "updateProfile"])->name("updateProfile");
-    Route::resource("utilisateurs", \App\Http\Controllers\admin\UserController::class);
+    // Route::get("/", [\App\Http\Controllers\admin\DashboardController::class, "index"])->name("index");
+    // Route::get("/profile", [\App\Http\Controllers\admin\ProfileController::class, "profile"])->name("profile");
+    // Route::post("/profile", [\App\Http\Controllers\admin\ProfileController::class, "updateProfile"])->name("updateProfile");
+    // Route::resource("utilisateurs", \App\Http\Controllers\admin\UserController::class);
+
+    Route::view('/{path?}', "admin.root")->where('path', '.*');
 });
 
 Route::group(["as" => "front."], function () {
