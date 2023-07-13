@@ -13,8 +13,8 @@ class UserController extends Controller
         $users = User::orderByDesc("id")->paginate(8);
 
         if (request()->ajax()) {
-            return response()->json($users);
         }
+        return response()->json($users);
 
         return view("admin.user.index", compact("users"));
     }

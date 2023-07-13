@@ -45,7 +45,7 @@ class User extends Authenticatable
         "social_value"
     ];
 
-    protected $appends = ["typeText"];
+    protected $appends = ["typeText","full_name"];
 
     /**
      * The attributes that should be cast.

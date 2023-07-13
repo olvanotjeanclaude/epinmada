@@ -11,7 +11,7 @@ export default function PageTitle({ pageTitle, url, title }) {
                     <div className="page-title-right">
                         <ol className="breadcrumb m-0">
                             <li className="breadcrumb-item">
-                                <Link to={url}>{pageTitle}</Link>
+                                <Link to={`/${pageTitle?.toLowerCase()}`}>{pageTitle}</Link>
                             </li>
                             <li className="breadcrumb-item active">{title}</li>
                         </ol>
