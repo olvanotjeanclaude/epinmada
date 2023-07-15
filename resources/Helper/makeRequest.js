@@ -15,6 +15,9 @@ const http = axios.create({
 export const getCsrfCoockie = async () => {
     return await axios.get(`${process.env.REACT_APP_BACKEND_DOMAIN}/api/test`)
         .then(res => res)
+        .finally(err =>{
+            console.log(err);
+        })
 };
 
 export default http;
