@@ -1,30 +1,26 @@
-import React, { useState } from 'react'
+import React from 'react'
 import User from './User'
 import { Col, Row, Spinner } from 'react-bootstrap'
-import { useQuery } from 'react-query';
-import http from '../../Helper/makeRequest';
-import { arrayRange } from '../../Helper/Helper';
 import Paginate from '../Pagination/Paginate';
+import useQueryApi from '../../Hooks/useQueryApi';
+import Error from '../Message/Error';
 
 function Users() {
-    const [currentPage, setCurrentPage] = useState(1);
+    const {
+        currentPage,
+        setCurrentPage,
+        fetchData,
+    } = useQueryApi("users");
 
-    const fetchUsers = async () => {
-        return (await http.get(`/users?page=${currentPage}`)).data;
-    };
+    const { data: users, isLoading,error } = fetchData();
 
-    const { data: users, isLoading, isError } = useQuery({
-        queryKey: ["posts", currentPage],
-        queryFn: fetchUsers,
-        keepPreviousData: true
-    });
-
-    const links = arrayRange(1, users?.links?.length - 2);
+    if (error) {
+        return <Error error={error} />
+    }
 
     return (
         <>
             {isLoading && <Spinner />}
-
 
             <Row>
                 {
@@ -36,7 +32,7 @@ function Users() {
                 }
             </Row>
 
-            <Paginate links={links}
+            <Paginate data={users}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage} />
         </>

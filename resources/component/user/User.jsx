@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function User({ user }) {
     return (
@@ -6,7 +7,7 @@ export default function User({ user }) {
             <div className="card-body">
                 <div className="avatar-sm mx-auto mb-4">
                     <span className="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-16">
-                        {user.name[0] ?? ''} {user.surname[1] ?? ''}
+                        {user.name[0]?.toUpperCase() ?? ''} {user.surname[1]?.toUpperCase() ?? ''}
                     </span>
                 </div>
                 <h5 className="font-size-15 mb-1"><a
@@ -29,9 +30,9 @@ export default function User({ user }) {
                     </div>
 
                     <div className="flex-fill">
-                        <a >
+                        <Link to={ `${user.id}`}>
                             <i className="bx bx-user-circle"></i>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

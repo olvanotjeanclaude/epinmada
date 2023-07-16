@@ -1,7 +1,10 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
+import { arrayRange } from '../../Helper/Helper';
 
-function Paginate({ links, currentPage, setCurrentPage }) {
+function Paginate({ data, currentPage, setCurrentPage }) {
+  const links = arrayRange(1, data?.links?.length - 2) ?? [];
+
   return (
     <div className="text-center">
       <ul className="pagination justify-content-center pagination-rounded">

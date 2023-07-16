@@ -1,71 +1,62 @@
 import React from 'react'
 import PageTitle from '../Layout/PageTitle'
-import { useForm } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import useFetchConstants from '../../Hooks/useFetchConstants';
-import { useMutation } from 'react-query';
-import http from '../../Helper/makeRequest';
-import { mapFormErrors } from '../../Helper/Helper';
-import {  useNavigate } from 'react-router-dom'
+import useQueryApi from '../../Hooks/useQueryApi'
+import useUserForm from '../../Hooks/useUserForm'
+import { useParams } from 'react-router-dom';
+import Error from '../Message/Error';
 
 export default function UserForm() {
-    const navigate = useNavigate();
-    
-    const { user_types } = useFetchConstants();
+    const { id } = useParams();
 
-    const schema = yup.object({
-        type: yup.string().required('Selectionnez le rôle'),
-        name: yup.string().required("le nom ne peut pas être vide"),
-        surname: yup.string().required("le prenom ne peut pas être vide"),
-        phone: yup.string().required("Téléphone ne peut pas être vide"),
-        email: yup.string().email("Email invalide").required("Email ne peut pas être vide"),
-        password: yup.string().required("le mot de passe ne peut pas être vide"),
-        password_confirmation: yup.string().required('La confirmation du mot de passe est requise')
-            .oneOf([yup.ref('password'), null], 'Les mots de passe doivent correspondre'),
-    }).required()
+    const {
+        addMutation,
+        updateMutation,
+        crud,
+        showData
+    } = useQueryApi("users", "/utilisateurs");
 
-    const { register, handleSubmit, formState: { errors }, setError } = useForm({
-        resolver: yupResolver(schema),
-        defaultValues: {
-            type: "",
-            name: "",
-            surname: "",
-            phone: "",
-            email: "",
-            password: "",
-            password_confirmation: "",
-        },
-    });
+    const action = id ? "update" : "store";
 
-    const mutation = useMutation(async (newUser) => {
-        return await http.post("/users", newUser).catch(error => {
-            if (error.response.status == 422) {
-                const errors = mapFormErrors(error.response.data.errors);
-                errors.forEach(({ name, type, message }) => {
-                    setError(name, { type, message })
-                });
-            }
-            throw "Error ocurred";
-        });
-    },{
-        onSuccess:function({data}){
-            navigate("/utilisateurs", {
-                state: {
-                    message:data
-                }
-            })
-        }
-    });
+
+    const { data: user } = showData(id);
+
+    if (action == "update" && !user) {
+        return <Error />
+    }
+
+    const {
+        register,
+        handleSubmit,
+        errors,
+        user_types,
+        setError,
+    } = useUserForm(user);
 
     const onSubmit = async (data) => {
-        mutation.mutate(data);
+        const onError = () => {
+            crud.errors?.forEach(({ name, type, message }) => {
+                setError(name, { type, message })
+            });
+        }
+
+        switch (action) {
+            case "store":
+                addMutation.mutate(data, { onError });
+                break;
+
+            case "update":
+                updateMutation.mutate((data), { onError });
+                break;
+
+            default:
+                break;
+        }
     }
 
     return (
         <>
-            <PageTitle pageTitle="Utilisateurs" title="Nouveau Utilisateur" />
+            <PageTitle pageTitle="Utilisateurs" title={`${action == "store" ? "Nouveau" : "Modification d'"} utilisateur`} />
 
             <Form autoComplete="off" onSubmit={handleSubmit(onSubmit)} className="needs-validation" method="post">
 
@@ -136,37 +127,46 @@ export default function UserForm() {
                             </Col>
                         </Row>
 
-                        <Row className='mb-3'>
-                            <Col sm={4} md={3}>
-                                <Form.Label>Mot De Passe</Form.Label>
-                            </Col>
-                            <Col sm={true} md={true}>
-                                <Form.Control {...register("password")} isInvalid={!!errors.password} type='password' />
-                                <Form.Control.Feedback type='invalid'>
-                                    {errors.password?.message}
-                                </Form.Control.Feedback>
-                            </Col>
-                        </Row>
+                        {
+                            action == "store" &&
+                            <>
+                                <Row className='mb-3'>
+                                    <Col sm={4} md={3}>
+                                        <Form.Label>Mot De Passe</Form.Label>
+                                    </Col>
+                                    <Col sm={true} md={true}>
+                                        <Form.Control {...register("password")} isInvalid={!!errors.password} type='password' />
+                                        <Form.Control.Feedback type='invalid'>
+                                            {errors.password?.message}
+                                        </Form.Control.Feedback>
+                                    </Col>
+                                </Row>
 
-                        <Row className='mb-3'>
-                            <Col sm={4} md={3}>
-                                <Form.Label>Confirmez le mot de passe</Form.Label>
-                            </Col>
-                            <Col sm={true} md={true}>
-                                <Form.Control  {...register("password_confirmation")}
-                                    type='password'
-                                    isInvalid={!!errors.password_confirmation} />
-                                <Form.Control.Feedback type='invalid'>
-                                    {errors.password_confirmation?.message}
-                                </Form.Control.Feedback>
-                            </Col>
-                        </Row>
+                                <Row className='mb-3'>
+                                    <Col sm={4} md={3}>
+                                        <Form.Label>Confirmez le mot de passe</Form.Label>
+                                    </Col>
+                                    <Col sm={true} md={true}>
+                                        <Form.Control  {...register("password_confirmation")}
+                                            type='password'
+                                            isInvalid={!!errors.password_confirmation} />
+                                        <Form.Control.Feedback type='invalid'>
+                                            {errors.password_confirmation?.message}
+                                        </Form.Control.Feedback>
+                                    </Col>
+                                </Row>
+                            </>
+                        }
 
                         <Button
-                            // disabled={isDirty || !isValid}
+                            disabled={addMutation.isLoading || updateMutation.isLoading}
                             type='submit'
                             className="btn btn-rounded btn-primary waves-effect waves-light float-end">
-                            <i className="mdi mdi-content-save"></i> Enregistrer
+                            <i className="mdi mdi-content-save"></i>
+                            {
+                                (addMutation.isLoading || updateMutation.isLoading) ?
+                                    "Chargement..." : "Enregister"
+                            }
                         </Button>
                     </div>
                 </div>

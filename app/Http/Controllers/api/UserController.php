@@ -25,4 +25,23 @@ class UserController extends Controller
             "value" => "Utilisateur enregistré avec succès"
         ]);
     }
+
+    public function show($userID)
+    {
+        return User::findOrFail($userID);
+    }
+
+    public function update($userID, UserRequest $request)
+    {
+        $user = User::findOrFail($userID);
+
+        $data = $request->except(["password", "password_confirmation"]);
+
+        $user->update($data);
+
+        return response()->json([
+            "type" => "success",
+            "value" => "Utilisateur a été sauvegardé avec succès"
+        ]);
+    }
 }

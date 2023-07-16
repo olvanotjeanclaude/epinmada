@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -30,9 +31,9 @@ class UserRequest extends FormRequest
             "name" => "required",
             "surname" => "required",
             "phone" => "required",
-            "email" => "required|unique:users",
-            "password" => "required|confirmed",
-            "password_confirmation" => "required",
+            "email" => Rule::unique('users')->ignore($this->id),
+            "password" => request()->routeIs("users.update") ? "" : "required|confirmed",
+            "password_confirmation" => request()->routeIs("users.update") ? "" : "required",
         ];
     }
 }
