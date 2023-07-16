@@ -5,6 +5,7 @@ import UserList from '../component/user/UserList';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
 import UserForm from '../component/user/UserForm';
+import FormContextProvider from '../Context/FormContext';
 
 function MainApp() {
   const queryClient = new QueryClient()
@@ -12,17 +13,19 @@ function MainApp() {
   return (
     <BrowserRouter basename='/admin'>
       <QueryClientProvider client={queryClient}>
-        <Routes >
-          <Route element={<Admin />} >
-            <Route path='dashboard' element={<h1>Dashboard</h1>} />
-            <Route path='utilisateurs' element={<Outlet />} >
-              <Route path='' element={<UserList />} />
-              <Route  path='nouveau' element={<UserForm />} />
+        <FormContextProvider>
+          <Routes >
+            <Route element={<Admin />} >
+              <Route path='dashboard' element={<h1>Dashboard</h1>} />
+              <Route path='utilisateurs' element={<Outlet />} >
+                <Route path='' element={<UserList />} />
+                <Route path='nouveau' element={<UserForm />} />
+              </Route>
+              <Route path='ventes' element={<h1>Ventes</h1>} />
+              <Route path='*' element={<h1>Not Found</h1>} />
             </Route>
-            <Route path='ventes' element={<h1>Ventes</h1>} />
-            <Route path='*' element={<h1>Not Found</h1>} />
-          </Route>
-        </Routes>
+          </Routes>
+        </FormContextProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </BrowserRouter>

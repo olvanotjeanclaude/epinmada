@@ -3,22 +3,16 @@ export const arrayRange = (start, stop, step = 1) =>
         { length: (stop - start) / step + 1 },
         (value, index) => start + index * step
     );
-export const mapErrors = (errors, setError) => {
 
+export const mapFormErrors = (errors) => {
     if (Object.keys(errors).length) {
-       const inputs= Object.entries(errors ?? {})
+        return Object.entries(errors ?? {})
             .map(([inputName, error]) => (
                 {
                     type: "manual",
                     name: inputName,
-                    message: error[0] ?? "",
+                    message: Array.isArray(error) ? error.join(".") : error ?? "",
                 }
-            ))
-
-        console.log(inputs);
-
-        // inputs.forEach(({ name, type, message }) => {
-        //     setError(name, { type, message })
-        // })
+            ));
     }
 }
