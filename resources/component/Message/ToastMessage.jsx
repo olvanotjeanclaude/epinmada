@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import { Toaster, toast } from 'react-hot-toast';
 import { useLocation } from 'react-router-dom';
 
-function ToastMessage() {
+function ToastMessage({ data }) {
     const location = useLocation();
 
-    const message = location.state?.message ?? {};
+    const message = data ?? location.state?.message ?? {};
 
     const alertToast = () => {
         switch (message?.type) {

@@ -9,7 +9,13 @@ import FormContextProvider from '../Context/FormContext';
 import UserShow from '../component/user/UserShow';
 
 function MainApp() {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 2
+      }
+    }
+  })
 
   return (
     <BrowserRouter basename='/admin'>

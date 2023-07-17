@@ -10,7 +10,7 @@ const useUserForm = (user) => {
     const schema = yup.object({
         type: yup.string().required('Selectionnez le rôle'),
         name: yup.string().required("le nom ne peut pas être vide"),
-        surname: yup.string().required("le prenom ne peut pas être vide"),
+        surname: yup.string().required("le prénom ne peut pas être vide"),
         phone: yup.string().required("Téléphone ne peut pas être vide"),
         email: yup.string().email("Email invalide").required("Email ne peut pas être vide"),
         password: user ? null : yup.string().required("le mot de passe ne peut pas être vide"),

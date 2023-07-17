@@ -1,7 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import useQueryApi from '../../Hooks/useQueryApi'
+import { onDeleteData } from '../../Helper/sweetAlert'
 
 export default function User({ user }) {
+    const { deleteMutation } = useQueryApi("users");
+
+    const onDelete = async (user) => await onDeleteData(user, deleteMutation);
+
     return (
         <div className="card text-center">
             <div className="card-body">
@@ -26,11 +32,19 @@ export default function User({ user }) {
             <div className="card-footer bg-transparent border-top">
                 <div className="contact-links d-flex font-size-20">
                     <div className="flex-fill">
-                        <a ><i className="bx bx-message-square-dots"></i></a>
+                        <span role='button' onClick={() => onDelete(user)}>
+                            <i className="bx bx-trash"></i>
+                        </span>
                     </div>
 
                     <div className="flex-fill">
-                        <Link to={ `${user.id}`}>
+                        <Link to={`${user.id}/edit`}>
+                            <i className="bx bx-edit-alt"></i>
+                        </Link>
+                    </div>
+
+                    <div className="flex-fill">
+                        <Link to={`${user.id}`}>
                             <i className="bx bx-user-circle"></i>
                         </Link>
                     </div>

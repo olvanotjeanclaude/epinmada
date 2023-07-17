@@ -30,13 +30,13 @@ const useQueryApi = (endPoint, path) => {
     });
 
     const showData = (id) => useQuery({
-        queryKey: [crud.endPoint,id],
-        queryFn: async () => await crud.show(id),
+        queryKey: [crud.endPoint, id],
+        queryFn:  () =>  crud.show(id),
         keepPreviousData: true,
     });
 
     const addMutation = useMutation({
-        mutationFn: (newData) => crud.add(newData),
+        mutationFn: async(newData) => await crud.add(newData),
         onSuccess
     });
 
@@ -45,7 +45,7 @@ const useQueryApi = (endPoint, path) => {
         onSuccess
     });
 
-    const deleteMutation = useMutation((data) => crud.delete(data.id), {
+    const deleteMutation = useMutation( async(data) => await crud.delete(data.id), {
         onSuccess: () => {
             queryClient.invalidateQueries(crud.endPoint);
         },
@@ -54,7 +54,6 @@ const useQueryApi = (endPoint, path) => {
     return {
         currentPage,
         setCurrentPage,
-
         fetchData,
         showData,
         addMutation,

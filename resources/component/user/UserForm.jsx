@@ -18,11 +18,10 @@ export default function UserForm() {
 
     const action = id ? "update" : "store";
 
+    const response = id == undefined ? null : showData(id);
 
-    const { data: user } = showData(id);
-
-    if (action == "update" && !user) {
-        return <Error />
+    if (response?.error) {
+        return <Error error={response.error} />
     }
 
     const {
@@ -31,7 +30,7 @@ export default function UserForm() {
         errors,
         user_types,
         setError,
-    } = useUserForm(user);
+    } = useUserForm(response?.data);
 
     const onSubmit = async (data) => {
         const onError = () => {

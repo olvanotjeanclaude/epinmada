@@ -9,7 +9,7 @@ export class Crud {
 
     async get(page = 1) {
         return (await http.get(`/${this.endPoint}?page=${page}`)
-            .catch(error => this.handleError(error)))
+            .catch(err => { throw err.message }))
             .data
     }
 
@@ -26,7 +26,7 @@ export class Crud {
                     throw "Utilisateur introuvable";
                 }
 
-                throw "Erreur survenue";
+                throw error.message 
             }))
             .data
     }
@@ -37,10 +37,8 @@ export class Crud {
             .data
     }
 
-    async delete(data) {
-        return (await http.delete(`/${this.endPoint}/${data.id}`))
-            .catch(error => this.handleError(error))
-            .data
+    async delete(id) {
+        return await http.delete(`/${this.endPoint}/${id}`).catch(err => { throw err.message })
     }
 
     getErrors() {
@@ -56,5 +54,7 @@ export class Crud {
         else {
             throw error.message;
         }
+
+        throw error.message;
     }
 }

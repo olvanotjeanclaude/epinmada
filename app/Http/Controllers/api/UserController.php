@@ -44,4 +44,15 @@ class UserController extends Controller
             "value" => "Utilisateur a été sauvegardé avec succès"
         ]);
     }
+
+    public function destroy($userID){
+        $user = User::findOrFail($userID);
+
+        $user->delete();
+
+        return response()->json([
+            "type" => "success",
+            "value" => "Utilisateur a été supprimé avec succès"
+        ]);
+    }
 }
