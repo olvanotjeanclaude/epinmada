@@ -1,10 +1,10 @@
 import React from 'react'
-import PageTitle from '../Layout/PageTitle'
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import useQueryApi from '../../Hooks/useQueryApi'
 import useUserForm from '../../Hooks/useUserForm'
 import { useParams } from 'react-router-dom';
-import Error from '../Message/Error';
+import Error from '../../component/Message/Error';
+import PageTitle from '../../component/Layout/PageTitle';
 
 export default function UserForm() {
     const { id } = useParams();

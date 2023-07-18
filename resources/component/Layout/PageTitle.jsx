@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function PageTitle({ pageTitle, url, title }) {
+export default function PageTitle({ pageTitle,  title }) {
     return (
         <div className="row">
             <div className="col-12">

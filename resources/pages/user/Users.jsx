@@ -1,9 +1,9 @@
 import React from 'react'
 import User from './User'
 import { Col, Row, Spinner } from 'react-bootstrap'
-import Paginate from '../Pagination/Paginate';
 import useQueryApi from '../../Hooks/useQueryApi';
-import Error from '../Message/Error';
+import Paginate from '../../component/Pagination/Paginate';
+import Error from '../../component/Message/Error';
 
 function Users() {
     const {
@@ -12,7 +12,7 @@ function Users() {
         fetchData,
     } = useQueryApi("users");
 
-    const { data: users, isLoading,error } = fetchData();
+    const { data: users, isLoading, error } = fetchData();
 
     if (error) {
         return <Error error={error} />

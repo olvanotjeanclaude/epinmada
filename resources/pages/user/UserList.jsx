@@ -1,9 +1,7 @@
 import React from 'react'
-import PageTitle from '../Layout/PageTitle';
-import Button from 'react-bootstrap/Button'
-import Users from './Users';
+import PageTitle from '../../component/Layout/PageTitle';
 import { Link } from 'react-router-dom';
-
+import Users from './Users';
 
 function UserList() {
   return (

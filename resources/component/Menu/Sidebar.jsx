@@ -20,21 +20,21 @@ function Sidebar() {
 
 
                         <li>
-                            <Link  to="/utilisateurs" className="waves-effect">
+                            <Link to="/utilisateurs" className="waves-effect">
                                 <i className="bx bx-user-circle"></i>
                                 <span key="t-user">Utilisateurs</span>
                             </Link>
                         </li>
 
                         <li>
-                            <a href="/#" className="has-arrow waves-effect">
+                            <a className="has-arrow waves-effect">
                                 <i className="bx bx-store"></i>
                                 <span key="t-ecommerce">Ventes</span>
                             </a>
                             <ul className="sub-menu" ariaexpanded="false">
-                                <li><a href="/#" key="t-products">Produits</a></li>
-                                <li><a href="/#" key="t-orders">Commandes</a></li>
-                                <li><a href="/#" key="t-add-product">Nouveau Produit</a></li>
+                                <li><Link to="/produits" key="t-products">Produits</Link></li>
+                                <li><Link to="/commandes" key="t-orders">Commandes</Link></li>
+                                <li><Link to="/produits/nouveau" key="t-add-product">Nouveau Produit</Link></li>
                             </ul>
                         </li>
 

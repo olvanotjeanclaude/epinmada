@@ -2,7 +2,7 @@ import { mapFormErrors } from "../Helper/Helper";
 import http from "../Helper/makeRequest";
 
 export class Crud {
-    constructor(endPoint, path) {
+    constructor(endPoint) {
         this.endPoint = endPoint;
         this.errors = null;
     }
@@ -54,7 +54,5 @@ export class Crud {
         else {
             throw error.message;
         }
-
-        throw error.message;
     }
 }

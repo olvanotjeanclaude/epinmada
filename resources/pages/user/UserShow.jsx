@@ -2,10 +2,10 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import useQueryApi from '../../Hooks/useQueryApi';
 import { Button, Card, Spinner, Table } from 'react-bootstrap';
-import Error from '../Message/Error';
-import PageTitle from '../Layout/PageTitle';
 import Icon from '@mdi/react';
 import { mdiAccountEdit } from '@mdi/js';
+import Error from '../../component/Message/Error';
+import PageTitle from '../../component/Layout/PageTitle';
 
 function UserShow() {
     const { id } = useParams();
