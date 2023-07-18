@@ -23,9 +23,9 @@ const useQueryApi = (endPoint, path) => {
         queryClient.invalidateQueries({ queryKey: [crud.endPoint] });
     }
 
-    const fetchData = () => useQuery({
+    const fetchData = (params) => useQuery({
         queryKey: [endPoint, currentPage],
-        queryFn: () => crud.get(currentPage),
+        queryFn: () => crud.get(currentPage, params),
         keepPreviousData: true,
     });
 

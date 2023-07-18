@@ -7,8 +7,10 @@ export class Crud {
         this.errors = null;
     }
 
-    async get(page = 1) {
-        return (await http.get(`/${this.endPoint}?page=${page}`)
+    async get(page = 1, params = {}) {
+        return (await http.get(`/${this.endPoint}?page=${page}`, {
+            params
+        })
             .catch(err => { throw err.message }))
             .data
     }
@@ -26,7 +28,7 @@ export class Crud {
                     throw "Utilisateur introuvable";
                 }
 
-                throw error.message 
+                throw error.message
             }))
             .data
     }
@@ -39,6 +41,14 @@ export class Crud {
 
     async delete(id) {
         return await http.delete(`/${this.endPoint}/${id}`).catch(err => { throw err.message })
+    }
+
+    async filter(params, page = 1) {
+        return (await http.get(`/${this.endPoint}?page=${page}`, {
+            params
+        })
+            .catch(err => { throw err.message }))
+            .data
     }
 
     getErrors() {
