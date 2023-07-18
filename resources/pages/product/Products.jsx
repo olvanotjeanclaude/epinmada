@@ -1,5 +1,5 @@
-import React from 'react'
-import { Card, Spinner, Table } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Spinner, Table } from 'react-bootstrap'
 import useQueryApi from '../../Hooks/useQueryApi';
 import Error from '../../component/Message/Error';
 import { Link } from 'react-router-dom';
@@ -13,19 +13,19 @@ function Products() {
     fetchData,
   } = useQueryApi("products");
 
-  const { data, isLoading, isError, error } = fetchData();
+  const [checkboxs, setCheckboxs] = useState({});
+
+  const { data, isLoading, isError, error } = fetchData(checkboxs);
 
   if (isError) {
     return <Error error={error} />
   }
 
-  const applyFilter = (checkboxs) => {
-    console.log(checkboxs);
-  }
-
   return (
     <>
-      <Filter applyFilter={applyFilter} />
+      <Filter checkboxes={checkboxs} setCheckboxes={setCheckboxs} />
+
+      {isLoading && <h1>Loading...</h1>}
 
       <Table responsive striped className="table align-middle mb-0 table-nowrap">
         <thead className="table-light">

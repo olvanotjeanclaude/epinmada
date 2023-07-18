@@ -24,7 +24,7 @@ const useQueryApi = (endPoint, path) => {
     }
 
     const fetchData = (params) => useQuery({
-        queryKey: [endPoint, currentPage],
+        queryKey: [endPoint, currentPage, params],
         queryFn: () => crud.get(currentPage, params),
         keepPreviousData: true,
     });

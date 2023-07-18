@@ -4,7 +4,7 @@ import { Spinner } from 'react-bootstrap';
 import Error from '../../component/Message/Error';
 import { useEffect } from 'react';
 
-function Filter({ applyFilter }) {
+function Filter({ setCheckboxes }) {
     const { fetchData } = useQueryApi("products");
 
     const { data, isLoading, isError, error } = fetchData();
@@ -18,15 +18,10 @@ function Filter({ applyFilter }) {
         return acc;
     }, {});
 
-    const [checkboxes, setCheckboxes] = useState({});
 
     useEffect(() => {
         setCheckboxes(categories);
     }, [data?.categories]);
-
-    useEffect(() => {
-        applyFilter(checkboxes);
-    }, [checkboxes]);
 
     const handleCheckboxChange = (event) => {
         const { name, checked } = event.target;
@@ -37,25 +32,24 @@ function Filter({ applyFilter }) {
 
     };
 
+    if (isLoading) {
+        return "loading....";
+    }
 
     return (
-        isLoading ? <Spinner /> :
-            <>
-                <div className="d-flex justify-content-center">
-                    {
-                        data.categories.map(category => (
-                            <div className="form-check mx-3 mb-3" key={category.id}>
-                                <input onChange={handleCheckboxChange} className="form-check-input p-1" name={category.name.toLowerCase()}
-                                    type="checkbox" id={`${category.id}`} />
-                                <label className="form-check-label" htmlFor={`${category.id}`}>
-                                    {category.name}
-                                </label>
-                            </div>)
-                        )
-                    }
-                </div>
-            </>
-
+        <div className="d-flex justify-content-center">
+            {
+                data.categories.map(category => (
+                    <div className="form-check mx-3 mb-3" key={category.id}>
+                        <input onChange={handleCheckboxChange} className="form-check-input p-1" name={category.name.toLowerCase()}
+                            type="checkbox" id={`${category.id}`} />
+                        <label className="form-check-label" htmlFor={`${category.id}`}>
+                            {category.name}
+                        </label>
+                    </div>)
+                )
+            }
+        </div>
     )
 }
 
