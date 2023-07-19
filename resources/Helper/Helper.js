@@ -16,3 +16,13 @@ export const mapFormErrors = (errors) => {
             ));
     }
 }
+
+export const capitalizeLetter = (letter) => {
+    const splited = letter?.toLowerCase()
+        .split(" ")
+        .map(letter => letter.charAt(0)
+            .toUpperCase() + letter.slice(1)
+        ).join(" ");
+
+    return splited;
+}
