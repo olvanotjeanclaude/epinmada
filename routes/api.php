@@ -39,5 +39,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(["middleware" => "auth:sanctum"], function () {
   Route::resource("users", App\Http\Controllers\api\UserController::class);
   Route::resource("products", App\Http\Controllers\api\ProductController::class);
+  Route::resource("categories", App\Http\Controllers\api\CategoryController::class)->only("index");
   Route::get("constants", [\App\Http\Controllers\api\ConstantController::class, "constants"]);
 });

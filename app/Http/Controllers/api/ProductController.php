@@ -16,7 +16,6 @@ class ProductController extends Controller
             ->whereHas("category", function ($query) {
                 $inputs = array_filter(request()->all(), fn ($input) => $input == "true");
                 $names = array_keys($inputs);
-                Log::info($names);
 
                 if(count($names)){
                     $query->whereIn("name",$names);

@@ -1,0 +1,4 @@
+.p-inputtext:enabled:focus {
+    outline: none;
+    box-shadow: none;
+}

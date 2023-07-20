@@ -1,7 +1,7 @@
 import React from 'react'
 import PageTitle from '../../component/Layout/PageTitle'
 import { Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
-import PrimeFile from '../../component/Form/prime/PrimeFile';
+import PrimeAutoComplete from '../../component/prime/PrimeSelect';
 
 function ProductForm() {
 
@@ -39,6 +39,9 @@ function ProductForm() {
                   >
                     <Form.Control as="textarea" placeholder="Ecrit quelque chose..." />
                   </FloatingLabel>
+
+                  <PrimeAutoComplete placeholder="Catégorie" />
+
                 </Col>
                 <Col sm={6}>
                   <FloatingLabel
@@ -46,13 +49,16 @@ function ProductForm() {
                     label="Description"
                     className="mb-3"
                   >
-                    <Form.Control as="textarea" style={{ height: `134px` }} placeholder="Description" />
+                    <Form.Control as="textarea" style={{ height: `${58 * 3 + 1.5 * 16}px` }} placeholder="Description" />
                   </FloatingLabel>
                 </Col>
               </Row>
 
               <div className="d-flex flex-wrap justify-content-end gap-2">
-                <button type="submit" className="btn btn-primary waves-effect waves-light">Save Changes</button>
+                <button type="submit" className="btn btn-primary waves-effect waves-light">
+                  <i className='mdi mdi-content-save'></i>
+                  Enregistrer
+                </button>
               </div>
 
 
@@ -64,7 +70,7 @@ function ProductForm() {
             <Card.Body>
               <h4 className="card-title mb-3">Images du produit</h4>
 
-              <PrimeFile />          
+              {/* <PrimeFile /> */}
             </Card.Body>
           </Card>
         </Col>
