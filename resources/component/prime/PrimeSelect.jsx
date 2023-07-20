@@ -1,40 +1,57 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AutoComplete } from "primereact/autocomplete";
 import useQueryApi from "../../Hooks/useQueryApi";
 
 export default function PrimeAutoComplete({ placeholder }) {
-    const [selectedItem, setSelectedItem] = useState(null);
     const [filteredItems, setFilteredItems] = useState(null);
-    
-    const { fetchData } = useQueryApi("categories");
-    
-    const {data:items} = fetchData();
+    const [items, setItems] = useState([]);
+    const [selectedItem, setSelectedItem] = useState(null);
 
+    const { fetchData } = useQueryApi("categories");
+    const { data, isSuccess } = fetchData({ name: selectedItem });
+
+    useEffect(() => {
+        if (isSuccess) {
+            setItems([...data.data]);
+            setFilteredItems(items);
+        }
+    }, [data]);
+
+    useEffect(() => {
+        setSelectedItem(selectedItem?.name ?? selectedItem);
+    }, [selectedItem])
 
     const searchItems = (event) => {
-        //in a real application, make a request to a remote url with the query and return filtered results, for demo purposes we filter at client side
-        let query = event.query;
-        let _filteredItems = [];
+        let query = event.query.toLowerCase();
 
-        for (let i = 0; i < items.length; i++) {
-            let item = items[i];
-            if (item.label.toLowerCase().indexOf(query.toLowerCase()) === 0) {
-                _filteredItems.push(item);
-            }
+        const _filteredItems = items.filter(item => {
+            return item.name.toLowerCase().startsWith(query);
+        })
+
+        if (_filteredItems.length) {
+            setFilteredItems(_filteredItems);
+        }
+        else {
+            setFilteredItems([]);
         }
 
-        setFilteredItems(_filteredItems);
     }
+
+    const itemTemplate = (item) => (
+        <div className="flex align-items-center">
+            <div>{item.name}</div>
+        </div>
+    )
 
     return (
         <AutoComplete placeholder={placeholder}
+            itemTemplate={itemTemplate}
             style={{ width: "100%", marginBottom: "1rem" }}
             value={selectedItem}
             suggestions={filteredItems}
             completeMethod={searchItems}
-            virtualScrollerOptions={{ itemSize: 38 }}
             field="label"
-            dropdown onChange={(e) => setSelectedItem("ok")} />
+            dropdown onChange={(e) => setSelectedItem(e.value)} />
     )
 }
