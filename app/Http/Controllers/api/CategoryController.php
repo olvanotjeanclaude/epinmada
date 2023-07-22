@@ -14,7 +14,7 @@ class CategoryController extends Controller
         
         $name = is_string($name) ? $name : '';
         
-        $categories = Category::where('name', 'LIKE', "%$name%")->paginate(10);
+        $categories = Category::where('name', 'LIKE', "%$name%")->get();
         
         return response()->json($categories);
     }

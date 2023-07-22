@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -17,8 +18,8 @@ class ProductController extends Controller
                 $inputs = array_filter(request()->all(), fn ($input) => $input == "true");
                 $names = array_keys($inputs);
 
-                if(count($names)){
-                    $query->whereIn("name",$names);
+                if (count($names)) {
+                    $query->whereIn("name", $names);
                 }
             })->paginate(5);
 
@@ -33,5 +34,10 @@ class ProductController extends Controller
     public function show($id)
     {
         return Product::findOrFail($id);
+    }
+
+    public function store(ProductRequest $request)
+    {
+        return $request->all();
     }
 }
