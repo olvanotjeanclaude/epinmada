@@ -38,6 +38,14 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        return $request->all();
+        $data = $request->validated();
+        $data["category_id"] = $request->category;
+
+        Product::create($data);
+
+        return response()->json([
+            "type" => "success",
+            "value" => "Produit enregistré avec succès"
+        ]);
     }
 }

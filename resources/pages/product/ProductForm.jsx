@@ -1,23 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PageTitle from '../../component/Layout/PageTitle'
 import { Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import PrimeFile from '../../component/prime/PrimeFile';
 import { InputNumber } from 'primereact/inputnumber';
 import { Editor } from "primereact/editor";
-import useFormLogic from '../../Hooks/useFormLogic';
 import useProductForm from '../../Hooks/useProductForm';
 import PrimeFilterableSelect from '../../component/prime/PrimeFilterableSelect';
+import useDemo from '../../Hooks/useFormLogic';
+import useFormLogic from '../../Hooks/useFormLogic';
+import http from '../../Helper/makeRequest';
 
 
 function ProductForm() {
-  const { handleSubmit, control, errors, register, setValue } = useFormLogic("produits", "products", useProductForm);
+  const {
+    handleSubmit,
+    control,
+    errors,
+    register,
+    setValue,
+    submitForm,
+  } = useFormLogic("produits", "products", useProductForm);
+
   const [text, setText] = useState("");
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onChangeLongDescription = (e) => {
+    setText(e.htmlValue);
+    setValue("long_description", e.htmlValue);
   }
 
-  const printError = (field) => errors[field] && <small className="p-error">{errors[field].message}</small>;
+  const onSubmit = (data) => {
+    const params = {
+      ...data,
+      category: data.category.id
+    }
+
+    submitForm(params);
+  }
+
+  const printError = (field) => {
+    return errors[field] && <small className="p-error">{errors[field].message}</small>;
+  };
 
   return (
     <>
@@ -63,7 +85,7 @@ function ProductForm() {
                         type='number'
                         {...register("price")}
                         placeholder="Prix" />
-                      {printError("short_description")}
+                      {printError("price")}
                     </FloatingLabel>
 
                     {/* <InputNumber placeholder='Prix'
@@ -76,7 +98,6 @@ function ProductForm() {
 
                     <PrimeFilterableSelect
                       control={control}
-                      setValue={setValue}
                       name="category"
                       apiUrl="categories"
                       placeholder="Catégorie" />
@@ -86,7 +107,7 @@ function ProductForm() {
                     <Editor value={text}
                       {...register("long_description")}
                       placeholder='Description'
-                      onTextChange={(e) => setText(e.htmlValue)}
+                      onTextChange={onChangeLongDescription}
                       style={{ height: `${58 * 3.5 + 16}px` }} />
                   </Col>
                 </Row>
@@ -105,7 +126,8 @@ function ProductForm() {
             <Card.Body>
               <h4 className="card-title mb-3">Images du produit</h4>
 
-              <PrimeFile />
+              <PrimeFile model="product" />
+
             </Card.Body>
           </Card>
         </Col>

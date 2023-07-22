@@ -1,14 +1,25 @@
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { FileUpload } from 'primereact/fileupload';
 import { ProgressBar } from 'primereact/progressbar';
 import { Tooltip } from 'primereact/tooltip';
+import http from '../../Helper/makeRequest';
 
-export default function PrimeFile() {
+export default function PrimeFile({ model }) {
     const toast = useRef(null);
     const [totalSize, setTotalSize] = useState(0);
     const fileUploadRef = useRef(null);
+
+    const [imageKey, setImageKey] = useState("");
+
+    useEffect(() => {
+        http.get("/files/generate-key")
+            .then(response => {
+                setImageKey(response.data);
+            })
+            .catch(e => e.message);
+    }, [])
 
     const onTemplateSelect = (e) => {
         let _totalSize = totalSize;
@@ -54,13 +65,25 @@ export default function PrimeFile() {
         );
     };
 
+    const uploadHandler = async (params) => {
+        await http.post("/files/upload", {
+            files: params.files,
+            model,
+            imageKey
+        },)
+            .then(res => {
+                console.log(res.data)
+                toast.current
+            })
+    }
+
 
     const emptyTemplate = () => {
         return (
             <div className="d-flex justify-content-between align-items-center flex-column" style={{
                 border: "2px dashed #bcbcbc",
                 borderRadius: "5"
-             }}>
+            }}>
                 <div className="icon">
                     <i className="pi pi-image mt-3 p-5"
                         style={{ fontSize: '2em', borderRadius: '50%', backgroundColor: 'var(--surface-b)', color: 'var(--surface-d)' }}>
@@ -86,9 +109,11 @@ export default function PrimeFile() {
             <Tooltip target=".custom-cancel-btn" content="Annuler" position="bottom" />
 
             <FileUpload ref={fileUploadRef}
-                name="demo[]" url="/api/upload"
-                multiple accept="image/*"
-                maxFileSize={1000000}
+                url="/api/files/upload"
+                accept="image/*"
+                customUpload
+                uploadHandler={uploadHandler}
+                maxFileSize={15000000}
                 onUpload={onTemplateUpload}
                 onSelect={onTemplateSelect}
                 onError={onTemplateClear}

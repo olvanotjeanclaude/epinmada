@@ -26,3 +26,21 @@ export const capitalizeLetter = (letter) => {
 
     return splited;
 }
+
+
+export const blobToBase64 = (blob) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            const base64String = reader.result.split(',')[1];
+            resolve(base64String);
+        };
+
+        reader.onerror = () => {
+            reject(new Error('Error reading the Blob as Base64'));
+        };
+
+        reader.readAsDataURL(blob);
+    });
+}

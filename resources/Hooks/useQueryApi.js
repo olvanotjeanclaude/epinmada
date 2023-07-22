@@ -13,7 +13,7 @@ const useQueryApi = (endPoint, path) => {
     const crud = new Crud(endPoint);
 
     const onSuccess = (data) => {
-        if (path) {
+        if (data && path) {
             navigate(path, {
                 state: {
                     message: data

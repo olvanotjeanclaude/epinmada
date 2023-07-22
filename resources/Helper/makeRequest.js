@@ -7,7 +7,7 @@ const http = axios.create({
         "Accept": "application/json",
         "X-Requested-With": "XMLHttpRequest",
         "withCredentials": true,
-        "Content-Type": "application/json",
+        'Content-Type': 'multipart/form-data',
         "Authorization": `Bearer ${localStorage.getItem("token")}`,
     }
 });

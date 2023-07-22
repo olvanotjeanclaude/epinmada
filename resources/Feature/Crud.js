@@ -18,7 +18,7 @@ export class Crud {
     async add(newData) {
         return (await http.post(`/${this.endPoint}`, newData)
             .catch(error => this.handleError(error)))
-            .data
+            ?.data
     }
 
     async show(id) {
