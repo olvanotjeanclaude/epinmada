@@ -8,12 +8,12 @@ function ToastMessage({ data }) {
     const message = data ?? location.state?.message ?? {};
 
     const alertToast = () => {
-        switch (message?.type) {
+        switch (data?.type) {
             case "success":
-                toast.success(message.value ?? "");
+                toast.success(data.message ?? "");
                 break;
             case "error":
-                toast.error(message.value ?? "");
+                toast.error(data.message ?? "");
                 break;
 
             default:

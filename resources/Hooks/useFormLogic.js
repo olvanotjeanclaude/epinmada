@@ -1,7 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useQueryApi from "./useQueryApi";
+import { allErrors, mapFormErrors } from "../Helper/Helper";
 
-const useFormLogic = (path, apiUrl, useDataForm) => {
+const useFormLogic = ({ path, apiUrl, useDataForm, toast }) => {
+    const navigate = useNavigate();
+
     const { id } = useParams();
 
     const queryApi = useQueryApi(apiUrl, `/${path}`);
@@ -12,31 +15,48 @@ const useFormLogic = (path, apiUrl, useDataForm) => {
 
     const dataForm = useDataForm(response?.data);
 
-    const submitForm = (data) => {
-        const onError = () => {
-            dataForm.errors?.forEach(({ name, type, message }) => {
-                setError(name, { type, message })
+    const onSuccess = (data) => {
+        const toastParams = {
+            severity: data.type,
+            summary: data.message,
+        };
+
+        if (data.code == 422) {
+            const errors = mapFormErrors(data.errors);
+
+            const allError = allErrors(data.errors).map(err => err).join(".");
+
+            toastParams.detail = allError;
+
+            errors.forEach(({ name, type, message }) => {
+                dataForm.setError(name, { type, message })
             });
         }
 
-        switch (action) {
-            case "store":
-                queryApi.addMutation.mutate(data, { onError });
-                break;
+        toast.current.show(toastParams);
 
-            case "update":
-                queryApi.updateMutation.mutate((data), { onError });
-                break;
 
-            default:
-                break;
+        if (data.type == "success") {
+            setTimeout(() => {
+                navigate(`/${path}`)
+            }, 3000)
         }
-    }
+    };
+
+    const onError = (error) => {
+        toast.current.show({
+            severity: "error",
+            summary: error,
+        });
+    };
 
     return {
         ...dataForm,
         ...queryApi,
-        submitForm,
+
+        onSuccess,
+        onError,
+
         id,
         action,
         response,

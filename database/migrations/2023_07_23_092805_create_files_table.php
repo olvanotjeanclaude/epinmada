@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\File;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +14,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('temp_files', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->id();
+            $table->integer("status")->default(File::STATUS["pending"]);
             $table->string("path");
             $table->string("key");
             $table->string("model");
+            $table->string("action")->default(File::ACTION["create"]);
+            $table->unsignedBigInteger("user_id");
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('temp_files');
+        Schema::dropIfExists('files');
     }
 };

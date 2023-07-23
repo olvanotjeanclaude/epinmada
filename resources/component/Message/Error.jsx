@@ -6,8 +6,7 @@ function Error({ error }) {
     const navigate = useNavigate();
     return (
         <div className='text-danger'>
-            <p> Error occured</p>
-            <p>{JSON.stringify(error ?? {})}</p>
+            <p>Erreur: {error}</p>
             <Button onClick={() => navigate(-1)}>Retourner</Button>
         </div>
     )

@@ -8,11 +8,9 @@ export class Crud {
     }
 
     async get(page = 1, params = {}) {
-        return (await http.get(`/${this.endPoint}?page=${page}`, {
-            params
-        })
-            .catch(err => { throw err.message }))
-            .data
+        return (await http.get(`/${this.endPoint}?page=${page}`, { params })
+            .catch(error => this.handleError(error)))
+            ?.data
     }
 
     async add(newData) {
@@ -23,32 +21,28 @@ export class Crud {
 
     async show(id) {
         return (await http.get(`/${this.endPoint}/${id}`)
-            .catch(error => {
-                if (error.response?.status == 404) {
-                    throw "Utilisateur introuvable";
-                }
-
-                throw error.message
-            }))
-            .data
+            .catch(error => this.handleError(error)))
+            ?.data
     }
 
     async update(data) {
         return (await http.put(`/${this.endPoint}/${data.id}`, data)
             .catch(error => this.handleError(error)))
-            .data
+            ?.data
     }
 
     async delete(id) {
-        return await http.delete(`/${this.endPoint}/${id}`).catch(err => { throw err.message })
+        return await http.delete(`/${this.endPoint}/${id}`)
+            .catch(error => this.handleError(error))
+            ?.data;
     }
 
     async filter(params, page = 1) {
         return (await http.get(`/${this.endPoint}?page=${page}`, {
             params
         })
-            .catch(err => { throw err.message }))
-            .data
+            .catch(error => this.handleError(error)))
+            ?.data
     }
 
     getErrors() {
@@ -56,13 +50,21 @@ export class Crud {
     }
 
     handleError(error) {
-        const status = error.response?.status;
+        this.errors = error.response;
 
-        if (status == 422) {
-            this.errors = mapFormErrors(error.response.data.errors);
-        }
-        else {
-            throw error.message;
+        switch (error.response.status) {
+            case 500:
+                throw "Erreur du serveur";
+                break;
+            case 404:
+                throw "Data introuvalble";
+                break;
+            case 422:
+                throw "Mauvaise data";
+                break;
+            default:
+                throw "Erreur inconnue";
+                break;
         }
     }
 }

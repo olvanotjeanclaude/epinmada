@@ -1,25 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import PageTitle from '../../component/Layout/PageTitle'
 import { Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import PrimeFile from '../../component/prime/PrimeFile';
-import { InputNumber } from 'primereact/inputnumber';
 import { Editor } from "primereact/editor";
 import useProductForm from '../../Hooks/useProductForm';
 import PrimeFilterableSelect from '../../component/prime/PrimeFilterableSelect';
-import useDemo from '../../Hooks/useFormLogic';
 import useFormLogic from '../../Hooks/useFormLogic';
-import http from '../../Helper/makeRequest';
-
+import { Toast } from 'primereact/toast';
 
 function ProductForm() {
+  const toast = useRef(null);
+
   const {
+    addMutation,
+    updateMutation,
     handleSubmit,
     control,
     errors,
     register,
     setValue,
-    submitForm,
-  } = useFormLogic("produits", "products", useProductForm);
+    action,
+    onError,
+    onSuccess
+  } = useFormLogic({ path: "produits", apiUrl: "products", useDataForm: useProductForm, toast });
 
   const [text, setText] = useState("");
 
@@ -28,14 +31,27 @@ function ProductForm() {
     setValue("long_description", e.htmlValue);
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const params = {
       ...data,
       category: data.category.id
     }
 
-    submitForm(params);
+    switch (action) {
+      case "store":
+        addMutation.mutate(params, { onError, onSuccess });
+        break;
+
+      case "update":
+        updateMutation.mutate((params), { onError, onSuccess });
+        break;
+
+      default:
+        alert("Unknown error");
+        break;
+    }
   }
+
 
   const printError = (field) => {
     return errors[field] && <small className="p-error">{errors[field].message}</small>;
@@ -43,6 +59,8 @@ function ProductForm() {
 
   return (
     <>
+      <Toast ref={toast} />
+
       <PageTitle pageTitle="Produits" title="Nouveau de produit" />
 
       <Row>

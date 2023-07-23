@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import useQueryApi from '../../Hooks/useQueryApi'
 import useUserForm from '../../Hooks/useUserForm'
 import { useParams } from 'react-router-dom';
 import Error from '../../component/Message/Error';
 import PageTitle from '../../component/Layout/PageTitle';
+import { Toast } from 'primereact/toast';
+import {  mapFormErrors } from '../../Helper/Helper';
 
 export default function UserForm() {
     const { id } = useParams();
@@ -12,9 +14,10 @@ export default function UserForm() {
     const {
         addMutation,
         updateMutation,
-        crud,
         showData
     } = useQueryApi("users", "/utilisateurs");
+
+    const toast = useRef(null);
 
     const action = id ? "update" : "store";
 
@@ -33,21 +36,36 @@ export default function UserForm() {
     } = useUserForm(response?.data);
 
     const onSubmit = async (data) => {
-        const onError = () => {
-            crud.errors?.forEach(({ name, type, message }) => {
-                setError(name, { type, message })
+        const onSuccess = (data) => {
+            toast.current.show({
+                severity: data.type,
+                summary: data.message,
             });
-        }
+
+            if (data.code == 422) {
+                const errors = mapFormErrors(data.errors);
+
+                errors.forEach(({ name, type, message }) => {
+                    setError(name, { type, message })
+                });
+            }
+        };
+
+        const onError = (error) => {
+            toast.current.show({
+                severity: "error",
+                summary: error,
+            });
+        };
 
         switch (action) {
             case "store":
-                addMutation.mutate(data, { onError });
+                addMutation.mutate(data, { onError, onSuccess });
                 break;
 
             case "update":
-                updateMutation.mutate((data), { onError });
+                updateMutation.mutate((data), { onError, onSuccess });
                 break;
-
             default:
                 break;
         }
@@ -55,6 +73,8 @@ export default function UserForm() {
 
     return (
         <>
+            <Toast ref={toast}></Toast>
+
             <PageTitle pageTitle="Utilisateurs" title={`${action == "store" ? "Nouveau" : "Modification d'"} utilisateur`} />
 
             <Form autoComplete="off" onSubmit={handleSubmit(onSubmit)} className="needs-validation" method="post">

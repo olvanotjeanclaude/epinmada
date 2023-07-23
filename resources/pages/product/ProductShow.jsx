@@ -22,8 +22,6 @@ function ProductShow() {
     return <Error error={error} />;
   }
 
-  console.log(product);
-
   return (
     <>
       <PageTitle pageTitle="Produits" title="Detail du produit" />

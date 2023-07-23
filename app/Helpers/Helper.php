@@ -7,14 +7,23 @@ function currenUser()
     return request()->user();
 }
 
-function deleteImage($image)
+function deleteFile($file)
 {
-    if ($image && file_exists($image)) {
-        unlink($image);
+    if ($file && file_exists($file)) {
+        unlink($file);
         return true;
     }
 
     return false;
+}
+
+function getImage($image)
+{
+    if (!str_contains($image, "http")) {
+        return $image && file_exists($image) ? asset($image) : asset("assets/image/not-found.jpg");
+    }
+
+    return $image;
 }
 
 function formatPrice($price)
@@ -29,15 +38,6 @@ function formatPrice($price)
     return "0 arairy";
 }
 
-function getImage($image)
-{
-
-    // if (!str_contains($image, "http")) {
-    //     return $image && file_exists($image) ? asset($image) : asset("assets/image/not-found.jpg");
-    // }
-
-    return $image;
-}
 
 function getFileExtensionByFilename($filename)
 {

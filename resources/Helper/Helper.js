@@ -17,6 +17,13 @@ export const mapFormErrors = (errors) => {
     }
 }
 
+export const allErrors = (errors) => {
+    if (Object.keys(errors).length) {
+        return Object.entries(errors ?? {})
+            .map(([inputName, error]) => Array.isArray(error) ? error.join(".") : error ?? "");
+    }
+}
+
 export const capitalizeLetter = (letter) => {
     const splited = letter?.toLowerCase()
         .split(" ")
@@ -25,22 +32,4 @@ export const capitalizeLetter = (letter) => {
         ).join(" ");
 
     return splited;
-}
-
-
-export const blobToBase64 = (blob) => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            const base64String = reader.result.split(',')[1];
-            resolve(base64String);
-        };
-
-        reader.onerror = () => {
-            reject(new Error('Error reading the Blob as Base64'));
-        };
-
-        reader.readAsDataURL(blob);
-    });
 }

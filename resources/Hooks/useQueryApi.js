@@ -13,13 +13,13 @@ const useQueryApi = (endPoint, path) => {
     const crud = new Crud(endPoint);
 
     const onSuccess = (data) => {
-        if (data && path) {
-            navigate(path, {
-                state: {
-                    message: data
-                }
-            })
-        }
+        // if (data && data.type == "success" && path) {
+        //     navigate(path, {
+        //         state: {
+        //             message: data
+        //         }
+        //     })
+        // }
         queryClient.invalidateQueries({ queryKey: [crud.endPoint] });
     }
 
