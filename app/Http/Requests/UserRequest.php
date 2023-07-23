@@ -10,7 +10,6 @@ use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
-
     use Error;
 
     public function authorize()
@@ -23,11 +22,18 @@ class UserRequest extends FormRequest
         return [
             "type" => "required",
             "name" => "required",
-            "surnam" => "required",
+            "surname" => "required",
             "phone" => "required",
             "email" => Rule::unique('users')->ignore($this->id),
             "password" => request()->routeIs("users.update") ? "" : "required|confirmed",
             "password_confirmation" => request()->routeIs("users.update") ? "" : "required",
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            "type.required" =>"Veuillez entrer le type d'utilisateur"
         ];
     }
 }

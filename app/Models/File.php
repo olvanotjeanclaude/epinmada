@@ -12,7 +12,7 @@ class File extends Model
     protected $fillable = ["path", "key", "model", "action", "user_id"];
 
     const ACTION = [
-        "create" => "create",
+        "create" => "store",
         "update" => "update",
     ];
 

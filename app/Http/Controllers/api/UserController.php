@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Helpers\Message;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
@@ -20,10 +21,7 @@ class UserController extends Controller
     {
         User::create($request->validated());
 
-        return response()->json([
-            "type" => "success",
-            "value" => "Utilisateur enregistré avec succès"
-        ]);
+        return Message::success("Utilisateur");
     }
 
     public function show($userID)
@@ -39,20 +37,15 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return response()->json([
-            "type" => "success",
-            "value" => "Utilisateur a été sauvegardé avec succès"
-        ]);
+        return Message::success("Utilisateur");
     }
 
-    public function destroy($userID){
+    public function destroy($userID)
+    {
         $user = User::findOrFail($userID);
 
         $user->delete();
 
-        return response()->json([
-            "type" => "success",
-            "value" => "Utilisateur a été supprimé avec succès"
-        ]);
+        return Message::delete(("Utilisateur"));
     }
 }

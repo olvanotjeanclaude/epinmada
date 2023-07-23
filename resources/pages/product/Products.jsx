@@ -25,8 +25,6 @@ function Products() {
     <>
       <Filter checkboxes={checkboxs} setCheckboxes={setCheckboxs} />
 
-      {isLoading && <h1>Loading...</h1>}
-
       <Table responsive striped className="table align-middle mb-0 table-nowrap">
         <thead className="table-light">
           <tr>

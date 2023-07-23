@@ -1,12 +1,13 @@
 import React, { useRef } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import {  Col, Form, Row } from 'react-bootstrap';
 import useQueryApi from '../../Hooks/useQueryApi'
 import useUserForm from '../../Hooks/useUserForm'
 import { useParams } from 'react-router-dom';
 import Error from '../../component/Message/Error';
 import PageTitle from '../../component/Layout/PageTitle';
 import { Toast } from 'primereact/toast';
-import {  mapFormErrors } from '../../Helper/Helper';
+import Submit from '../../component/Button/Submit';
+import useCallbackApi from '../../Hooks/useApiCallback';
 
 export default function UserForm() {
     const { id } = useParams();
@@ -16,6 +17,17 @@ export default function UserForm() {
         updateMutation,
         showData
     } = useQueryApi("users", "/utilisateurs");
+
+    const {
+        register,
+        handleSubmit,
+        errors,
+        user_types,
+        setError,
+    } = useUserForm(response?.data);
+
+    const { onError, onSuccess } = useCallbackApi(toast, setError);
+
 
     const toast = useRef(null);
 
@@ -27,36 +39,7 @@ export default function UserForm() {
         return <Error error={response.error} />
     }
 
-    const {
-        register,
-        handleSubmit,
-        errors,
-        user_types,
-        setError,
-    } = useUserForm(response?.data);
-
     const onSubmit = async (data) => {
-        const onSuccess = (data) => {
-            toast.current.show({
-                severity: data.type,
-                summary: data.message,
-            });
-
-            if (data.code == 422) {
-                const errors = mapFormErrors(data.errors);
-
-                errors.forEach(({ name, type, message }) => {
-                    setError(name, { type, message })
-                });
-            }
-        };
-
-        const onError = (error) => {
-            toast.current.show({
-                severity: "error",
-                summary: error,
-            });
-        };
 
         switch (action) {
             case "store":
@@ -176,17 +159,9 @@ export default function UserForm() {
                                 </Row>
                             </>
                         }
+                        
 
-                        <Button
-                            disabled={addMutation.isLoading || updateMutation.isLoading}
-                            type='submit'
-                            className="btn btn-rounded btn-primary waves-effect waves-light float-end">
-                            <i className="mdi mdi-content-save"></i>
-                            {
-                                (addMutation.isLoading || updateMutation.isLoading) ?
-                                    "Chargement..." : "Enregister"
-                            }
-                        </Button>
+                        <Submit isLoading={addMutation.isLoading || updateMutation.isLoading} />
                     </div>
                 </div>
             </Form>

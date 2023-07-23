@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Helpers\ImageUpload;
+use App\Helpers\Message;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -45,9 +46,6 @@ class FileController extends Controller
             ]);
         }
 
-        return response()->json([
-            "message" => "échec du téléchargement",
-            "type" => "error"
-        ],422);
+        return Message::error("échec du téléchargement");
     }
 }

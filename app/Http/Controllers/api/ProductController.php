@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Helpers\Message;
 use App\Models\File;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 
@@ -50,11 +49,7 @@ class ProductController extends Controller
             ->first();
 
         if (is_null($image)) {
-            return response()->json([
-                "code" => 400,
-                'type' => "error",
-                'message' => "veuillez fournir l'image du produit"
-            ]);
+            return Message::error("veuillez fournir l'image du produit", 400);
         }
 
         $data["image_url"] = $image->path;
@@ -68,22 +63,11 @@ class ProductController extends Controller
 
         $this->deleteImage();
 
-        return response()->json([
-            "code" => 200,
-            'type' => "success",
-            "message" => "Produit enregistré avec succès"
-        ]);
+        return Message::success("Produit");
     }
 
     private function deleteImage()
     {
-        $files = File::where("key", $_COOKIE["product"])
-            ->where("status", File::STATUS["pending"])
-            ->get()
-            ->each(function ($file) {
-                // deleteFile($file->path);
-            });
-
         $deleted = File::where("key", $_COOKIE["product"])->delete();
 
         setcookie("product", "", time() - 3600);

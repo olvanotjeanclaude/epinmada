@@ -5,26 +5,33 @@ import PrimeFile from '../../component/prime/PrimeFile';
 import { Editor } from "primereact/editor";
 import useProductForm from '../../Hooks/useProductForm';
 import PrimeFilterableSelect from '../../component/prime/PrimeFilterableSelect';
-import useFormLogic from '../../Hooks/useFormLogic';
 import { Toast } from 'primereact/toast';
+import Submit from '../../component/Button/Submit';
+import { useParams } from 'react-router-dom';
+import useQueryApi from '../../Hooks/useQueryApi';
+import useApiCallback from '../../Hooks/useApiCallback';
 
 function ProductForm() {
   const toast = useRef(null);
 
-  const {
-    addMutation,
-    updateMutation,
-    handleSubmit,
-    control,
-    errors,
-    register,
-    setValue,
-    action,
-    onError,
-    onSuccess
-  } = useFormLogic({ path: "produits", apiUrl: "products", useDataForm: useProductForm, toast });
-
   const [text, setText] = useState("");
+
+  const { id } = useParams();
+
+  const { addMutation, updateMutation, showData } = useQueryApi("products", "/products");
+
+  const product = id == undefined ? null : showData(id);
+
+  const { register, handleSubmit, errors, setError, control,setValue } = useProductForm(product?.data);
+
+  const { onError, onSuccess } =  useApiCallback(toast, setError);
+
+  const action = id ? "update" : "store";
+
+
+  if (product?.error) {
+    return <Error error={product.error} />
+  }
 
   const onChangeLongDescription = (e) => {
     setText(e.htmlValue);
@@ -35,7 +42,7 @@ function ProductForm() {
     const params = {
       ...data,
       category: data.category.id
-    }
+    };
 
     switch (action) {
       case "store":
@@ -47,7 +54,7 @@ function ProductForm() {
         break;
 
       default:
-        alert("Unknown error");
+        console.log("eto..");
         break;
     }
   }
@@ -130,12 +137,8 @@ function ProductForm() {
                   </Col>
                 </Row>
 
-                <div className="d-flex flex-wrap justify-content-end gap-2">
-                  <button type="submit" className="btn btn-primary waves-effect waves-light">
-                    <i className='mdi mdi-content-save'></i>
-                    Enregistrer
-                  </button>
-                </div>
+                <Submit isLoading={addMutation.isLoading || updateMutation.isLoading} />
+
               </Card.Body>
             </Card>
           </Form>
@@ -144,7 +147,7 @@ function ProductForm() {
             <Card.Body>
               <h4 className="card-title mb-3">Images du produit</h4>
 
-              <PrimeFile model="product" />
+              <PrimeFile model="product" action={action} />
 
             </Card.Body>
           </Card>

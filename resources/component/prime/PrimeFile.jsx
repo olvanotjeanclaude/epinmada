@@ -6,7 +6,7 @@ import { Tooltip } from 'primereact/tooltip';
 import http from '../../Helper/makeRequest';
 import useCustomPrimeFile from '../../Hooks/useCustomPrimeFile';
 
-export default function PrimeFile({ model }) {
+export default function PrimeFile({ model,action }) {
     const {
         toast,
         onTemplateUpload,
@@ -19,12 +19,11 @@ export default function PrimeFile({ model }) {
         headerTemplate,
     } = useCustomPrimeFile(model);
 
-
     const uploadHandler = async (event) => {
         await http.post("/files/upload", {
             files: event.files,
             model,
-            action: "create"
+            action
         },)
             .then(res => {
                 event.options.clear();

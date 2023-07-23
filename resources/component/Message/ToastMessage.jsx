@@ -1,32 +1,29 @@
-import React, { useEffect } from 'react'
-import { Toaster, toast } from 'react-hot-toast';
+import { Toast } from 'primereact/toast';
+import React, { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom';
 
-function ToastMessage({ data }) {
+function ToastMessage() {
     const location = useLocation();
+    const toastRef = useRef(null);
 
-    const message = data ?? location.state?.message ?? {};
+    const data = location.state ?? {};
 
     const alertToast = () => {
-        switch (data?.type) {
-            case "success":
-                toast.success(data.message ?? "");
-                break;
-            case "error":
-                toast.error(data.message ?? "");
-                break;
+        if (data.type && data.message) {
+            toastRef.current.show({
+                severity: data.type,
+                summary: data.message
+            });
 
-            default:
-                break;
+            window.history.replaceState({}, document.title)
         }
-
-        window.history.replaceState({}, document.title)
     }
 
-    useEffect(() => { alertToast() }, [message]);
+    useEffect(() => { alertToast() }, [data]);
 
     return (
-        <Toaster toastOptions={{ duration: 5000 }} />
+        <Toast ref={toastRef} />
+        // <Toaster toastOptions={{ duration: 5000 }} />
     )
 }
 
