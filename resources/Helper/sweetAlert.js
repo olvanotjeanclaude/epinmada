@@ -23,14 +23,15 @@ export const confirmButton = {
 };
 
 export const onDeleteData = async (data, mutation) => {
+    
     return Swal.fire({
         ...deleteParams,
         preConfirm: async () => {
             await mutation?.mutateAsync(data)
-                .then(({ data: message }) => {
+                .then(res => {
                     Swal.fire({
-                        title: message.value,
-                        icon: "success",
+                        title: res.message,
+                        icon: res.type,
                         ...confirmButton
                     })
                 }).catch(err => {

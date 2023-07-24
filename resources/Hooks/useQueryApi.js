@@ -1,27 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Crud } from "../Feature/Crud";
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom'
 
-const useQueryApi = (endPoint, path) => {
+const useQueryApi = (endPoint) => {
     const queryClient = useQueryClient();
-
-    const navigate = useNavigate();
 
     const [currentPage, setCurrentPage] = useState(1);
 
     const crud = new Crud(endPoint);
-
-    const onSuccess = (data) => {
-        // if (data && data.type == "success" && path) {
-        //     navigate(path, {
-        //         state: {
-        //             message: data
-        //         }
-        //     })
-        // }
-        queryClient.invalidateQueries({ queryKey: [crud.endPoint] });
-    }
 
     const fetchData = (params) => useQuery({
         queryKey: [endPoint, currentPage, params],
@@ -37,18 +23,17 @@ const useQueryApi = (endPoint, path) => {
 
     const addMutation = useMutation({
         mutationFn: (newData) => crud.add(newData),
-        onSuccess
+        onSuccess: (data) => queryClient.invalidateQueries({ queryKey: [crud.endPoint] })
     });
 
     const updateMutation = useMutation({
         mutationFn: (dataToUpdate) => crud.update(dataToUpdate),
-        onSuccess
+        onSuccess: (data) => queryClient.invalidateQueries({ queryKey: [crud.endPoint] })
     });
 
-    const deleteMutation = useMutation((data) => crud.delete(data.id), {
-        onSuccess: () => {
-            queryClient.invalidateQueries(crud.endPoint);
-        },
+    const deleteMutation = useMutation({
+        mutationFn: (dataToUpdate) => crud.delete(dataToUpdate.id),
+        onSuccess: (data) => queryClient.invalidateQueries({ queryKey: [crud.endPoint] })
     });
 
     return {

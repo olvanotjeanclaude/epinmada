@@ -18,6 +18,8 @@ export default function UserForm() {
         showData
     } = useQueryApi("users", "/utilisateurs");
 
+    const response = id == undefined ? null : showData(id);
+
     const {
         register,
         handleSubmit,
@@ -26,14 +28,12 @@ export default function UserForm() {
         setError,
     } = useUserForm(response?.data);
 
-    const { onError, onSuccess } = useCallbackApi(toast, setError);
-
-
     const toast = useRef(null);
+
+    const { onError, onSuccess } = useCallbackApi(toast, setError);
 
     const action = id ? "update" : "store";
 
-    const response = id == undefined ? null : showData(id);
 
     if (response?.error) {
         return <Error error={response.error} />

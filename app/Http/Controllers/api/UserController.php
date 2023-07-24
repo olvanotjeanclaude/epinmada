@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderByDesc("id")->paginate(8);
+        $users = User::orderByDesc("id")->paginate(4);
 
         return response()->json($users);
     }

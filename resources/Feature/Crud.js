@@ -30,11 +30,11 @@ export class Crud {
             .catch(error => this.handleError(error)))
             ?.data
     }
-
+    
     async delete(id) {
-        return await http.delete(`/${this.endPoint}/${id}`)
-            .catch(error => this.handleError(error))
-            ?.data;
+        return (await http.delete(`/${this.endPoint}/${id}`)
+            .catch(error => this.handleError(error)))
+            ?.data
     }
 
     async filter(params, page = 1) {

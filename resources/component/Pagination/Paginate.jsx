@@ -1,43 +1,41 @@
-import React from 'react'
-import { Button } from 'react-bootstrap'
-import { arrayRange } from '../../Helper/Helper';
 
-function Paginate({ data, currentPage, setCurrentPage }) {
-  const links = arrayRange(1, data?.links?.length - 2) ?? [];
+import React, { useState } from "react";
+import { Paginator } from 'primereact/paginator';
+import { Divider } from 'primereact/divider';
+
+export default function Paginate({ data, setCurrentPage }) {
+  if (!data) return "";
+
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(data.per_page);
+
+  const onPageChange = (e) => {
+    setFirst(e.first);
+    setRows(e.rows);
+    setCurrentPage(e.page + 1);
+  };
+
+  const template = {
+    layout: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport',
+    CurrentPageReport: (options) => {
+      return (
+        <span style={{ color: 'var(--text-color)', userSelect: 'none', width: '120px', textAlign: 'center' }}>
+          {options.first} - {options.last} sur {options.totalRecords}
+        </span>
+      );
+    }
+  };
 
   return (
-    links.length > 1 ?
-      <div className="text-center">
-        <ul className="pagination justify-content-center pagination-rounded">
-          <li className={`page-item ${currentPage <= 1 ? "disabled" : ""}`}>
-            <Button className="page-link"
-              onClick={() => setCurrentPage(currentPage - 1)}
-            >
-              <i className="mdi mdi-chevron-left"></i>
-            </Button>
-          </li>
-
-          {
-            links?.map((index) => (
-              <li className={`page-item ${index == currentPage ? "active" : ""}`} key={index}>
-                <Button onClick={() => setCurrentPage(index)} className="page-link">
-                  {index}
-                </Button>
-              </li>
-            ))
-          }
-
-          <li className={`page-item ${currentPage >= links?.length ? "disabled" : ""}`}>
-            <Button
-              onClick={() => setCurrentPage(currentPage + 1)}
-              className="page-link">
-              <i className="mdi mdi-chevron-right"></i>
-            </Button>
-          </li>
-        </ul>
-      </div>
-      : <></>
+    <div className="card">
+      <Divider />
+      <Paginator
+        template={template}
+        first={first}
+        rows={rows}
+        totalRecords={data.total}
+        onPageChange={onPageChange}
+        className="justify-content-end" />
+    </div>
   )
 }
-
-export default Paginate;

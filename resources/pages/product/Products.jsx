@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Spinner, Table } from 'react-bootstrap'
 import useQueryApi from '../../Hooks/useQueryApi';
 import Error from '../../component/Message/Error';
@@ -7,15 +7,12 @@ import Paginate from '../../component/Pagination/Paginate';
 import Filter from './Filter';
 
 function Products() {
-  const {
-    currentPage,
-    setCurrentPage,
-    fetchData,
-  } = useQueryApi("products");
+  const { currentPage, setCurrentPage, fetchData, } = useQueryApi("products");
 
   const [checkboxs, setCheckboxs] = useState({});
 
   const { data, isLoading, isError, error } = fetchData(checkboxs);
+
 
   if (isError) {
     return <Error error={error} />
