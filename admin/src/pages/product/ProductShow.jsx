@@ -1,26 +1,21 @@
-import React from 'react'
 import { useParams } from 'react-router-dom';
-import useQueryApi from '../../Hooks/useQueryApi';
 import { Button, Card, Col, Row, Spinner } from 'react-bootstrap';
 import Error from '../../component/Message/Error';
-import Specification from './Specification';
 import PageTitle from '../../component/Layout/PageTitle';
-import Review from './Review';
+import { useQuery } from 'react-query';
+import productService from '../../service/ProductService';
 
 function ProductShow() {
   const { id } = useParams();
 
-  const { showData } = useQueryApi("products");
+  const { data: product, isLoading, error, isError } = useQuery({
+    queryKey: [id],
+    queryFn: async () => await productService.show(id)
+  })
 
-  const { data: product, isLoading, error } = showData(id);
+  if (isError) return <Error error={error} />;
 
-  if (isLoading) {
-    return <Spinner />
-  }
-
-  if (!product) {
-    return <Error error={error} />;
-  }
+  if (isLoading) return <Spinner />
 
   return (
     <>

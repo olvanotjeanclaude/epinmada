@@ -4,6 +4,7 @@ import {
     ProductForm, ProductList, ProductShow,
     UserForm, UserList, UserShow
 } from '../pages';
+
 import Admin from './Admin';
 
 const routeList = [

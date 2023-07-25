@@ -1,6 +1,10 @@
-import React from 'react'
+import { string } from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+
+Error.propTypes ={
+    error: string
+}
 
 function Error({ error }) {
     const navigate = useNavigate();

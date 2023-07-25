@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import  { useState } from 'react'
 import { Spinner, Table } from 'react-bootstrap'
-import useQueryApi from '../../Hooks/useQueryApi';
 import Error from '../../component/Message/Error';
 import { Link } from 'react-router-dom';
 import Paginate from '../../component/Pagination/Paginate';
 import Filter from './Filter';
+import { useQuery } from 'react-query';
+import productService from '../../service/ProductService';
 
 function Products() {
-  const { currentPage, setCurrentPage, fetchData, } = useQueryApi("products");
-
   const [checkboxs, setCheckboxs] = useState({});
+  
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, isLoading, isError, error } = fetchData(checkboxs);
+  const { data, error, isLoading,isError } = useQuery({
+      queryKey: [productService.name,currentPage,checkboxs],
+      queryFn: () => productService.fetchAll(currentPage,checkboxs),
+      keepPreviousData:true
+  })
 
 
   if (isError) {
@@ -45,7 +50,7 @@ function Products() {
                       </td>
                       <td>
                         <h5 className="font-size-14 text-truncate">
-                          <a target='_blank' href={product.route_detail} className="text-dark">
+                          <a href={product.route_detail} className="text-dark">
                             {product?.name}
                           </a>
                         </h5>

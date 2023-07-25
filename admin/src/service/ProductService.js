@@ -4,7 +4,10 @@ import { BaseService } from "./BaseService";
 class ProductService extends BaseService {
     constructor() {
         super(END_POINTS.products);
+        this.name = "products";
     }
 }
 
-export default ProductService;
+const productService = new ProductService();
+
+export default productService;

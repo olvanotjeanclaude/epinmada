@@ -7,7 +7,7 @@ const useApiCallback = (toast, setError) => {
 
     const path = location.pathname.split("/").filter(path => path != "")[0];
 
-    const onSuccess = (data) => {
+    const onSuccess = ({ data }) => {
         if (data.code == 422) {
             const errors = mapFormErrors(data.errors);
 
@@ -26,7 +26,7 @@ const useApiCallback = (toast, setError) => {
             return true;
         }
 
-        if(data.type && data.message){
+        if (data.type && data.message) {
             toast.current.show({
                 severity: data.type,
                 summary: data.message

@@ -1,10 +1,14 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
-import useQueryApi from '../../Hooks/useQueryApi'
 import { onDeleteData } from '../../Helper/sweetAlert'
+import { object } from 'prop-types';
+import useUserMutation from './useUserMutation';
+
+User.propTypes = {
+    user: object
+};
 
 export default function User({ user }) {
-    const { deleteMutation } = useQueryApi("users");
+    const { deleteMutation } = useUserMutation();
 
     const onDelete = async (user) => await onDeleteData(user, deleteMutation);
 

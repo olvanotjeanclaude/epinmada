@@ -7,13 +7,7 @@ import router from './router';
 
 
 function MainApp() {  
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: 2
-      }
-    }
-  })
+  const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>

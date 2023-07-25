@@ -1,64 +1,26 @@
-import React, { useRef, useState } from 'react'
+import  { useState } from 'react'
 import PageTitle from '../../component/Layout/PageTitle'
 import { Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import PrimeFile from '../../component/prime/PrimeFile';
 import { Editor } from "primereact/editor";
-import useProductForm from '../../Hooks/useProductForm';
 import PrimeFilterableSelect from '../../component/prime/PrimeFilterableSelect';
 import { Toast } from 'primereact/toast';
 import Submit from '../../component/Button/Submit';
-import { useParams } from 'react-router-dom';
-import useQueryApi from '../../Hooks/useQueryApi';
-import useApiCallback from '../../Hooks/useApiCallback';
+import useProductMutation from './useProductMutation';
+import Error from '../../component/Message/Error';
 
 function ProductForm() {
-  const toast = useRef(null);
-
+  const {product,setValue,errors,handleSubmit,onSubmit,register}  = useProductMutation();
   const [text, setText] = useState("");
-
-  const { id } = useParams();
-
-  const { addMutation, updateMutation, showData } = useQueryApi("products", "/products");
-
-  const product = id == undefined ? null : showData(id);
-
-  const { register, handleSubmit, errors, setError, control,setValue } = useProductForm(product?.data);
-
-  const { onError, onSuccess } =  useApiCallback(toast, setError);
-
-  const action = id ? "update" : "store";
-
-
-  if (product?.error) {
-    return <Error error={product.error} />
-  }
 
   const onChangeLongDescription = (e) => {
     setText(e.htmlValue);
     setValue("long_description", e.htmlValue);
   }
 
-  const onSubmit = async (data) => {
-    const params = {
-      ...data,
-      category: data.category.id
-    };
-
-    switch (action) {
-      case "store":
-        addMutation.mutate(params, { onError, onSuccess });
-        break;
-
-      case "update":
-        updateMutation.mutate((params), { onError, onSuccess });
-        break;
-
-      default:
-        console.log("eto..");
-        break;
-    }
+  if (product.error) {
+    return <Error error={product.error} />
   }
-
 
   const printError = (field) => {
     return errors[field] && <small className="p-error">{errors[field].message}</small>;

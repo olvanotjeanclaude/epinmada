@@ -1,4 +1,3 @@
-import React from 'react'
 import PageTitle from '../../component/Layout/PageTitle'
 import { Card } from 'react-bootstrap'
 import Products from './Products';

@@ -38,8 +38,6 @@ export class BaseService {
     }
 
     handleError(error) {
-        this.errors = error.response;
-
         switch (error.response.status) {
             case 500:
                 throw "Erreur du serveur";
