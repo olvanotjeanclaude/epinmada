@@ -6,8 +6,8 @@ import { object } from "prop-types";
 import { func } from "prop-types";
 
 Paginate.propTypes = {
-  data: object.isRequired,
-  setCurrentPage: func.isRequired
+  data: object,
+  setCurrentPage: func
 }
 
 export default function Paginate({ data, setCurrentPage }) {

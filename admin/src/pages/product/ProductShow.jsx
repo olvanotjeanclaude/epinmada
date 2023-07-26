@@ -1,17 +1,10 @@
-import { useParams } from 'react-router-dom';
 import { Button, Card, Col, Row, Spinner } from 'react-bootstrap';
 import Error from '../../component/Message/Error';
 import PageTitle from '../../component/Layout/PageTitle';
-import { useQuery } from 'react-query';
-import productService from '../../service/ProductService';
+import { useShow } from './useProducts';
 
 function ProductShow() {
-  const { id } = useParams();
-
-  const { data: product, isLoading, error, isError } = useQuery({
-    queryKey: [id],
-    queryFn: async () => await productService.show(id)
-  })
+  const { isError, error, isLoading, product } = useShow();
 
   if (isError) return <Error error={error} />;
 

@@ -44,7 +44,7 @@ class ProductController extends Controller
 
         $image = File::where("user_id", auth()->id())
             ->where("model", "product")
-            ->where("key", $_COOKIE["product"])
+            ->where("key", $_COOKIE["product"] ?? null)
             ->orderByDesc("id")
             ->first();
 

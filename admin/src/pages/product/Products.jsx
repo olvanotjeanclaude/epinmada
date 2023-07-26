@@ -1,27 +1,15 @@
-import  { useState } from 'react'
 import { Spinner, Table } from 'react-bootstrap'
 import Error from '../../component/Message/Error';
 import { Link } from 'react-router-dom';
 import Paginate from '../../component/Pagination/Paginate';
 import Filter from './Filter';
-import { useQuery } from 'react-query';
-import productService from '../../service/ProductService';
+import { useFetchAll } from './useProducts';
 
 function Products() {
-  const [checkboxs, setCheckboxs] = useState({});
-  
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, error, isLoading,isError } = useQuery({
-      queryKey: [productService.name,currentPage,checkboxs],
-      queryFn: () => productService.fetchAll(currentPage,checkboxs),
-      keepPreviousData:true
-  })
+  const { error, checkboxs, setCheckboxs, isError, isLoading, data, currentPage, setCurrentPage } = useFetchAll()
 
-
-  if (isError) {
-    return <Error error={error} />
-  }
+  if (isError) return <Error error={error} />
 
   return (
     <>
@@ -42,7 +30,7 @@ function Products() {
             isLoading ? <tr><td colSpan={4}><Spinner /></td></tr>
               : <>
                 {
-                  data?.products.data?.map(product => (
+                  data.products.data?.map(product => (
                     <tr key={product.unique_id}>
                       <td>
                         <img src={`${product.image_url}`} alt="product-img"

@@ -1,4 +1,4 @@
-import  { useState } from 'react'
+import { useState } from 'react'
 import PageTitle from '../../component/Layout/PageTitle'
 import { Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import PrimeFile from '../../component/prime/PrimeFile';
@@ -6,11 +6,16 @@ import { Editor } from "primereact/editor";
 import PrimeFilterableSelect from '../../component/prime/PrimeFilterableSelect';
 import { Toast } from 'primereact/toast';
 import Submit from '../../component/Button/Submit';
-import useProductMutation from './useProductMutation';
 import Error from '../../component/Message/Error';
+import { useProductMutation } from './useProducts';
 
 function ProductForm() {
-  const {product,setValue,errors,handleSubmit,onSubmit,register}  = useProductMutation();
+  const {
+    product,errors,toast, action,
+    handleSubmit,onSubmit,register,control,
+    addMutation,updateMutation, setValue,
+  } = useProductMutation();
+  
   const [text, setText] = useState("");
 
   const onChangeLongDescription = (e) => {
@@ -18,13 +23,11 @@ function ProductForm() {
     setValue("long_description", e.htmlValue);
   }
 
-  if (product.error) {
+  if (product.isError) {
     return <Error error={product.error} />
   }
 
-  const printError = (field) => {
-    return errors[field] && <small className="p-error">{errors[field].message}</small>;
-  };
+  const printError = field =>errors[field] && <small className="p-error">{errors[field].message}</small>;
 
   return (
     <>
@@ -99,7 +102,7 @@ function ProductForm() {
                   </Col>
                 </Row>
 
-                <Submit isLoading={addMutation.isLoading || updateMutation.isLoading} />
+                <Submit isLoading={addMutation?.isLoading || updateMutation?.isLoading} />
 
               </Card.Body>
             </Card>

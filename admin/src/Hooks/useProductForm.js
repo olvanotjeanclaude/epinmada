@@ -38,7 +38,7 @@ const useProductForm = (product) => {
             form.setValue("id", product.id)
         }
 
-    }, [product]);
+    }, [form, product]);
 
     return {
         ...form,
