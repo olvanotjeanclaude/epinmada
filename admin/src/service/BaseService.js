@@ -45,6 +45,8 @@ export class BaseService {
                 throw "Data introuvalble";
             case 422:
                 throw "Mauvaise data";
+            case 401:
+                throw "Veuillez se reconnecter";
             default:
                 throw "Erreur inconnue";
         }

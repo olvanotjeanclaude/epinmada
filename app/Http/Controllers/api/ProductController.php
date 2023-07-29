@@ -41,7 +41,8 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         $data["category_id"] = $request->category;
-
+        
+        return response()->json($_COOKIE);
         $image = File::where("user_id", auth()->id())
             ->where("model", "product")
             ->where("key", $_COOKIE["product"] ?? null)

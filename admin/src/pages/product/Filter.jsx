@@ -1,27 +1,24 @@
-import React, { useState } from 'react'
-import useQueryApi from '../../Hooks/useQueryApi';
 import { Spinner } from 'react-bootstrap';
 import Error from '../../component/Message/Error';
 import { useEffect } from 'react';
+import { func } from 'prop-types';
+import { useFetchAll } from './useProducts';
+
+Filter.propTypes = {
+    setCheckboxes: func
+}
 
 function Filter({ setCheckboxes }) {
-    const { fetchData } = useQueryApi("products");
-
-    const { data, isLoading, isError, error } = fetchData();
-
-    if (isError) {
-        return <Error error={error} />
-    }
+    const { data, isLoading, isError, error } = useFetchAll();
 
     const categories = data?.categories?.reduce((acc, category) => {
         acc[category.name.toLowerCase()] = false;
         return acc;
     }, {});
 
-
     useEffect(() => {
         setCheckboxes(categories);
-    }, [data?.categories]);
+    }, [data]);
 
     const handleCheckboxChange = (event) => {
         const { name, checked } = event.target;
@@ -32,9 +29,9 @@ function Filter({ setCheckboxes }) {
 
     };
 
-    if (isLoading) {
-        return "loading....";
-    }
+    if (isError) return <Error error={error} />
+
+    if (isLoading) return <Spinner />
 
     return (
         <div className="d-flex justify-content-center">

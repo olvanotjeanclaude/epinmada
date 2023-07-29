@@ -1,5 +1,3 @@
-import React from 'react'
-
 function Footer() {
     return (
         <footer className="footer">
@@ -10,7 +8,7 @@ function Footer() {
                     </div>
                     <div className="col-sm-6">
                         <div className="text-sm-end d-none d-sm-block">
-                            Design & Develop by Themesbrand
+                            Design & Develop by Olvanot Jean Claude Rakotoninina
                         </div>
                     </div>
                 </div>

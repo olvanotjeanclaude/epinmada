@@ -41,6 +41,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function getAuthentification()
+    {
+        return view("auth");
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -52,14 +57,17 @@ class LoginController extends Controller
             "password.required" => "Le champ mot de passe est obligatoire."
         ]);
 
+
         if (Auth::attempt($credentials)) {
             $user = $request->user();
+
+            $user->tokens()->delete();
+
             $token = $user->createToken('spa')->plainTextToken;
 
             if ($request->ajax()) {
                 return response()->json([
                     'token' => $token,
-                    "user" => $user,
                     'token_type' => 'Bearer',
                 ]);
             }
@@ -70,7 +78,7 @@ class LoginController extends Controller
         $errorMessages = "les informations d'identification invalides";
 
         if ($request->ajax()) {
-            return response()->json(['message' => $errorMessages], 422);
+            return response()->json(['message' => $errorMessages], 401);
         }
 
         return back()->withErrors(["errors" => $errorMessages]);
@@ -78,18 +86,12 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        $this->guard()->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        if ($response = $this->loggedOut($request)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect('/admin');
+        Auth::logout();
+        
+        return response()->json([
+            "code" => 200,
+            'type' => "success",
+            "message" => "vous êtes déconnecté avec succès"
+        ]);
     }
 }

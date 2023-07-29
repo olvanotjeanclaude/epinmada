@@ -6,6 +6,7 @@ import {
 } from '../pages';
 
 import Admin from './Admin';
+import Login from '../component/Auth/Login';
 
 const routeList = [
     { path: 'dashboard', element: <Dashboard /> },
@@ -44,6 +45,7 @@ const routes = [
             { path: '*', element: <h1>DATA NOT FOUND</h1> }
         ],
     },
+    { path: 'login', element: <Login /> },
 ]
 
 const router = createBrowserRouter(routes);

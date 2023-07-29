@@ -13,17 +13,14 @@ export const useFetchAll = () => {
     const { data, error, isLoading, isError } = useQuery({
         queryKey: [productService.name, currentPage, checkboxs],
         queryFn: () => productService.fetchAll(currentPage, checkboxs),
-        keepPreviousData: true
+        keepPreviousData: true,
+        onError: (error) => new Error(error.message)
     });
 
     return {
-        checkboxs,
-        setCheckboxs,
+        checkboxs, setCheckboxs,
         currentPage, setCurrentPage,
-        data,
-        error,
-        isLoading,
-        isError
+        data, error, isLoading, isError
     }
 }
 
@@ -36,12 +33,7 @@ export const useShow = () => {
         enabled: id != undefined
     });
 
-    return {
-        product,
-        isLoading,
-        error,
-        isError
-    }
+    return { product, isLoading, error, isError }
 }
 
 export const useAddMutation = () => {
@@ -53,18 +45,7 @@ export const useAddMutation = () => {
     return { data, isError, isLoading, error };
 }
 
-export const useUpdateMutation = () => {
-    const queryClient = useQueryClient();
-    const { data, isError, error, isLoading } = useMutation({
-        mutationFn: async (newData) => await productService.update(newData),
-        mutationKey: [productService.name],
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: [productService.endPoint] })
-    });
-
-    return { data, isError, isLoading, error };
-}
-
-export const useProductMutation = () =>{
+export const useProductMutation = () => {
     const toast = useRef(null);
     const { id } = useParams();
     const queryClient = useQueryClient();
@@ -85,12 +66,7 @@ export const useProductMutation = () =>{
         onSuccess: () => queryClient.invalidateQueries({ queryKey: [productService.endPoint] })
     });
 
-    const deleteMutation = useMutation({
-        mutationFn: (dataToUpdate) => productService.destroy(dataToUpdate.id),
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: [productService.endPoint] })
-    });
-
-    const { register, handleSubmit, errors, user_types,setValue, setError,control } = useProductForm(productService.data);
+    const { register, handleSubmit, errors, setValue, setError, control } = useProductForm(productService.data);
 
     const { onError, onSuccess } = useApiCallback(toast, setError);
 
@@ -113,14 +89,20 @@ export const useProductMutation = () =>{
     return {
         addMutation,
         updateMutation,
-        deleteMutation,
         product,
         register, handleSubmit, control,
         errors,
-        user_types,
         toast,
         onError, onSuccess, onSubmit, setValue,
         action,
         id
     }
+}
+
+export const useDeleteMutation = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (dataToUpdate) => productService.destroy(dataToUpdate.id),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: [productService.endPoint] })
+    });
 }

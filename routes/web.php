@@ -30,6 +30,9 @@ Route::group(["prefix" => "admin", "as" => "admin.", "middleware" => "auth"], fu
     Route::view('/{path?}', "admin.root")->where('path', '.*');
 });
 
+Route::get('/authentification', [\App\Http\Controllers\Auth\LoginController::class, "getAuthentification"])->name("getAuthentification");
+Route::post('/authentification', [\App\Http\Controllers\Auth\LoginController::class, "auth"])->name("auth");
+
 Route::group(["as" => "front."], function () {
     Route::get('/', [\App\Http\Controllers\FrontController::class, "index"])->name("index");
     Route::get('/contact', [\App\Http\Controllers\FrontController::class, "getContact"])->name("getContact");
