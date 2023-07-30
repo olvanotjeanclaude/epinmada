@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 function currenUser()
 {
@@ -9,6 +10,10 @@ function currenUser()
 
 function deleteFile($file)
 {
+    $file = str_replace(request()->schemeAndHttpHost()."/","",$file);
+
+    Log::alert($file);
+
     if ($file && file_exists($file)) {
         unlink($file);
         return true;

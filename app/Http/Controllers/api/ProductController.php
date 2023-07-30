@@ -22,7 +22,9 @@ class ProductController extends Controller
                 if (count($names)) {
                     $query->whereIn("name", $names);
                 }
-            })->paginate(5);
+            })
+            ->orderByDesc("id")
+            ->paginate(5);
 
         $datas = [
             "products" => $products,
@@ -41,11 +43,10 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         $data["category_id"] = $request->category;
-        
-        return response()->json($_COOKIE);
+
         $image = File::where("user_id", auth()->id())
             ->where("model", "product")
-            ->where("key", $_COOKIE["product"] ?? null)
+            ->where("key", $request->imageKey)
             ->orderByDesc("id")
             ->first();
 
@@ -53,7 +54,7 @@ class ProductController extends Controller
             return Message::error("veuillez fournir l'image du produit", 400);
         }
 
-        $data["image_url"] = $image->path;
+        $data["image_url"] = $image->path??"";
         $data["category_id"] = $request->category;
         $data["unique_id"] = generateNo();
         $data["slug"] = Str::slug($request->name);
@@ -69,10 +70,21 @@ class ProductController extends Controller
 
     private function deleteImage()
     {
-        $deleted = File::where("key", $_COOKIE["product"])->delete();
+        $deleted = File::where("key", request("imageKey"))->delete();
 
         setcookie("product", "", time() - 3600);
 
         return $deleted;
+    }
+
+    public function destroy($unique_id)
+    {
+        $product = Product::findOrFail($unique_id);
+
+        deleteFile($product->image_url);
+
+        $product->delete();
+
+        return Message::delete(("Produit"));
     }
 }

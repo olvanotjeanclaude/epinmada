@@ -1,12 +1,18 @@
 
-import React from 'react';
 import { Toast } from 'primereact/toast';
 import { FileUpload } from 'primereact/fileupload';
 import { Tooltip } from 'primereact/tooltip';
 import http from '../../Helper/makeRequest';
 import useCustomPrimeFile from '../../Hooks/useCustomPrimeFile';
+import { string } from 'prop-types';
+import uuid from 'react-uuid';
 
-export default function PrimeFile({ model,action }) {
+PrimeFile.propTypes = {
+    model: string,
+    action: string
+};
+
+export default function PrimeFile({ model, action }) {
     const {
         toast,
         onTemplateUpload,
@@ -20,9 +26,16 @@ export default function PrimeFile({ model,action }) {
     } = useCustomPrimeFile(model);
 
     const uploadHandler = async (event) => {
+        const key = localStorage.getItem(model);
+
+        if (!key) {
+            localStorage.setItem(model, uuid());
+        }
+
         await http.post("/files/upload", {
             files: event.files,
             model,
+            key: localStorage.getItem(model),
             action
         },)
             .then(res => {

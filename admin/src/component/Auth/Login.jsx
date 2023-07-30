@@ -29,12 +29,13 @@ const Login = () => {
             .then((response) => {
                 const data = response.data;
                 localStorage.setItem("access_token", data.token);
+                localStorage.setItem("user", JSON.stringify(data.user));
                 window.location.href = "/dashboard";
             })
             .catch((error) => {
                 const response = error.response;
                 if (response.status == 422) {
-                    const errors = allErrors(response.data.errors).join(".");
+                    const errors = allErrors(response.data.errors)[0] ?? "";
 
                     toast.current.show({ severity: "error", summary: "Erreur", detail: errors });
                 }

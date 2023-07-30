@@ -23,6 +23,7 @@ class ProductRequest extends FormRequest
             "price" => "required",
             "category" => "required",
             "short_description" => "required",
+            "long_description" => "",
         ];
     }
 }

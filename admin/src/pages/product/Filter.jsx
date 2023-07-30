@@ -18,6 +18,7 @@ function Filter({ setCheckboxes }) {
 
     useEffect(() => {
         setCheckboxes(categories);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
     const handleCheckboxChange = (event) => {

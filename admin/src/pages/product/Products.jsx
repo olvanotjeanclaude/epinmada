@@ -3,13 +3,19 @@ import Error from '../../component/Message/Error';
 import { Link } from 'react-router-dom';
 import Paginate from '../../component/Pagination/Paginate';
 import Filter from './Filter';
-import { useFetchAll } from './useProducts';
+import { useDeleteMutation, useFetchAll } from './useProducts';
+import { onDeleteData } from '../../Helper/sweetAlert';
+import { capitalizeLetter } from '../../Helper/Helper';
 
 function Products() {
 
   const { error, checkboxs, setCheckboxs, isError, isLoading, data, currentPage, setCurrentPage } = useFetchAll()
 
+  const deleteMutation = useDeleteMutation();
+
   if (isError) return <Error error={error} />
+
+  const onDelete = async (product) => await onDeleteData(product, deleteMutation);
 
   return (
     <>
@@ -39,7 +45,7 @@ function Products() {
                       <td>
                         <h5 className="font-size-14 text-truncate">
                           <a href={product.route_detail} className="text-dark">
-                            {product?.name}
+                            {capitalizeLetter(product?.name)}
                           </a>
                         </h5>
                       </td>
@@ -51,7 +57,7 @@ function Products() {
                         <Link to={`${product.unique_id}`} className="action-icon text-warning">
                           <i className="mdi mdi-eye font-size-18"></i>
                         </Link>
-                        <Link className="ms-2 action-icon text-danger">
+                        <Link role='button' onClick={() => onDelete(product)} className="ms-2 action-icon text-danger">
                           <i className="mdi mdi-trash-can font-size-18"></i>
                         </Link>
                       </td>

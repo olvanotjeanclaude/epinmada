@@ -36,15 +36,6 @@ export const useShow = () => {
     return { product, isLoading, error, isError }
 }
 
-export const useAddMutation = () => {
-    const { data, isError, error, isLoading } = useMutation({
-        mutationFn: async (newData) => await productService.store(newData),
-        mutationKey: productService.name
-    });
-
-    return { data, isError, isLoading, error };
-}
-
 export const useProductMutation = () => {
     const toast = useRef(null);
     const { id } = useParams();
@@ -73,16 +64,26 @@ export const useProductMutation = () => {
     const action = product.data ? "update" : "store";
 
     const onSubmit = async (data) => {
+        const payload = {
+            ...data,
+            category: data.category.id,
+            imageKey: localStorage.getItem("product")
+        };
+
         switch (action) {
             case "store":
-                addMutation.mutate(data, { onError, onSuccess });
+                addMutation.mutate(payload, { onError, onSuccess });
                 break;
 
             case "update":
-                updateMutation.mutate((data), { onError, onSuccess });
+                updateMutation.mutate((payload), { onError, onSuccess });
                 break;
             default:
                 break;
+        }
+
+        if (addMutation.isSuccess || updateMutation.isSuccess) {
+            localStorage.removeItem("product")
         }
     }
 
@@ -102,7 +103,7 @@ export const useProductMutation = () => {
 export const useDeleteMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (dataToUpdate) => productService.destroy(dataToUpdate.id),
+        mutationFn: (dataToUpdate) => productService.destroy(dataToUpdate.unique_id),
         onSuccess: () => queryClient.invalidateQueries({ queryKey: [productService.endPoint] })
     });
 }

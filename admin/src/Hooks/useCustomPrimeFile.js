@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import primeFileOption from "../Helper/primeFileOption";
-import { Cookie } from "../Helper/Cookie";
 import uuid from "react-uuid";
 
 const useCustomPrimeFile = (model) => {
@@ -17,8 +16,8 @@ const useCustomPrimeFile = (model) => {
     } = primeFileOption(totalSize, fileUploadRef)
 
     useEffect(() => {
-        if (!Cookie.get(model)) {
-            Cookie.set(model, uuid())
+        if(!localStorage.getItem(model)){
+            localStorage.setItem(model,uuid());
         }
     }, []);
 

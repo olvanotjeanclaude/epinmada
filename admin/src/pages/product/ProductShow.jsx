@@ -1,10 +1,19 @@
-import { Button, Card, Col, Row, Spinner } from 'react-bootstrap';
+import { Button, Card, Col, Row, Spinner, Stack } from 'react-bootstrap';
 import Error from '../../component/Message/Error';
 import PageTitle from '../../component/Layout/PageTitle';
-import { useShow } from './useProducts';
+import { useDeleteMutation, useShow } from './useProducts';
+import { onDeleteData } from '../../Helper/sweetAlert';
+import { Navigate } from 'react-router-dom';
 
 function ProductShow() {
   const { isError, error, isLoading, product } = useShow();
+  const deleteMutation = useDeleteMutation();
+
+  const onDelete = async (product) => await onDeleteData(product, deleteMutation);
+
+  if (deleteMutation.isSuccess) {
+    return <Navigate to="/produits" />
+  }
 
   if (isError) return <Error error={error} />;
 
@@ -39,10 +48,16 @@ function ProductShow() {
                   <b>{product.formatted_price}</b>
                 </h5>
 
-                <p className="text-muted mb-4">{product.category?.description}</p>
+                <Stack>
+                  <h6>Description:</h6>
+                  <p>{product.short_description}</p>
+                </Stack>
+
+                <div dangerouslySetInnerHTML={{ __html: product.long_description }} />
 
                 <div className="mb-4">
-                  <Button variant='danger' className="waves-effect  mt-2 waves-light">
+                  <Button disabled={deleteMutation.isLoading}
+                    onClick={() => onDelete(product)} variant='danger' className="waves-effect  mt-2 waves-light">
                     <i className="bx bx-trash-alt me-2"></i>
                     Supprimer
                   </Button>

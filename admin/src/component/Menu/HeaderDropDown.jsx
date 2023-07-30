@@ -1,31 +1,21 @@
-import { useQuery } from "react-query"
 import http from "../../Helper/makeRequest"
 import { useState } from "react";
 import { useAuthProvider } from "../../Context/useAuthProvider";
-import Error from "../Message/Error";
+import { capitalizeLetter } from "../../Helper/Helper";
 
 export default function HeaderDropDown() {
-    const { setToken } = useAuthProvider();
-
-    const { data, isLoading, error, isError } = useQuery({
-        queryKey: "userInfo",
-        queryFn: async () => await http.get("user").catch(error => { throw error.message }),
-        keepPreviousData: true
-    });
+    const { setToken, setUser, user } = useAuthProvider();
 
     const [showDropdown, setShowDropdown] = useState(false);
-
-    if (isError) {
-        return <Error error={error.message} />
-    }
-
 
     const handleLogout = async () => {
         const response = await http.post("/logout").then(response => response.data);
 
         if (response.type == "success") {
-            setToken(null);
             localStorage.removeItem("access_token");
+            localStorage.removeItem("user");
+            setToken(null);
+            setUser(null);
 
             location.href = "/login";
         }
@@ -39,12 +29,9 @@ export default function HeaderDropDown() {
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {/* <img className="rounded-circle header-profile-user" src="/images/users/avatar-1.jpg"
                     alt="Header Avatar" /> */}
-                {
-                    isLoading ? "" :
-                        <span className="d-non d-xl-inline-block ms-1" key="t-henry">
-                            {data?.data?.name} {data?.data?.surname}
-                        </span>
-                }
+                <span className="d-non d-xl-inline-block ms-1" key="t-henry">
+                    {user && capitalizeLetter(`${user.name} ${user.surname}`)}
+                </span>
                 <i className="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
             </button>
             <div className={`dropdown-menu dropdown-menu-end ${showDropdown ? 'show' : ''}`}

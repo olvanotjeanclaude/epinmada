@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 
 const initValue = {
     token: null,
-    setToken: () => { }
+    user: null,
+    setToken: () => { },
+    setUser: () => { }
 };
 
 export const AuthProviderContext = createContext(initValue);
@@ -15,9 +17,10 @@ AuthProvider.propTypes = {
 
 export default function AuthProvider({ children }) {
     const [token, setToken] = useState(localStorage.getItem("access_token"));
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
     return (
-        <AuthProviderContext.Provider value={{ token, setToken }}>
+        <AuthProviderContext.Provider value={{ token, setToken, user, setUser }}>
             <div> {children}</div>
         </AuthProviderContext.Provider>
     );

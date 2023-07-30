@@ -35,7 +35,7 @@ class FileController extends Controller
             foreach ($files as $key => $file) {
                 $data["path"] =  ImageUpload::upload(rand(1111, 4444), $request->model, $file);
                 $data["user_id"] = auth()->id();
-                $data["key"] = $_COOKIE[$request->model] ?? "";
+                $data["key"] = $request->key;
                 
                 File::create($data);
             }

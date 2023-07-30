@@ -69,6 +69,11 @@ class LoginController extends Controller
                 return response()->json([
                     'token' => $token,
                     'token_type' => 'Bearer',
+                    "user" => [
+                        "name" => $user->name,
+                        "surname" => $user->surname,
+                        "email" => $user->email,
+                    ]
                 ]);
             }
 
@@ -87,7 +92,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        
+
         return response()->json([
             "code" => 200,
             'type' => "success",
