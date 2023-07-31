@@ -13,6 +13,15 @@ class Message
         ]);
     }
 
+    public static function alert($message = "Votre action a été sauvegardé avec succès")
+    {
+        return response()->json([
+            "code" => 200,
+            'type' => "success",
+            "message" => $message
+        ]);
+    }
+
     public static function error($messsage = "Erreur survenue", $code = 422)
     {
         return response()->json([

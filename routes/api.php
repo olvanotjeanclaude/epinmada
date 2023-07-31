@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(["middleware" => "auth:sanctum"], function () {
+  Route::post("update-password", [\App\Http\Controllers\api\PasswordController::class,"updatePassword"]);
   Route::resource("users", App\Http\Controllers\api\UserController::class);
   Route::resource("products", App\Http\Controllers\api\ProductController::class);
   Route::resource("categories", App\Http\Controllers\api\CategoryController::class)->only("index");

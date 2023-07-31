@@ -1,7 +1,9 @@
 import { Outlet, createBrowserRouter } from 'react-router-dom';
 import {
     Dashboard,
+    PersonalInfo,
     ProductForm, ProductList, ProductShow,
+    ProfileForm,
     UserForm, UserList, UserShow
 } from '../pages';
 
@@ -28,6 +30,14 @@ const routeList = [
             { path: 'nouveau', element: <ProductForm /> },
             { path: ':id', element: <ProductShow /> },
             { path: ':id/edit', element: <ProductForm /> },
+        ]
+    },
+    {
+        path: 'profile',
+        element: <Outlet />,
+        children: [
+            { index: true, element: <PersonalInfo /> },
+            { path: 'edit', element: <ProfileForm /> },
         ]
     },
     {
