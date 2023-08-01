@@ -21,14 +21,7 @@ Route::group(["prefix" => "auth", "as" => "auth.", "middleware" => "auth"], func
     Route::get("/lock-screen", [\App\Http\Controllers\Auth\LoginController::class, "lockScreen"])->name("lockScreen");
 });
 
-Route::group(["prefix" => "admin", "as" => "admin.", "middleware" => "auth"], function () {
-    // Route::get("/", [\App\Http\Controllers\admin\DashboardController::class, "index"])->name("index");
-    // Route::get("/profile", [\App\Http\Controllers\admin\ProfileController::class, "profile"])->name("profile");
-    // Route::post("/profile", [\App\Http\Controllers\admin\ProfileController::class, "updateProfile"])->name("updateProfile");
-    // Route::resource("utilisateurs", \App\Http\Controllers\admin\UserController::class);
-
-    Route::view('/{path?}', "admin.root")->where('path', '.*');
-});
+Route::view('/admin/{any_path?}', 'admin')->where('any_path', '(.*)');
 
 Route::get('/authentification', [\App\Http\Controllers\Auth\LoginController::class, "getAuthentification"])->name("getAuthentification");
 Route::post('/authentification', [\App\Http\Controllers\Auth\LoginController::class, "auth"])->name("auth");

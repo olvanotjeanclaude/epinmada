@@ -8,14 +8,16 @@ import { Toast } from 'primereact/toast';
 import Submit from '../../component/Button/Submit';
 import Error from '../../component/Message/Error';
 import { useProductMutation } from './useProducts';
+import { useQuery } from 'react-query';
+import http from '../../Helper/makeRequest';
 
 function ProductForm() {
   const {
-    product,errors,toast, action,
-    handleSubmit,onSubmit,register,control,
-    addMutation,updateMutation, setValue,
+    product, errors, toast, action,
+    handleSubmit, onSubmit, register, control,
+    addMutation, updateMutation, setValue,
   } = useProductMutation();
-  
+
   const [text, setText] = useState("");
 
   const onChangeLongDescription = (e) => {
@@ -27,7 +29,7 @@ function ProductForm() {
     return <Error error={product.error} />
   }
 
-  const printError = field =>errors[field] && <small className="p-error">{errors[field].message}</small>;
+  const printError = field => errors[field] && <small className="p-error">{errors[field].message}</small>;
 
   return (
     <>

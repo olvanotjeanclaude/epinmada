@@ -6,16 +6,21 @@ import { Spinner } from "react-bootstrap";
 import { useFetchAll } from '../../pages/product/useProducts';
 import Error from '../Message/Error';
 import { any, string } from 'prop-types';
+import { useQuery } from 'react-query';
+import http from '../../Helper/makeRequest';
 
 PrimeFilterableSelect.propTypes = {
     control: any,
     name: string
 };
 
-export default function PrimeFilterableSelect({ control, name }) {
-    const {isLoading,data,isError,error} = useFetchAll();
+export default function PrimeFilterableSelect({ control, name, apiUrl }) {
+    const { data, isError, error, isLoading } = useQuery({
+        queryFn: async () => http.get(apiUrl).then(res => res.data).catch(e => new Error(e.message)),
+        queryKey: apiUrl
+    });
 
-    if (isError)  return <Error error={error} />
+    if (isError) return <Error error={error} />
 
     return (
         <div className="card flex justify-content-center">
@@ -31,7 +36,7 @@ export default function PrimeFilterableSelect({ control, name }) {
                             value={field.value}
                             optionLabel="name"
                             placeholder="Sélectionnez une ville"
-                            options={[...data.categories]}
+                            options={data}
                             focusInputRef={field.ref}
                             onChange={e => field.onChange(e.value)}
                             className={classNames({ 'p-invalid': fieldState.error })}

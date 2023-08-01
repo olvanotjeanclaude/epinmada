@@ -18,7 +18,7 @@ const Login = () => {
         setErrors([]);
     }, [email, password]);
 
-    if (token) return <Navigate to="/dashboard" />
+    if (token) return <Navigate to="dashboard" />
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,7 +30,7 @@ const Login = () => {
                 const data = response.data;
                 localStorage.setItem("access_token", data.token);
                 localStorage.setItem("user", JSON.stringify(data.user));
-                window.location.href = "/dashboard";
+                window.location.href = "dashboard";
             })
             .catch((error) => {
                 const response = error.response;

@@ -11,11 +11,13 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
 
-    @include('include.head-css')
+    {{-- @include('include.head-css') --}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
     @viteReactRefresh
-    @vite(['resources/css/app.css', 'resources/js/index.jsx'])
+    @vite(['resources/admin/app.css', 'resources/admin/main.jsx'])
 </head>
 
 <body data-sidebar="dark">

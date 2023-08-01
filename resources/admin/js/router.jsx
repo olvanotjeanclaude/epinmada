@@ -58,6 +58,8 @@ const routes = [
     { path: 'login', element: <Login /> },
 ]
 
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter(routes,{
+    basename:"/admin",
+});
 
 export default router;

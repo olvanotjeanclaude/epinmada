@@ -6,6 +6,7 @@ import Error from "../../component/Message/Error";
 import EditPassword from "./EditPassword";
 import { Avatar } from "primereact/avatar";
 import { Link } from "react-router-dom";
+import EditIcon from '@mui/icons-material/Edit';
 
 const PersonalInfo = () => {
     const {
@@ -36,7 +37,7 @@ const PersonalInfo = () => {
                             </h4>
 
                             <Link to="edit" variant='success' className="waves-effectwaves-light">
-                                <i className="bx bx-pencil me-2"></i>
+                               <EditIcon />
                             </Link>
                         </div>
 

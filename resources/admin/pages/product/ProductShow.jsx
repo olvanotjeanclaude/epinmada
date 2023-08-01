@@ -26,13 +26,13 @@ function ProductShow() {
       <Card>
         <Card.Body>
           <Row>
-            <Col xl={4}>
+            <Col sm={4}>
               <div>
-                <img src={`${product.image_url}`} alt="" className="img-fluid mx-auto d-block" />
+                <img src={`${product.image_url}`} alt="" style={{ width: "60%" }} className="img-fluid w-100 mx-auto d-block" />
               </div>
             </Col>
 
-            <Col xl={8}>
+            <Col sm={8}>
               <div className="mt-4 mt-xl-3">
                 <a className="text-primary">{product.category.name}</a>
                 <h4 className="mt-1 mb-3">{product.name}</h4>
