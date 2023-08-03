@@ -13,11 +13,14 @@ class Message
         ]);
     }
 
-    public static function alert($message = "Votre action a été sauvegardé avec succès")
-    {
+    public static function alert(
+        $message = "Votre action a été sauvegardé avec succès",
+        $type = "success",
+        $code = 200
+    ) {
         return response()->json([
-            "code" => 200,
-            'type' => "success",
+            "code" => $code,
+            'type' => $type,
             "message" => $message
         ]);
     }

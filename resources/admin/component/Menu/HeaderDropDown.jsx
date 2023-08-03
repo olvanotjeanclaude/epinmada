@@ -3,9 +3,17 @@ import { useState } from "react";
 import { useAuthProvider } from "../../Context/useAuthProvider";
 import { capitalizeLetter } from "../../Helper/Helper";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import Error from "../Message/Error";
 
 export default function HeaderDropDown() {
-    const { setToken, setUser, user } = useAuthProvider();
+    // const { setToken, setUser, user } = useAuthProvider();
+
+    const { data: user, isError, error } = useQuery({
+        queryFn: async () => (await http.get("user")).data,
+        queryKey: "user",
+        keepPreviousData:true
+    })
 
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -21,6 +29,8 @@ export default function HeaderDropDown() {
             location.href = "/login";
         }
     }
+
+    if (isError) return <Error error={error.message} />
 
     return (
         <div className="dropdown d-inline-block">
@@ -41,7 +51,7 @@ export default function HeaderDropDown() {
                     <i className="bx bx-user font-size-16 align-middle me-1"></i>
                     <span key="t-profile">Profile</span>
                 </Link>
-               
+
                 {/* <a className="dropdown-item">
                     <i className="bx bx-lock-open font-size-16 align-middle me-1"></i>
                     <span key="t-lock-screen">Lock screen</span>

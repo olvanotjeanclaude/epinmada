@@ -9,10 +9,14 @@ import "./assets/css/app.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
-import "./css/app.css"; 
+import "./css/app.css";
+import { ThemeProvider } from '@mui/material';
+import customTheme from './theme/customTheme.js';
 
 ReactDOM.createRoot(document.getElementById('app')).render(
   <React.StrictMode>
-     <MainApp />
+    <ThemeProvider theme={customTheme}>
+      <MainApp />
+    </ThemeProvider>
   </React.StrictMode>,
 )
