@@ -11,8 +11,8 @@ export default function HeaderDropDown() {
 
     const { data: user, isError, error } = useQuery({
         queryFn: async () => (await http.get("user")).data,
-        queryKey: "user",
-        keepPreviousData:true
+        queryKey: ["user"],
+        staleTime:Infinity,
     })
 
     const [showDropdown, setShowDropdown] = useState(false);

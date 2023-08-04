@@ -22,7 +22,7 @@ const PersonalInfo = () => {
         queryKey: "profile",
     });
 
-    if (isError) return <Error error={error} />;
+    if (isError) return <Error error={error.message} />;
 
     if (isLoading) return <Spinner />;
 

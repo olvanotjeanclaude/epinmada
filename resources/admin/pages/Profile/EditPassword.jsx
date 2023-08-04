@@ -30,7 +30,7 @@ const EditPassword = () => {
         password_confirmation: yup.string().required("Confirmer le mot de passe"),
     }).required();
 
-    const { register, handleSubmit, setError, reset, getValues, formState: { errors } } = useForm({
+    const { register, handleSubmit, setError, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
 

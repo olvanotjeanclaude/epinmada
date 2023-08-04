@@ -16,27 +16,18 @@ function Filter({ setCheckboxes }) {
         return acc;
     }, {});
 
-    useEffect(() => {
-        setCheckboxes(categories);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
+    useEffect(() => setCheckboxes(categories), [data]);
 
     const handleCheckboxChange = (event) => {
         const { name, checked } = event.target;
-        setCheckboxes((prevCheckboxes) => ({
-            ...prevCheckboxes,
-            [name]: checked,
-        }));
-
+        setCheckboxes((prevCheckboxes) => ({ ...prevCheckboxes, [name]: checked }));
     };
 
     if (isError) return <Error error={error} />
 
-    if (isLoading) return <Spinner />
-
     return (
         <div className="d-flex justify-content-center">
-            {
+            {  isLoading ? <Spinner />:
                 data.categories.map(category => (
                     <div className="form-check mx-3 mb-3" key={category.id}>
                         <input onChange={handleCheckboxChange} className="form-check-input p-1" name={category.name.toLowerCase()}
@@ -51,4 +42,4 @@ function Filter({ setCheckboxes }) {
     )
 }
 
-export default Filter
+export default Filter;

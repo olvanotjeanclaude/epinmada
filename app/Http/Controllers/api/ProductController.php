@@ -68,6 +68,36 @@ class ProductController extends Controller
         return Message::success("Produit");
     }
 
+    public function update($productID,ProductRequest $request)
+    {
+        $product = Product::whereId($productID)->firstOrFail();
+
+        $data = $request->validated();
+       
+        $data["category_id"] = $request->category;
+
+        $image = File::where("user_id", auth()->id())
+            ->where("model", "product")
+            ->where("key", $request->imageKey)
+            ->orderByDesc("id")
+            ->first();
+
+        if($image) {
+            $data["image_url"] = $image->path??"";
+        }
+
+        $data["category_id"] = $request->category;
+        $data["slug"] = Str::slug($request->name);
+
+        $product->update($data);
+
+        $image?->update(["status" => File::STATUS["done"]]);
+
+        $this->deleteImage();
+
+        return Message::success("Produit");
+    }
+
     private function deleteImage()
     {
         $deleted = File::where("key", request("imageKey"))->delete();

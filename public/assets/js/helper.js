@@ -53,3 +53,8 @@ export function formatPrice(price) {
 
     return "0 Ariary";
 }
+
+
+export function printError(message){
+    return  message && <small className="p-error">{message}</small>;
+}

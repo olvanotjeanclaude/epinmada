@@ -18,7 +18,7 @@ const ProfileForm = () => {
 
     const queryClient = useQueryClient();
 
-    const { isError, isLoading, error, data: profile } = useProfile();
+    const { isError, error, data: profile } = useProfile();
 
     const profileMutation = useProfileMutation();
 

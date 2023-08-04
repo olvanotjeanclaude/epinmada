@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import PageTitle from '../../component/Layout/PageTitle'
 import { Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import PrimeFile from '../../component/prime/PrimeFile';
@@ -8,17 +8,19 @@ import { Toast } from 'primereact/toast';
 import Submit from '../../component/Button/Submit';
 import Error from '../../component/Message/Error';
 import { useProductMutation } from './useProducts';
-import { useQuery } from 'react-query';
-import http from '../../Helper/makeRequest';
 
 function ProductForm() {
+  const [text, setText] = useState("");
+
   const {
-    product, errors, toast, action,
-    handleSubmit, onSubmit, register, control,
+    product,
+    toast, action,
+    errors, handleSubmit, onSubmit, register, control,
     addMutation, updateMutation, setValue,
   } = useProductMutation();
 
-  const [text, setText] = useState("");
+
+  useEffect(() => setText(product.data?.long_description) , [product.data]);
 
   const onChangeLongDescription = (e) => {
     setText(e.htmlValue);
@@ -35,7 +37,7 @@ function ProductForm() {
     <>
       <Toast ref={toast} />
 
-      <PageTitle pageTitle="Produits" title="Nouveau de produit" />
+      <PageTitle pageTitle="Produits" title={`${product ? 'Modification' : 'Nouveau'} de produit`} />
 
       <Row>
         <Col>

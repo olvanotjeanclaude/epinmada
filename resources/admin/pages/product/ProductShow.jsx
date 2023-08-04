@@ -3,7 +3,7 @@ import Error from '../../component/Message/Error';
 import PageTitle from '../../component/Layout/PageTitle';
 import { useDeleteMutation, useShow } from './useProducts';
 import { onDeleteData } from '../../Helper/sweetAlert';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 function ProductShow() {
   const { isError, error, isLoading, product } = useShow();
@@ -55,12 +55,16 @@ function ProductShow() {
 
                 <div dangerouslySetInnerHTML={{ __html: product.long_description }} />
 
-                <div className="mb-4">
+                <div className="d-flex gap-2">
                   <Button disabled={deleteMutation.isLoading}
                     onClick={() => onDelete(product)} variant='danger' className="waves-effect  mt-2 waves-light">
                     <i className="bx bx-trash-alt me-2"></i>
                     Supprimer
                   </Button>
+                  <Link to="edit" className="waves-effect btn btn-success  mt-2 waves-light">
+                    <i className="bx bx-edit-alt me-2"></i>
+                    Editer
+                  </Link>
                 </div>
               </div>
             </Col>

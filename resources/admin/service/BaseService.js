@@ -21,7 +21,6 @@ export class BaseService {
         return (await http.get(`/${this.endPoint}/${id}`)
             .catch(error => this.handleError(error)))
             ?.data
-
     }
 
     async update(data) {

@@ -60,6 +60,9 @@ function Products() {
                         <Link role='button' onClick={() => onDelete(product)} className="ms-2 action-icon text-danger">
                           <i className="mdi mdi-trash-can font-size-18"></i>
                         </Link>
+                        <Link to={`${product.unique_id}/edit`} className="ms-2 action-icon text-success">
+                          <i className="mdi mdi-pencil font-size-18"></i>
+                        </Link>
                       </td>
                     </tr>
                   ))

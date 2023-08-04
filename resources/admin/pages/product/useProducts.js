@@ -57,7 +57,7 @@ export const useProductMutation = () => {
         onSuccess: () => queryClient.invalidateQueries({ queryKey: [productService.endPoint] })
     });
 
-    const { register, handleSubmit, errors, setValue, setError, control } = useProductForm(productService.data);
+    const { register, handleSubmit, errors, setValue, setError, control } = useProductForm(product.data);
 
     const { onError, onSuccess } = useApiCallback(toast, setError);
 
