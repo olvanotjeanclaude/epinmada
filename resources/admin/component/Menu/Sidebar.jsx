@@ -1,72 +1,82 @@
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import uuid from 'react-uuid';
+import menus from '../../js/menus';
+
+import '../../assets/scss/menus.scss';
 
 function Sidebar() {
+    const [active, setActive] = useState('');
+    const [subActive, setSubActive] = useState('');
+    const verticalMenuRef = useRef();
+
+    const handleActive = (menu) => {
+        setActive(menu);
+    };
+
+    const handleClickOutside = (event) => {
+        const classList = [...event.target.classList];
+
+        if(classList.includes("toggle-sidebar") || classList.includes("toggle-sidebar-icon")){
+            document.body.classList.toggle("sidebar-enable");
+        }
+
+        else if (verticalMenuRef.current && !verticalMenuRef.current.contains(event.target)) {
+            document.body.classList.remove("sidebar-enable");
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
     return (
-        <div className="vertical-menu">
-
+        <div className="vertical-menu" ref={verticalMenuRef}>
             <div data-simplebar className="h-100">
-
                 <div id="sidebar-menu">
                     <ul className="metismenu list-unstyled" id="side-menu">
-                        <li className="menu-title" key="t-menu">Menu</li>
-
-                        <li>
-                            <Link to="/dashboard" className="waves-effect">
-                                <i className="bx bx-home-circle"></i><span className="badge rounded-pill bg-info float-end">04</span>
-                                <span key="t-dashboards">Dashboard</span>
-                            </Link>
+                        <li className="menu-title" key="t-menu">
+                            Menu
                         </li>
-
-
-                        <li>
-                            <Link to="/utilisateurs" className="waves-effect">
-                                <i className="bx bx-user-circle"></i>
-                                <span key="t-user">Utilisateurs</span>
-                            </Link>
-                        </li>
-
-                        <li>
-                            <a className="has-arrow waves-effect">
-                                <i className="bx bx-store"></i>
-                                <span key="t-ecommerce">Ventes</span>
-                            </a>
-                            <ul className="sub-menu" ariaexpanded="false">
-                                <li><Link to="/produits" key="t-products">Produits</Link></li>
-                                <li><Link to="/commandes" key="t-orders">Commandes</Link></li>
-                                <li><Link to="/produits/nouveau" key="t-add-product">Nouveau Produit</Link></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="/#" className="waves-effect">
-                                <i className="bx bx-envelope"></i>
-                                <span key="t-envelope">Email</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/#" className="waves-effect">
-                                <i className="bx bx-receipt"></i>
-                                <span key="t-receipt">Factures</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/#" className="has-arrow waves-effect">
-                                <i className="bx bxs-user-detail"></i>
-                                <span key="t-contacts">Clients</span>
-                            </a>
-                            <ul className="sub-menu" ariaexpanded="false">
-                                <li><a href="/#" key="t-user-grid">Liste</a></li>
-                                <li><a href="/#" key="t-profile">Nouveau</a></li>
-                            </ul>
-                        </li>
+                        {menus.map((menu) => menu.children ? (
+                            <li key={uuid()}  onClick={() => handleActive(menu.name)}  className={active === menu.name ? 'mm-active' : ''} >
+                                <a className="has-arrow waves-effect" >
+                                    {menu.icon}
+                                    <span key={`t-${menu.name.toString()}`}>{menu.name}</span>
+                                </a>
+                                <ul className={`sub-menu mm-collapse ${active === menu.name ? 'mm-show' : ''}`}>
+                                    {menu.children.map((subMenu) => (
+                                        <li key={uuid()} onClick={() => setSubActive(subMenu.name)}>
+                                            <Link to={subMenu.path} key={`t-${subMenu.name.toString()}`}
+                                                className={subActive === subMenu.name ? 'mm-active' : ''}
+                                            >
+                                                {subMenu.name}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </li>
+                        ) : (
+                            <li
+                                key={uuid()}
+                                onClick={() => handleActive(menu.name)}
+                                className={active === menu.name ? 'mm-active' : ''}
+                            >
+                                <Link to={menu.path} className="waves-effect">
+                                    {menu.icon}
+                                    <span key={`t-${menu.name.toString()}`}>{menu.name}</span>
+                                </Link>
+                            </li>
+                        )
+                        )}
                     </ul>
                 </div>
             </div>
         </div>
-
     );
 }
 
-export default Sidebar
+export default Sidebar;

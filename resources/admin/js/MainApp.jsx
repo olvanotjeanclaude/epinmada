@@ -1,10 +1,10 @@
 import { RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
-import FormContextProvider from '../Context/FormContext';
 
 import router from './router';
 import AuthProvider from '../Context/AuthProvider';
+import LayoutProvider from '../Context/LayoutProvider';
 
 
 function MainApp() {
@@ -18,11 +18,11 @@ function MainApp() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <FormContextProvider>
+      <LayoutProvider>
+        <AuthProvider>
           <RouterProvider router={router} />
-        </FormContextProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </LayoutProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

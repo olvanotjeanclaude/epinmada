@@ -35,9 +35,9 @@ function Topbar() {
             </div>
 
             <button type="button" onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="btn btn-sm px-3 font-size-16 header-item waves-effect"
+              className="btn btn-sm px-3 toggle-sidebar font-size-16 header-item waves-effect"
               id="vertical-menu-btn">
-              <i className="fa fa-fw fa-bars"></i>
+              <i className="fa fa-fw fa-bars toggle-sidebar-icon"></i>
             </button>
 
           </div>
