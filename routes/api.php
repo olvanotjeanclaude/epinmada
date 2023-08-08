@@ -42,8 +42,10 @@ Route::group(["middleware" => "auth:sanctum"], function () {
   Route::put("update-profile", [\App\Http\Controllers\api\ProfileController::class,"updateProfile"]);
   
   Route::resource("users", App\Http\Controllers\api\UserController::class);
+  Route::resource("customers", App\Http\Controllers\api\CustomerController::class);
   Route::resource("products", App\Http\Controllers\api\ProductController::class);
   Route::resource("categories", App\Http\Controllers\api\CategoryController::class)->only("index");
+ 
   Route::get("constants", [\App\Http\Controllers\api\ConstantController::class, "constants"]);
   
   Route::prefix('files')->group(function () {

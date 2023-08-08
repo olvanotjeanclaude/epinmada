@@ -10,6 +10,7 @@ import ProductShow from "./product/ProductShow";
 import Products from "./product/Products"
 import PersonalInfo from './Profile/PersonalInfo';
 import ProfileForm from './Profile/ProfileForm';
+import Customers from './customer/Customers';
 
 export {
     // Dashboard
@@ -26,6 +27,9 @@ export {
     ProductList,
     ProductShow,
     Products,
+
+    // Customers
+    Customers,
 
     //Profile
     PersonalInfo,

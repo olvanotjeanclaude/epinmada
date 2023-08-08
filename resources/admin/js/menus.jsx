@@ -27,11 +27,11 @@ export default  [
             },
         ]
     },
-    {
-        name: "Email",
-        icon: <i className="bx bx-envelope"></i>,
-        path: "",
-    },
+    // {
+    //     name: "Email",
+    //     icon: <i className="bx bx-envelope"></i>,
+    //     path: "",
+    // },
     {
         name: "Factures",
         icon: <i className="bx bx-receipt"></i>,
@@ -43,7 +43,7 @@ export default  [
         children: [
             {
                 name: "Liste",
-                path: ""
+                path: "/clients"
             },
             {
                 name: "Nouveau",

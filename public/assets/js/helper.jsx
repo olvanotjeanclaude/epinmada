@@ -55,6 +55,15 @@ export function formatPrice(price) {
 }
 
 
-export function printError(message){
-    return  message && <small className="p-error">{message}</small>;
+export function printError(message) {
+    return message && <small className="p-error">{message}</small>;
+}
+
+export function getBadgeStatus(status) {
+    const maps = {
+        0: { severity: "danger", value: "Passif" },
+        1: { severity: "success", value: "Actif" },
+    };
+
+    return maps[status] ?? { severity: "info", value: "Inconnu" };
 }

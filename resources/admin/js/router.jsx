@@ -1,5 +1,6 @@
 import { Outlet, createBrowserRouter } from 'react-router-dom';
 import {
+    Customers,
     Dashboard,
     PersonalInfo,
     ProductForm, ProductList, ProductShow,
@@ -27,6 +28,16 @@ const routeList = [
         element: <Outlet />,
         children: [
             { index: true, element: <ProductList /> },
+            { path: 'nouveau', element: <ProductForm /> },
+            { path: ':id', element: <ProductShow /> },
+            { path: ':id/edit', element: <ProductForm /> },
+        ]
+    },
+    {
+        path: 'clients',
+        element: <Outlet />,
+        children: [
+            { index: true, element: <Customers /> },
             { path: 'nouveau', element: <ProductForm /> },
             { path: ':id', element: <ProductShow /> },
             { path: ':id/edit', element: <ProductForm /> },

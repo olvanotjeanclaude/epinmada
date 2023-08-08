@@ -17,7 +17,7 @@ class User extends Authenticatable
     const TYPES = [
         "admin" => 1,
         "staff" => 2,
-        "client" => 3   
+        "client" => 3
     ];
 
     protected $fillable = [
@@ -45,7 +45,7 @@ class User extends Authenticatable
         "social_value"
     ];
 
-    protected $appends = ["typeText","full_name"];
+    protected $appends = ["typeText", "full_name"];
 
     /**
      * The attributes that should be cast.
@@ -80,5 +80,10 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return Str::title("$this->name $this->surname");
+    }
+
+    public function scopeCustomers($query)
+    {
+        return $query->where("type", self::TYPES["client"]);
     }
 }
