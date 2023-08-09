@@ -11,6 +11,8 @@ import Products from "./product/Products"
 import PersonalInfo from './Profile/PersonalInfo';
 import ProfileForm from './Profile/ProfileForm';
 import Customers from './customer/Customers';
+import CustomerShow from './customer/CustomerShow';
+import CustomerForm from './customer/CustomerForm';
 
 export {
     // Dashboard
@@ -30,6 +32,8 @@ export {
 
     // Customers
     Customers,
+    CustomerShow,
+    CustomerForm,
 
     //Profile
     PersonalInfo,

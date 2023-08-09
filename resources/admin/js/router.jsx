@@ -1,5 +1,7 @@
 import { Outlet, createBrowserRouter } from 'react-router-dom';
 import {
+    CustomerForm,
+    CustomerShow,
     Customers,
     Dashboard,
     PersonalInfo,
@@ -38,9 +40,9 @@ const routeList = [
         element: <Outlet />,
         children: [
             { index: true, element: <Customers /> },
-            { path: 'nouveau', element: <ProductForm /> },
-            { path: ':id', element: <ProductShow /> },
-            { path: ':id/edit', element: <ProductForm /> },
+            { path: 'nouveau', element: <CustomerForm /> },
+            { path: ':id', element: <CustomerShow /> },
+            { path: ':id/edit', element: <CustomerForm /> },
         ]
     },
     {
@@ -69,8 +71,8 @@ const routes = [
     { path: 'login', element: <Login /> },
 ]
 
-const router = createBrowserRouter(routes,{
-    basename:"/admin",
+const router = createBrowserRouter(routes, {
+    basename: "/admin",
 });
 
 export default router;

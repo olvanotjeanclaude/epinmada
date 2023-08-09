@@ -6,7 +6,6 @@ export class BaseService {
     }
 
     async fetchAll(page = 1, params = {}) {
-        console.log(params)
         return (await http.get(`/${this.endPoint}?page=${page}`,{
             params:{
                 ...params

@@ -40,15 +40,6 @@ export default  [
     {
         name: "Clients",
         icon: <i className="bx bxs-user-detail"></i>,
-        children: [
-            {
-                name: "Liste",
-                path: "/clients"
-            },
-            {
-                name: "Nouveau",
-                path: ""
-            },
-        ]
+        path: "/clients"
     },
 ];

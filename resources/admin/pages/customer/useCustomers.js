@@ -1,6 +1,7 @@
-import { useQuery } from "react-query"
+import { useMutation, useQuery } from "react-query"
 import customerService from "../../service/CustomerService";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 export const useFetchAll = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -22,4 +23,20 @@ export const useFetchAll = () => {
         setOrder,
         data, error, isLoading, isError
     }
+}
+
+
+export const useDeleteMutation = () => {
+    return useMutation({
+        mutationKey: "deleteCustomers",
+        mutationFn: async (IDs) => await customerService.deleteMultiple(IDs)
+    });
+}
+
+export const useShow = () => {
+    const { id } = useParams();
+    return useQuery({
+        queryKey: "showCustomer",
+        queryFn: async () => await customerService.show(id)
+    })
 }
