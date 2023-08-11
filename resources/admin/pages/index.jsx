@@ -13,11 +13,16 @@ import ProfileForm from './Profile/ProfileForm';
 import Customers from './customer/Customers';
 import CustomerShow from './customer/CustomerShow';
 import CustomerForm from './customer/CustomerForm';
+import Orders from './orders/Orders';
+import OrderShow from './orders/OrderShow';
+import InvoiceList from './invoice/InvoiceList';
+import InvoiceShow from './invoice/InvoiceShow';
+import InvoiceForm from './invoice/InvoiceForm';
 
 export {
     // Dashboard
     Dashboard,
-    
+
     // Users category
     UserList,
     UserForm,
@@ -34,6 +39,15 @@ export {
     Customers,
     CustomerShow,
     CustomerForm,
+
+    // Commandes
+    Orders,
+    OrderShow,
+
+    // Invoices
+    InvoiceList,
+    InvoiceForm,
+    InvoiceShow,
 
     //Profile
     PersonalInfo,

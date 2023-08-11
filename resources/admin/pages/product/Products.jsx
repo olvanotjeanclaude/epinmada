@@ -40,14 +40,12 @@ function Products() {
                     <tr key={product.unique_id}>
                       <td>
                         <img src={`${product.image_url}`} alt="product-img"
-                          title="product-img" className="avatar-md" />
+                          title="product-img" className="avatar-sm" />
                       </td>
                       <td>
-                        <h5 className="font-size-14 text-truncate">
-                          <a href={product.route_detail} className="text-dark">
+                          <a href={product.route_detail} className="text-dark font-weight-bold">
                             {capitalizeLetter(product?.name)}
                           </a>
-                        </h5>
                       </td>
                       <td>{product.category?.name}</td>
                       <td>

@@ -6,7 +6,10 @@ const useFetchConstants = () => {
         return (await http.get('/constants')).data;
     };
 
-    const { data, isLoading, isError } = useQuery('/constants', fetchConstants);
+    const { data, isLoading, isError } = useQuery({
+        queryKey:"fetchConstants",
+        queryFn: fetchConstants
+    });
 
     return {
         user_types: {

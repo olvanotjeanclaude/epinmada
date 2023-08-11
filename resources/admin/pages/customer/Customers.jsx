@@ -61,10 +61,6 @@ function Customers() {
             tooltip: "Voir",
             tooltipOptions: { position: 'top' }
         },
-        edit: {
-            tooltip: "Editer",
-            tooltipOptions: { position: 'top' }
-        },
         delete: {
             tooltip: "Supprimer",
             tooltipOptions: { position: 'top' }
@@ -81,9 +77,6 @@ function Customers() {
                         <Button  {...tooltips.show} disabled={selectedCustomers.length != 1}
                             onClick={() => navigate(`${selectedCustomers[0].id}`)}
                             icon="pi pi-eye" severity="secondary" aria-label="Voir" />
-
-
-                        <Button {...tooltips.edit} disabled={selectedCustomers.length != 1} icon="pi pi-user-edit" severity="success" aria-label="Editer" />
 
                         <Button {...tooltips.delete} disabled={selectedCustomers.length == 0} onClick={onDelete}
                             icon="pi pi-trash" severity="danger" aria-label="Supprimer" />

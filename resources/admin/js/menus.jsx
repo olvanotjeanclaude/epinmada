@@ -27,16 +27,25 @@ export default  [
             },
         ]
     },
+    {
+        name: "Factures",
+        icon: <i className="bx bx-receipt"></i>,
+        children: [
+            {
+                name: "Factures",
+                path: "/factures"
+            },
+            {
+                name: "Nouveau Facture",
+                path: "/factures/nouveau"
+            },
+        ]
+    },
     // {
     //     name: "Email",
     //     icon: <i className="bx bx-envelope"></i>,
     //     path: "",
     // },
-    {
-        name: "Factures",
-        icon: <i className="bx bx-receipt"></i>,
-        path: "",
-    },
     {
         name: "Clients",
         icon: <i className="bx bxs-user-detail"></i>,

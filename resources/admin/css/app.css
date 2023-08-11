@@ -13,3 +13,8 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.pb-small {
+  padding: 1px; /* Adjust padding as needed */
+  font-size: 12rem!important; /* Adjust font size as needed */
+}

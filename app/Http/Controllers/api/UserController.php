@@ -6,13 +6,28 @@ use App\Helpers\Message;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderByDesc("id")->paginate(8);
+        $checkboxs = array_filter(request("checkboxs")??[], fn ($checkbox) => $checkbox == "true");
+
+        $users = User::where("type", "!=", User::TYPES["client"])
+            ->where(function ($query) {
+                $search = request("query");
+                $query->where("name", "LIKE", "%$search%")
+                    ->orWhere("surname", "LIKE", "%$search%")
+                    ->orWhere("phone", "LIKE", "%$search%")
+                    ->orWhere("email", "LIKE", "%$search%");
+            });
+
+        if (count($checkboxs)) {
+            $users = $users->whereIn("type", array_keys($checkboxs));
+        }
+
+        $users = $users->orderByDesc("id")->paginate(6);
 
         return response()->json($users);
     }

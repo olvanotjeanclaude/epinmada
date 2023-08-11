@@ -4,6 +4,11 @@ import {
     CustomerShow,
     Customers,
     Dashboard,
+    InvoiceList,
+    InvoiceShow,
+    InvoiceForm,
+    OrderShow,
+    Orders,
     PersonalInfo,
     ProductForm, ProductList, ProductShow,
     ProfileForm,
@@ -36,6 +41,24 @@ const routeList = [
         ]
     },
     {
+        path: 'factures',
+        element: <Outlet />,
+        children: [
+            { index: true, element: <InvoiceList /> },
+            { path: 'nouveau', element: <InvoiceForm /> },
+            { path: ':id', element: <InvoiceShow /> },
+            { path: ':id/edit', element: <InvoiceForm /> },
+        ]
+    },
+    {
+        path: 'commandes',
+        element: <Outlet />,
+        children: [
+            { index: true, element: <Orders /> },
+            { path: ':id/edit', element: <OrderShow /> },
+        ]
+    },
+    {
         path: 'clients',
         element: <Outlet />,
         children: [
@@ -52,10 +75,6 @@ const routeList = [
             { index: true, element: <PersonalInfo /> },
             { path: 'edit', element: <ProfileForm /> },
         ]
-    },
-    {
-        path: 'commandes',
-        element: <h1>Commandes</h1>
     },
 ];
 

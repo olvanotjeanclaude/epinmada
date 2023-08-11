@@ -7,7 +7,7 @@ User.propTypes = {
     user: object
 };
 
-export default function User({ user }) {
+export default function User({ user,query }) {
     const { deleteMutation } = useUserMutation();
 
     const onDelete = async (user) => await onDeleteData(user, deleteMutation);
