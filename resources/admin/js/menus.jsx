@@ -10,7 +10,7 @@ export default  [
         path: "/utilisateurs"
     },
     {
-        name: "Ventes",
+        name: "Produits",
         icon: <i className="bx bx-store"></i>,
         children: [
             {
@@ -18,26 +18,22 @@ export default  [
                 path: "/produits"
             },
             {
-                name: "Commandes",
-                path: "/commandes"
-            },
-            {
-                name: "Nouveau Produit",
+                name: "Nouveau",
                 path: "/produits/nouveau"
             },
         ]
     },
     {
-        name: "Factures",
+        name: "Ventes",
         icon: <i className="bx bx-receipt"></i>,
         children: [
             {
-                name: "Factures",
-                path: "/factures"
+                name: "Ventes",
+                path: "/ventes"
             },
             {
-                name: "Nouveau Facture",
-                path: "/factures/nouveau"
+                name: "Nouveau",
+                path: "/ventes/nouveau"
             },
         ]
     },

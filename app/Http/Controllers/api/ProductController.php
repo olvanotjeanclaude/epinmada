@@ -14,15 +14,17 @@ class ProductController extends Controller
 {
     public function index()
     {
+        $search = request("query");
         $products = Product::with("category")
             ->whereHas("category", function ($query) {
-                $inputs = array_filter(request()->all(), fn ($input) => $input == "true");
-                $names = array_keys($inputs);
+                $inputs = array_filter(request("checkboxs")??[], fn ($input) => $input == "true");
+                $catIds = array_keys($inputs);
 
-                if (count($names)) {
-                    $query->whereIn("name", $names);
+                if (count($catIds)) {
+                    $query->whereIn("id", $catIds);
                 }
             })
+            ->where("name","LIKE","%$search%")
             ->orderByDesc("id")
             ->paginate(5);
 

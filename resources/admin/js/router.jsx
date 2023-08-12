@@ -4,15 +4,12 @@ import {
     CustomerShow,
     Customers,
     Dashboard,
-    InvoiceList,
-    InvoiceShow,
-    InvoiceForm,
     OrderShow,
     Orders,
     PersonalInfo,
     ProductForm, ProductList, ProductShow,
     ProfileForm,
-    UserForm, UserList, UserShow
+    UserForm, UserList, UserShow, Sales, SaleForm, SaleShow
 } from '../pages';
 
 import Admin from './Admin';
@@ -41,13 +38,13 @@ const routeList = [
         ]
     },
     {
-        path: 'factures',
+        path: 'ventes',
         element: <Outlet />,
         children: [
-            { index: true, element: <InvoiceList /> },
-            { path: 'nouveau', element: <InvoiceForm /> },
-            { path: ':id', element: <InvoiceShow /> },
-            { path: ':id/edit', element: <InvoiceForm /> },
+            { index: true, element: <Sales /> },
+            { path: 'nouveau', element: <SaleForm /> },
+            { path: ':id', element: <SaleShow /> },
+            { path: ':id/edit', element: <SaleForm /> },
         ]
     },
     {

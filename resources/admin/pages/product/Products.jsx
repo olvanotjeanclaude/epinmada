@@ -9,7 +9,7 @@ import { capitalizeLetter } from '../../Helper/Helper';
 
 function Products() {
 
-  const { error, checkboxs, setCheckboxs, isError, isLoading, data, currentPage, setCurrentPage } = useFetchAll()
+  const { error, setCheckboxs, isError, isLoading, data, query, setQuery, currentPage, setCurrentPage } = useFetchAll()
 
   const deleteMutation = useDeleteMutation();
 
@@ -19,7 +19,10 @@ function Products() {
 
   return (
     <>
-      <Filter checkboxes={checkboxs} setCheckboxes={setCheckboxs} />
+      <Filter data={data}
+        isLoading={isLoading}
+        query={query} setQuery={setQuery}
+        setCheckboxes={setCheckboxs} />
 
       <Table responsive striped className="table align-middle mb-0 table-nowrap">
         <thead className="table-light">
@@ -43,9 +46,9 @@ function Products() {
                           title="product-img" className="avatar-sm" />
                       </td>
                       <td>
-                          <a href={product.route_detail} className="text-dark font-weight-bold">
-                            {capitalizeLetter(product?.name)}
-                          </a>
+                        <a href={product.route_detail} className="text-dark font-weight-bold">
+                          {capitalizeLetter(product?.name)}
+                        </a>
                       </td>
                       <td>{product.category?.name}</td>
                       <td>

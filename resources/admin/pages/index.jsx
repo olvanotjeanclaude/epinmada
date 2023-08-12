@@ -15,9 +15,12 @@ import CustomerShow from './customer/CustomerShow';
 import CustomerForm from './customer/CustomerForm';
 import Orders from './orders/Orders';
 import OrderShow from './orders/OrderShow';
-import InvoiceList from './invoice/InvoiceList';
-import InvoiceShow from './invoice/InvoiceShow';
-import InvoiceForm from './invoice/InvoiceForm';
+import Sales from './sales/Sales';
+import SaleShow from './sales/SaleShow';
+import SaleForm from './sales/SaleForm';
+// import InvoiceList from './invoice/InvoiceList';
+// import InvoiceShow from './invoice/InvoiceShow';
+// import InvoiceForm from './invoice/InvoiceForm';
 
 export {
     // Dashboard
@@ -45,9 +48,11 @@ export {
     OrderShow,
 
     // Invoices
-    InvoiceList,
-    InvoiceForm,
-    InvoiceShow,
+    
+    // Sales
+    Sales,
+    SaleShow,
+    SaleForm,
 
     //Profile
     PersonalInfo,

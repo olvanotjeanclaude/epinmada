@@ -8,11 +8,13 @@ import useApiCallback from "../../Hooks/useApiCallback";
 export const useFetchAll = () => {
     const [checkboxs, setCheckboxs] = useState({});
 
+    const [query,setQuery] = useState("");
+
     const [currentPage, setCurrentPage] = useState(1);
 
     const { data, error, isLoading, isError } = useQuery({
-        queryKey: [productService.name, currentPage, checkboxs],
-        queryFn: () => productService.fetchAll(currentPage, checkboxs),
+        queryKey: [productService.name, currentPage,query, checkboxs],
+        queryFn: () => productService.fetchAll(currentPage, {checkboxs,query}),
         keepPreviousData: true,
         onError: (error) => new Error(error.message)
     });
@@ -20,7 +22,8 @@ export const useFetchAll = () => {
     return {
         checkboxs, setCheckboxs,
         currentPage, setCurrentPage,
-        data, error, isLoading, isError
+        data, error, isLoading, isError,
+        query,setQuery
     }
 }
 
