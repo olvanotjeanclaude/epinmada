@@ -38,19 +38,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(["middleware" => "auth:sanctum"], function () {
-  Route::post("update-password", [\App\Http\Controllers\api\PasswordController::class,"updatePassword"]);
-  Route::put("update-profile", [\App\Http\Controllers\api\ProfileController::class,"updateProfile"]);
-  
+  Route::post("update-password", [\App\Http\Controllers\api\PasswordController::class, "updatePassword"]);
+  Route::put("update-profile", [\App\Http\Controllers\api\ProfileController::class, "updateProfile"]);
+
   Route::resource("users", App\Http\Controllers\api\UserController::class);
+  Route::put("users/update-status/{id}", [App\Http\Controllers\api\UserController::class, "updateStatus"]);
+  
   Route::resource("customers", App\Http\Controllers\api\CustomerController::class);
   Route::resource("products", App\Http\Controllers\api\ProductController::class);
   Route::resource("categories", App\Http\Controllers\api\CategoryController::class)->only("index");
- 
+
   Route::get("constants", [\App\Http\Controllers\api\ConstantController::class, "constants"]);
-  
+
   Route::prefix('files')->group(function () {
     Route::get("generate-key", [\App\Http\Controllers\api\FileController::class, "generateKey"]);
     Route::post("upload", [\App\Http\Controllers\api\FileController::class, "upload"]);
   });
 });
-

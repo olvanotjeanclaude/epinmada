@@ -1,6 +1,6 @@
 import React from 'react'
 import PageTitle from '../../component/Layout/PageTitle'
-import { Card, Col, Row } from 'react-bootstrap'
+import { Button, Card, Col, Row } from 'react-bootstrap'
 import Products from './component/Products'
 import PaymentMethod from '../../component/card/PaymentMethod'
 import { Divider } from 'primereact/divider'
@@ -17,10 +17,25 @@ export default function SaleForm() {
         </Col>
 
         <Col sm={4} lg={5}>
-          <br /><br />
-          <PaymentMethod />
           <Divider />
+
+          <PaymentMethod />
+
+          <Divider />
+
           <OrderSummary />
+
+          <Divider />
+          <div className="d-flex justify-content-end gap-2">
+            <Button>
+              <i className="mdi mdi-cart-arrow-right me-1"></i>
+              Payer
+            </Button>
+            <Button variant='danger'>
+              <i className="mdi mdi-close me-1"></i>
+              Anuller
+            </Button>
+          </div>
         </Col>
       </Row>
     </>

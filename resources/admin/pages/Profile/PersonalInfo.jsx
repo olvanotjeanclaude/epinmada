@@ -1,12 +1,13 @@
 import React from "react";
-import {  Col, Row, Spinner, Stack } from "react-bootstrap";
+import { Col, Row, Spinner } from "react-bootstrap";
 import { useQuery } from "react-query";
 import http from "../../Helper/makeRequest";
 import Error from "../../component/Message/Error";
 import EditPassword from "./EditPassword";
 import { Avatar } from "primereact/avatar";
 import { Link } from "react-router-dom";
-import EditIcon from '@mui/icons-material/Edit';
+import { mdiAccountEdit } from '@mdi/js';
+
 
 const PersonalInfo = () => {
     const {
@@ -36,8 +37,9 @@ const PersonalInfo = () => {
                                 Informations personnelles
                             </h4>
 
-                            <Link to="edit" variant='success' className="waves-effectwaves-light">
-                               <EditIcon />
+                            <Link to="edit" className="waves-effectwaves-light btn btn-primary">
+                                <i className="mdi mdi-account-edit"></i>
+                                Editer
                             </Link>
                         </div>
 

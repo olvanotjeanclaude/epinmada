@@ -12,7 +12,6 @@ import { capitalizeLetter } from '../../Helper/Helper';
 
 function Users() {
     const [currentPage, setCurrentPage] = useState(1);
-
     const { user_types } = useFetchConstants();
     const [checkboxs, setCheckboxs] = useState();
     const [query, setQuery] = useState("");
@@ -35,13 +34,13 @@ function Users() {
     return (
         isLoading ? <Spinner /> :
             <>
-                <div className="d-flex align-items-center flex-wrap mb-2 justify-content-between">
-                    <span className="p-input-icon-left">
+                <div className="d-flex align-items-center flex-wrap mb-2  gap-2 justify-content-between">
+                    <span className="p-input-icon-left flex-grow-1 flex-xl-grow-0">
                         <i className="pi pi-search" />
-                        <InputText value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Rechercher..." />
+                        <InputText className='w-100' value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Rechercher..." />
                     </span>
 
-                    <div className='d-flex gap-2'>
+                    <div className='d-flex flex-grow-1 flex-xl-grow-0 gap-2'>
                         {
                             user_types && Object.entries(user_types)
                                 .filter(([type, value]) => type != "client")
@@ -61,10 +60,10 @@ function Users() {
 
                     <PCreateButton />
                 </div>
-                <Row>
+                <Row style={{ minHeight: "350px" }}>
                     {
                         users?.data?.map(user => (
-                            <Col sm={6} md={4} key={user.id}>
+                            <Col sm={6} md={4} xl={3} key={user.id}>
                                 <User user={user} query={query} />
                             </Col>
                         ))

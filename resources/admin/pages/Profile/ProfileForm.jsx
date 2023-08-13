@@ -1,5 +1,3 @@
-import { Box, Button, FormHelperText, TextField } from '@mui/material';
-import SaveIcon from '@mui/icons-material/Save';
 import React, { useRef } from 'react';
 import PageTitle from '../../component/Layout/PageTitle';
 import useProfile from './useProfile';
@@ -12,6 +10,8 @@ import { useEffect } from 'react';
 import { Toast } from 'primereact/toast';
 import { useQueryClient } from 'react-query';
 import { mapFormErrors } from '../../Helper/Helper';
+import { FloatingLabel, Form } from 'react-bootstrap';
+import { Button } from 'primereact/button';
 
 const ProfileForm = () => {
     const toast = useRef();
@@ -42,7 +42,7 @@ const ProfileForm = () => {
     });
 
     useEffect(() => {
-        setValue("name", profile.name);
+        setValue("name", profile?.name);
         setValue("surname", profile?.surname);
         setValue("phone", profile?.phone);
         setValue("email", profile?.email);
@@ -71,63 +71,49 @@ const ProfileForm = () => {
     if (isError) return <Error error={error.message} />
 
     return (
-        <>
+        <Form className='needs-validation' onSubmit={handleSubmit(onSubmit)} noValidate>
+
             <Toast ref={toast} />
             <PageTitle pageTitle="Profile" title="Modification du profile" />
 
-            <Box
-                component="form"
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '1rem',
-                }}
-                onSubmit={handleSubmit(onSubmit)}
-                noValidate
-                autoComplete="off"
-            >
-                <Box>
-                    <TextField
-                        {...register("name")}
-                        error={!!errors.name}
-                        fullWidth label="Nom" variant="outlined" />
-                    <FormHelperText disabled error>{errors.name?.message}</FormHelperText>
-                </Box>
-                <Box>
-                    <TextField
-                        {...register("surname")}
-                        error={!!errors.surname}
-                        fullWidth label="Prénom" variant="outlined" />
-                    <FormHelperText disabled error>{errors.surname?.message}</FormHelperText>
-                </Box>
-                <Box>
-                    <TextField
-                        {...register("email")}
-                        error={!!errors.email}
-                        type='email'
-                        fullWidth label="E-mail" variant="outlined" />
-                    <FormHelperText disabled error>{errors.email?.message}</FormHelperText>
-                </Box>
-                <Box>
-                    <TextField
-                        {...register("phone")}
-                        error={!!errors.phone}
-                        fullWidth label="Téléphone" variant="outlined" />
-                    <FormHelperText disabled error>{errors.phone?.message}</FormHelperText>
-                </Box>
+            <Form.Group className="mb-3">
+                <FloatingLabel controlId="name" label="Nom">
+                    <Form.Control {...register("name")}
+                        type="text" placeholder="Nom"
+                        isInvalid={!!errors.name} />
+                    <Form.Control.Feedback type="invalid">{errors.name?.message}</Form.Control.Feedback>
+                </FloatingLabel>
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <FloatingLabel controlId="surname" label="Prénom">
+                    <Form.Control {...register("surname")}
+                        type="text" placeholder="Prénom"
+                        isInvalid={!!errors.surname} />
+                    <Form.Control.Feedback type="invalid">{errors.surname?.message}</Form.Control.Feedback>
+                </FloatingLabel>
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <FloatingLabel controlId="phone" label="Téléphone">
+                    <Form.Control {...register("phone")}
+                        type="phone" placeholder="Téléphone"
+                        isInvalid={!!errors.phone} />
+                    <Form.Control.Feedback type="invalid">{errors.phone?.message}</Form.Control.Feedback>
+                </FloatingLabel>
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <FloatingLabel controlId="email" label="Email">
+                    <Form.Control {...register("email")}
+                        type="email" placeholder="Email"
+                        isInvalid={!!errors.email} />
+                    <Form.Control.Feedback type="invalid">{errors.email?.message}</Form.Control.Feedback>
+                </FloatingLabel>
+            </Form.Group>
 
-                <Box sx={{ display: "flex", justifyContent: "end" }}>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        disabled={profileMutation.isLoading}
-                        endIcon={profileMutation.isLoading ? null : <SaveIcon />}
-                    >
-                        {profileMutation.isLoading ? 'Envoyen en cours...' : 'Enregister'}
-                    </Button>
-                </Box>
-            </Box>
-        </>
+        <div className="d-flex justify-content-end">
+            <Button size='small' label="Envoyer"
+             icon="pi pi-check" loading={profileMutation.isLoading} />
+        </div>
+        </Form>
     );
 }
 
