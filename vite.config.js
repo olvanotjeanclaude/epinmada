@@ -6,7 +6,10 @@ export default defineConfig({
     plugins: [
         react(),
         laravel({
-            input: ['resources/admin/main.jsx'],
+            input: [
+                'resources/admin/main.jsx',
+                'resources/front/main.jsx',
+            ],
             refresh: true,
         }),
     ],

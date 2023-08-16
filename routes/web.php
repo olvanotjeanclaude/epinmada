@@ -22,6 +22,7 @@ Route::group(["prefix" => "auth", "as" => "auth.", "middleware" => "auth"], func
 });
 
 Route::view('/admin/{any_path?}', 'admin')->where('any_path', '(.*)');
+Route::view('/u/{any_path?}', 'front')->where('any_path', '(.*)');
 
 Route::get('/authentification', [\App\Http\Controllers\Auth\LoginController::class, "getAuthentification"])->name("getAuthentification");
 Route::post('/authentification', [\App\Http\Controllers\Auth\LoginController::class, "auth"])->name("auth");

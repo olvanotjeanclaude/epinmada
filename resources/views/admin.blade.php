@@ -14,8 +14,6 @@
     {{-- @include('include.head-css') --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-
     @viteReactRefresh
     @vite(['resources/admin/app.css', 'resources/admin/main.jsx'])
 </head>
