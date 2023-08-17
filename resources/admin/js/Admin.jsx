@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import RightContent from '../component/Layout/RightContent';
 import Menu from '../component/Menu/Menu';
 import { useAuthProvider } from '../Context/useAuthProvider';
@@ -6,11 +5,10 @@ import { useEffect } from 'react';
 
 function Admin() {
   const { token } = useAuthProvider();
-  const navigate = useNavigate();
 
-  useEffect(() =>{
-    if (token==null) navigate("/login");
-  })
+  useEffect(() => {
+    if (token == null) window.location.href = "/sign-in";
+  }, [])
 
   return (
     <div className="App">

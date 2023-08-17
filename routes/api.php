@@ -29,9 +29,11 @@ Route::get('/token', function (Request $request) {
 
 Route::post("auth-social/{social}", [\App\Http\Controllers\Auth\SocialController::class, "authSocial"]);
 
-Route::get("/login", [\App\Http\Controllers\Auth\LoginController::class, "showLoginForm"])->name("showLoginForm");
-Route::post("/login", [\App\Http\Controllers\Auth\LoginController::class, "login"]);
+
+Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, "login"])->name("login");
+Route::post('/sign-up', [\App\Http\Controllers\Auth\RegisterController::class, "signUp"])->name("signUp");
 Route::post("/logout", [\App\Http\Controllers\Auth\LoginController::class, "logout"]);
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
   return $request->user();

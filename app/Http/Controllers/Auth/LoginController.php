@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
@@ -38,12 +39,14 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        if (!request()->ajax()) {
+            $this->middleware('guest')->except('logout');
+        }
     }
 
-    public function getAuthentification()
+    public function signIn()
     {
-        return view("auth");
+        return view("auth.sign");
     }
 
     public function login(Request $request)
@@ -73,6 +76,7 @@ class LoginController extends Controller
                         "name" => $user->name,
                         "surname" => $user->surname,
                         "email" => $user->email,
+                        "type" =>array_search($user->type,User::TYPES)
                     ]
                 ]);
             }

@@ -1,24 +1,20 @@
 import { Link } from 'react-router-dom'
 import { onDeleteData } from '../../Helper/sweetAlert'
-import { object } from 'prop-types';
-import useUserMutation from './useUserMutation';
 import { InputSwitch } from 'primereact/inputswitch';
-import { useEffect, useRef, useState } from 'react';
-import { useMutation } from 'react-query';
+import { useRef } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 import http from '../../Helper/makeRequest';
-import { Spinner } from 'react-bootstrap';
 import { Toast } from 'primereact/toast';
+import useFetchConstants from '../../Hooks/useFetchConstants';
+import useUserMutation from './useUserMutation';
+import { LinearProgress } from '@mui/material';
 
-
-User.propTypes = {
-    user: object
-};
 
 export default function User({ user }) {
     const toast = useRef();
     const { deleteMutation } = useUserMutation();
-
-    const [checkedStaff, setCheckedStaff] = useState({ id: null, checked: false });
+    const { user_types } = useFetchConstants();
+    const queryClient = useQueryClient();
 
     const onDelete = async (user) => await onDeleteData(user, deleteMutation);
 
@@ -33,15 +29,18 @@ export default function User({ user }) {
         mutationKey: ["updateUserStatus"]
     });
 
-    const handleSwich = (e) => {
-        const data = { id: user.id, checked: e.value };
-        setCheckedStaff(data)
+    const handleSwich = () => {
+        const data = { id: user.id };
 
-        const _showFeedback = (data) =>{
-            toast.current.show({ severity: data.type, summary: data.type??"Erreur", detail: data.message })
+        const _showFeedback = (data) => {
+            toast.current.show({ severity: data.type, summary: data.type ?? "Erreur", detail: data.message })
         }
+
         mutation.mutate(data, {
-            onSuccess: _showFeedback,
+            onSuccess: (data) => {
+                _showFeedback(data);
+                queryClient.invalidateQueries(user.is_team)
+            },
             onError: _showFeedback
         })
     };
@@ -49,6 +48,7 @@ export default function User({ user }) {
     return (
         <div className="card">
             <Toast ref={toast} />
+            {mutation.isLoading && <LinearProgress />}
             <div className="card-body">
                 <div className="d-flex align-items-center mb-3 justify-content-between">
                     <div className="avatar-sm">
@@ -57,11 +57,10 @@ export default function User({ user }) {
                         </span>
                     </div>
 
-                    <div className='text-end'>
+                    <div hidden={user_types.admin == user.type} className='text-end'>
                         <h6>Activation</h6>
-                        <InputSwitch checked={checkedStaff.checked} onChange={handleSwich} />
+                        <InputSwitch checked={user.is_team == 1 ? true : false} onChange={handleSwich} />
                     </div>
-
                 </div>
                 <div className="font-size-15  overflow-hidden mb-1">
                     <a className="text-dark  text-truncate">{user.full_name}</a>

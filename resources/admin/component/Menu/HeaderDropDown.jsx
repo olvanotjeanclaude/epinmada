@@ -7,7 +7,7 @@ import { useQuery } from "react-query";
 import Error from "../Message/Error";
 
 export default function HeaderDropDown() {
-    // const { setToken, setUser, user } = useAuthProvider();
+    const { setToken, setUser } = useAuthProvider();
 
     const { data: user, isError, error } = useQuery({
         queryFn: async () => (await http.get("user")).data,
@@ -26,8 +26,8 @@ export default function HeaderDropDown() {
             setToken(null);
             setUser(null);
 
-            location.href = "/login";
         }
+        location.href = "/sign-in";
     }
 
     if (isError) return <Error error={error.message} />

@@ -15,17 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Route::view('/sign-in',"auth.sign-in")->name("signInForm");
+Route::view('/sign-up',"auth.sign-up")->name("signUpForm");
 
 Route::group(["prefix" => "auth", "as" => "auth.", "middleware" => "auth"], function () {
     Route::get("/lock-screen", [\App\Http\Controllers\Auth\LoginController::class, "lockScreen"])->name("lockScreen");
 });
 
 Route::view('/admin/{any_path?}', 'admin')->where('any_path', '(.*)');
-Route::view('/u/{any_path?}', 'front')->where('any_path', '(.*)');
-
-Route::get('/authentification', [\App\Http\Controllers\Auth\LoginController::class, "getAuthentification"])->name("getAuthentification");
-Route::post('/authentification', [\App\Http\Controllers\Auth\LoginController::class, "auth"])->name("auth");
+Route::view('/u/{any_path?}', 'user')->where('any_path', '(.*)');
 
 Route::group(["as" => "front."], function () {
     Route::get('/', [\App\Http\Controllers\FrontController::class, "index"])->name("index");

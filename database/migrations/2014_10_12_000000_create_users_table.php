@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean("status")->default(true);
             $table->string('name');
             $table->string('surname');
+            $table->boolean("is_team")->comment("show on front");
             $table->string("province")->nullable();
             $table->string("district")->nullable();
             $table->string("neighborhood")->nullable();

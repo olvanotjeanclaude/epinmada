@@ -24,6 +24,7 @@ class User extends Authenticatable
         "id",
         "name",
         "surname",
+        "is_team",
         "province",
         "district",
         "neighborhood",

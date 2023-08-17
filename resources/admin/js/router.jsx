@@ -83,8 +83,7 @@ const routes = [
             ...routeList,
             { path: '*', element: <h1>DATA NOT FOUND</h1> }
         ],
-    },
-    { path: 'login', element: <Login /> },
+    }
 ]
 
 const router = createBrowserRouter(routes, {

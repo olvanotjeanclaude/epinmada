@@ -9,6 +9,9 @@ export default defineConfig({
             input: [
                 'resources/admin/main.jsx',
                 'resources/front/main.jsx',
+
+                "resources/front/js/sign-in.js",
+                "resources/front/js/sign-up.js",
             ],
             refresh: true,
         }),

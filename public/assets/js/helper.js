@@ -56,7 +56,7 @@ export function formatPrice(price) {
 
 
 export function printError(message) {
-    return message && <small className="p-error">{message}</small>;
+    return message &&`<small className="p-error">${message}</small>`;
 }
 
 export function getBadgeStatus(status) {

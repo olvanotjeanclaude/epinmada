@@ -7,7 +7,7 @@
     <title>Epin Mada</title>
 
     @viteReactRefresh
-    @vite(['resources/front/main.jsx'])
+    @vite(['resources/user/main.jsx'])
 </head>
 <body>
     <div id="root"></div>
