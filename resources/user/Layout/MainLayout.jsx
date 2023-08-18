@@ -6,13 +6,18 @@ import MainContent from './MainContent'
 import { grey, red } from '@mui/material/colors'
 import FixedBottomBar from '../component/navigation/FixedBottomBar'
 import { useLocation } from 'react-router-dom'
+import { useUser } from '../context/UserContextProvider'
 
 export default function MainLayout() {
     const location = useLocation();
+    const { user, token } = useUser();
 
-    useEffect(() => {
-        // console.log(location)
-    }, [location])
+    // useEffect(() => {
+    //     console.log(user,token);
+    //     if (user==null || token==null) {
+    //         window.location.href = "/sign-in";
+    //     }
+    // }, [user, token])
 
     return (
         <Box position="relative" bgcolor={grey[50]}>

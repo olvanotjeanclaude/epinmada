@@ -17,16 +17,22 @@ class ProductController extends Controller
         $search = request("query");
         $products = Product::with("category")
             ->whereHas("category", function ($query) {
-                $inputs = array_filter(request("checkboxs")??[], fn ($input) => $input == "true");
+                $inputs = array_filter(request("checkboxs") ?? [], fn ($input) => $input == "true");
                 $catIds = array_keys($inputs);
 
                 if (count($catIds)) {
                     $query->whereIn("id", $catIds);
                 }
+
+                $tag = request("tag");
+
+                if ($tag && $tag != "all") {
+                    $query->where("name", "LIKE", "%$tag%");
+                }
             })
-            ->where("name","LIKE","%$search%")
+            ->where("name", "LIKE", "%$search%")
             ->orderByDesc("id")
-            ->paginate(5);
+            ->paginate(request("tag") == "all" ? Product::count() : 6);
 
         $datas = [
             "products" => $products,
@@ -56,7 +62,7 @@ class ProductController extends Controller
             return Message::error("veuillez fournir l'image du produit", 400);
         }
 
-        $data["image_url"] = $image->path??"";
+        $data["image_url"] = $image->path ?? "";
         $data["category_id"] = $request->category;
         $data["unique_id"] = generateNo();
         $data["slug"] = Str::slug($request->name);
@@ -70,12 +76,12 @@ class ProductController extends Controller
         return Message::success("Produit");
     }
 
-    public function update($productID,ProductRequest $request)
+    public function update($productID, ProductRequest $request)
     {
         $product = Product::whereId($productID)->firstOrFail();
 
         $data = $request->validated();
-       
+
         $data["category_id"] = $request->category;
 
         $image = File::where("user_id", auth()->id())
@@ -84,8 +90,8 @@ class ProductController extends Controller
             ->orderByDesc("id")
             ->first();
 
-        if($image) {
-            $data["image_url"] = $image->path??"";
+        if ($image) {
+            $data["image_url"] = $image->path ?? "";
         }
 
         $data["category_id"] = $request->category;

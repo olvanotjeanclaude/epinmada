@@ -3,7 +3,7 @@
     Connexion
 @endsection
 @section('content')
-    <div class="container" style="margin-top: 5rem">
+    <div class="container"  style="margin-bottom: 20rem; margin-top:5rem">
         <form action="" autocomplete="false">
             <div class="row">
                 <div class="col-lg-6 mx-auto">
@@ -13,7 +13,7 @@
                             <p class="account__login--header__desc">Inscrivez-vous ici si vous êtes un nouveau client</p>
                         </div>
                         <div class="account__login--inner">
-                            <div class="d-flex gap-2">
+                            <div class="d-flex flex-column flex-md-row gap-2">
                                 <label class="flex-grow-1">
                                     <input class="account__login--input" name="name" placeholder="Nom" type="text">
                                 </label>

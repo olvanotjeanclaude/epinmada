@@ -57,3 +57,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::post("upload", [\App\Http\Controllers\api\FileController::class, "upload"]);
   });
 });
+
+Route::resource("baskets", \App\Http\Controllers\api\front\BasketController::class);
+Route::post('/empty-panier', [\App\Http\Controllers\api\front\BasketController::class, "emptyCart"])->name("emptyCart");
+Route::post('/update-quantity/{basket}', [\App\Http\Controllers\api\front\BasketController::class, "updateQuantity"])->name("updateQuantity");

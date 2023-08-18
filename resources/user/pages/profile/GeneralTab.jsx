@@ -1,20 +1,99 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TabPanel from '../../component/navigation/TabPanel'
-import { Box, Button, Stack, TextField } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, Snackbar, Stack, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import http from '@/common/http';
+import { object, string } from 'yup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import MUTextField from '@/common/component/MUITextField';
+import Error from '../error/Error';
+import { HandleError } from '@/common/HandleError';
 
 export default function GeneralTab({ active }) {
+  const queryClient = useQueryClient();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [severity, setSeverity] = useState("error");
+
+  const { data: profile, isLoading, isError, error } = useQuery({
+    queryFn: async () =>
+      await http.get("/user")
+        .then((res) => res.data)
+        .catch((err) => new Error(err.message)),
+    queryKey: "user.profile",
+  });
+
+  const profileMutation = useMutation({
+    mutationKey: ["user.updateProfile"],
+    mutationFn: async data => await http.put("update-profile", data)
+      .then(res => res.data)
+      .catch(HandleError.catch),
+  });
+
+
+  const schema = object({
+    name: string().required("Le nom ne peut pas être vide"),
+    surname: string().required("Le prénom ne peut pas être vide"),
+    email: string().email("Email invalide").required("Email ne peut pas être vide"),
+    phone: string().required("Le téléphone ne peut pas être vide"),
+  }).required();
+
+
+  const { control, handleSubmit, setValue, setError } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      name: "",
+      surname: "",
+      email: "",
+      phone: "",
+    }
+  });
+
+  useEffect(() => {
+    setValue("name", profile?.name);
+    setValue("surname", profile?.surname);
+    setValue("phone", profile?.phone);
+    setValue("email", profile?.email);
+  }, [profile])
+
+  const onSubmit = (data) => {
+    profileMutation.mutate(data, {
+      onSuccess: () => {
+        setSeverity("success");
+        setSnackbarOpen(true)
+        queryClient.invalidateQueries("user.profile")
+      },
+      onError: (error) => {
+        setSeverity("error");
+        setSnackbarOpen(true);
+      }
+    });
+  }
+
+  if (isError) return <Error error={error} />
+
+  if (isLoading) return <CircularProgress />;
+
   return (
     <TabPanel hidden={active != "basicInfo"}>
-      <Box mt={2} component="form" noValidate autoComplete="off" >
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
+        <Alert variant='filled' onClose={() => setSnackbarOpen(false)} severity={severity} sx={{ width: '100%' }}>
+          {profileMutation.data?.message || profileMutation.error}
+        </Alert>
+      </Snackbar>
+
+      <Box mt={2} onSubmit={handleSubmit(onSubmit)} component="form" noValidate autoComplete="off" >
         <Stack gap={2}>
-          <TextField label="Nom" required variant="outlined" />
-          <TextField label="Prenom" required variant="outlined" />
-          <TextField label="Email" required variant="outlined" />
-          <TextField label="Téléphone" required variant="outlined" />
+          <MUTextField label="Nom" name="name" control={control} />
+          <MUTextField label="Prenom" name="surname" control={control} />
+          <MUTextField type="phone" label="Téléphone" name="phone" control={control} />
+          <MUTextField type="email" label="Email" name="email" control={control} />
         </Stack>
 
-        <Button sx={{ float: "right", mt: 2 }} variant="contained" type='submit' startIcon={<SaveIcon />}>
+        <Button disabled={profileMutation.isLoading}
+          sx={{ float: "right", mt: 2 }} variant="contained"
+          type='submit' startIcon={<SaveIcon />}>
           Mettre A Jour
         </Button>
       </Box>

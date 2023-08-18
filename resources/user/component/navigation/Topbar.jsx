@@ -6,22 +6,27 @@ import path from '../../menus/path'
 import { AccountCircle } from '@mui/icons-material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useBasket } from '@/user/context/BasketContextProvider'
 
 export default function Topbar() {
   const navigate = useNavigate();
+  const { data } = useBasket();
 
   return (
     <Box bgcolor={grey[100]} boxShadow={1} position="sticky" top={0} zIndex={1}>
       <Container>
         <Box py={1}
           display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="h3" fontWeight="bold" color="primary">
-            EPIN MADA
-          </Typography>
+
+          <Button onClick={() => open("/", "_blank")}>
+            <Typography variant="h3" fontWeight="bold" color="primary">
+              EPIN MADA
+            </Typography>
+          </Button>
 
           <Stack direction="row" gap={1} alignItems="center">
-            <IconButton onClick={() =>navigate(path.basket)}>
-              <Badge badgeContent={0} sx={{ mt: 1 }} showZero color="primary">
+            <IconButton onClick={() => navigate(path.basket)}>
+              <Badge badgeContent={data?.count} sx={{ mt: 1 }} showZero color="primary">
                 <ShoppingCartIcon color="action" />
               </Badge>
             </IconButton>

@@ -19,7 +19,7 @@ $(document).ready(function () {
             .then(res => {
                 const data = res.data;
                 if (data.token) {
-                    localStorage.setItem("access_token", data.token);
+                    localStorage.setItem("access_token", JSON.stringify(data.token));
                     localStorage.setItem("user", JSON.stringify(data.user));
 
                     if (data.user.type == "admin" || data.user.type == "staff") {

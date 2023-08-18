@@ -4,10 +4,12 @@ import React from 'react'
 import menus from '../../menus'
 import { NavLink } from 'react-router-dom'
 import styled from '@emotion/styled';
+import { useUser } from '@/user/context/UserContextProvider'
 
 
 export default function Sidebar() {
     const theme = useTheme();
+    const { user } = useUser();
     const StyledNavLink = styled(NavLink)`
    text-decoration: none;
    color: inherit;   
@@ -28,7 +30,7 @@ export default function Sidebar() {
                     sx={{ width: 55, height: 55 }}
                 />
                 <Typography variant="h5" fontWeight={500} mr={2} textAlign="right">
-                    Olvanot Jean Claude Rakotonirina
+                    {user?.name} {user?.surname}
                 </Typography>
             </Box>
 

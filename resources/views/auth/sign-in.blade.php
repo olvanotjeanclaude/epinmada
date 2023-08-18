@@ -5,7 +5,7 @@
 @section('content')
     <x-breadcrumb title="Contactez-nous" />
 
-    <div class="container   d-flex align-items-center justify-content-center" style="margin-bottom: 10rem; margin-top:5rem">
+    <div class="container   d-flex align-items-center justify-content-center" style="margin-bottom: 20rem; margin-top:5rem">
         <form id="loginForm" autocomplete="off">
             <div class="account__login">
                 <div class="account__login--header mb-25">
