@@ -17,20 +17,14 @@ $(document).ready(function () {
             }
         })
             .then(res => {
-                const data = res.data;
-                if (data.token) {
-                    localStorage.setItem("access_token", JSON.stringify(data.token));
-                    localStorage.setItem("user", JSON.stringify(data.user));
-
-                    if (data.user.type == "admin" || data.user.type == "staff") {
+                const user = res.data.user;
+                if (user) {
+                    if (user.type == "admin" || user.type == "staff") {
                         return location.href = "/admin"
                     }
 
                     return location.href = "/u";
                 }
-
-                localStorage.removeItem("access_token");
-                localStorage.removeItem("user");
             })
             .catch(e => {
                 const response = e.response;

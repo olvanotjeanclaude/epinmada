@@ -1,25 +1,19 @@
-import { Box, Container, CssBaseline } from '@mui/material'
-import React, { useEffect } from 'react'
+import { Box, CircularProgress, Container, CssBaseline } from '@mui/material'
 import Topbar from '../component/navigation/Topbar'
 import Sidebar from '../component/navigation/Sidebar'
 import MainContent from './MainContent'
 import { grey, red } from '@mui/material/colors'
 import FixedBottomBar from '../component/navigation/FixedBottomBar'
-import { useLocation } from 'react-router-dom'
-import { useUser } from '../context/UserContextProvider'
+import useAuth from '../../common/hook/useAuth'
 
 export default function MainLayout() {
-    const location = useLocation();
-    const { user, token } = useUser();
+    const { user, userLoading, userError } = useAuth();
 
-    // useEffect(() => {
-    //     console.log(user,token);
-    //     if (user==null || token==null) {
-    //         window.location.href = "/sign-in";
-    //     }
-    // }, [user, token])
+    if (userLoading) return <CircularProgress />;
 
-    return (
+    if (userError) return window.location.replace("sign-in")
+
+    return user ? (
         <Box position="relative" bgcolor={grey[50]}>
             <CssBaseline />
             <Topbar />
@@ -33,5 +27,5 @@ export default function MainLayout() {
             </Box>
             <FixedBottomBar />
         </Box>
-    )
+    ) : <></>
 }

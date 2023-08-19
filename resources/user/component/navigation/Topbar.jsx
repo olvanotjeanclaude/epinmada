@@ -7,9 +7,11 @@ import { AccountCircle } from '@mui/icons-material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useBasket } from '@/user/context/BasketContextProvider'
+import useAuth from '@/common/hook/useAuth'
 
 export default function Topbar() {
   const navigate = useNavigate();
+  const { logout } = useAuth();
   const { data } = useBasket();
 
   return (
@@ -38,7 +40,7 @@ export default function Topbar() {
               <AccountCircle fontSize="large" />
             </IconButton>
             <IconButton
-              onClick={() => navigate(path.profile)}
+              onClick={() => logout()}
               color="primary">
               <LogoutIcon />
             </IconButton>

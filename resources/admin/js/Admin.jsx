@@ -1,14 +1,14 @@
+import { CircularProgress } from '@mui/material';
+import useAuth from '../../common/hook/useAuth';
 import RightContent from '../component/Layout/RightContent';
 import Menu from '../component/Menu/Menu';
-import { useAuthProvider } from '../Context/useAuthProvider';
-import { useEffect } from 'react';
 
 function Admin() {
-  const { token } = useAuthProvider();
+  const { userLoading, userError } = useAuth();
 
-  useEffect(() => {
-    if (token == null) window.location.href = "/sign-in";
-  }, [])
+  if (userLoading) return <CircularProgress />;
+
+  if (userError) window.location.href = "/sign-in";
 
   return (
     <div className="App">

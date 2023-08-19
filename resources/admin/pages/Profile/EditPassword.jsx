@@ -66,14 +66,6 @@ const EditPassword = () => {
 
                 <form onSubmit={handleSubmit(onSubmit)} noValidate className="needs-validation">
                     <Form.Group className="mb-3">
-                        <FloatingLabel controlId="current-password" id="current-password" label="Mot de passe actuel">
-                            <Form.Control {...register("current_password")}
-                                type="password" placeholder="Password"
-                                isInvalid={!!errors.current_password} />
-                            <Form.Control.Feedback type="invalid">{errors.current_password?.message}</Form.Control.Feedback>
-                        </FloatingLabel>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
                         <FloatingLabel controlId="password" label="Nouveau Mot de passe">
                             <Form.Control {...register("password")}
                                 type="password" placeholder="Password"

@@ -1,7 +1,6 @@
 import { Box, Tab, Tabs } from '@mui/material';
 import React, { useState } from 'react';
 import PageTitle from '../../component/PageTitle';
-import TabPanel from '../../component/navigation/TabPanel';
 import GeneralTab from './GeneralTab';
 import ChangePasswordTab from './ChangePasswordTab';
 

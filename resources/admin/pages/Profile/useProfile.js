@@ -7,7 +7,7 @@ const useProfile = () => {
             await http.get("/user")
                 .then((res) => res.data)
                 .catch((err) => new Error(err.message)),
-        queryKey: "profile",
+        queryKey: "user",
     });
 }
 

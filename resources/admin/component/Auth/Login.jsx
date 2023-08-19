@@ -2,11 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import http from '../../Helper/makeRequest';
 import { allErrors } from '../../Helper/Helper';
 import { Toast } from 'primereact/toast';
-import { Navigate } from 'react-router-dom';
-import { useAuthProvider } from '../../Context/useAuthProvider';
 
 const Login = () => {
-    const { token } = useAuthProvider();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
@@ -18,7 +15,6 @@ const Login = () => {
         setErrors([]);
     }, [email, password]);
 
-    if (token) return <Navigate to="dashboard" />
 
     const handleSubmit = async (e) => {
         e.preventDefault();

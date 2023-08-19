@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import TabPanel from '../../component/navigation/TabPanel'
 import { Alert, Box, Button, CircularProgress, Snackbar, Stack, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import http from '@/common/http';
 import { object, string } from 'yup';
 import { useForm } from 'react-hook-form';
@@ -10,19 +10,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import MUTextField from '@/common/component/MUITextField';
 import Error from '../error/Error';
 import { HandleError } from '@/common/HandleError';
+import useUser from '../../../common/hook/useUser';
 
 export default function GeneralTab({ active }) {
   const queryClient = useQueryClient();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [severity, setSeverity] = useState("error");
 
-  const { data: profile, isLoading, isError, error } = useQuery({
-    queryFn: async () =>
-      await http.get("/user")
-        .then((res) => res.data)
-        .catch((err) => new Error(err.message)),
-    queryKey: "user.profile",
-  });
+  const { user, isLoading, isError, error } = useUser("user");
 
   const profileMutation = useMutation({
     mutationKey: ["user.updateProfile"],
@@ -40,7 +35,7 @@ export default function GeneralTab({ active }) {
   }).required();
 
 
-  const { control, handleSubmit, setValue, setError } = useForm({
+  const { control, handleSubmit, setValue, formState: { isValid } } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       name: "",
@@ -51,18 +46,18 @@ export default function GeneralTab({ active }) {
   });
 
   useEffect(() => {
-    setValue("name", profile?.name);
-    setValue("surname", profile?.surname);
-    setValue("phone", profile?.phone);
-    setValue("email", profile?.email);
-  }, [profile])
+    setValue("name", user?.name);
+    setValue("surname", user?.surname);
+    setValue("phone", user?.phone);
+    setValue("email", user?.email);
+  }, [user])
 
   const onSubmit = (data) => {
     profileMutation.mutate(data, {
       onSuccess: () => {
         setSeverity("success");
         setSnackbarOpen(true)
-        queryClient.invalidateQueries("user.profile")
+        queryClient.invalidateQueries(["user"])
       },
       onError: (error) => {
         setSeverity("error");
@@ -77,7 +72,7 @@ export default function GeneralTab({ active }) {
 
   return (
     <TabPanel hidden={active != "basicInfo"}>
-      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
+      <Snackbar open={snackbarOpen} autoHideDuration={5000} onClose={() => setSnackbarOpen(false)}>
         <Alert variant='filled' onClose={() => setSnackbarOpen(false)} severity={severity} sx={{ width: '100%' }}>
           {profileMutation.data?.message || profileMutation.error}
         </Alert>
@@ -91,7 +86,7 @@ export default function GeneralTab({ active }) {
           <MUTextField type="email" label="Email" name="email" control={control} />
         </Stack>
 
-        <Button disabled={profileMutation.isLoading}
+        <Button disabled={profileMutation.isLoading || !isValid}
           sx={{ float: "right", mt: 2 }} variant="contained"
           type='submit' startIcon={<SaveIcon />}>
           Mettre A Jour

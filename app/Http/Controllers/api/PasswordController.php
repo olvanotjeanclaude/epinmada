@@ -12,12 +12,7 @@ class PasswordController extends Controller
 {
     public function updatePassword(PasswordRequest $request)
     {
-
         $user = $request->user();
-
-        if (!Hash::check($request->current_password, $user->password)) {
-            return Message::error("Mot de passe actuel incorrect", 400);
-        }
 
         $user->update(["password" => Hash::make($request->password)]);
 

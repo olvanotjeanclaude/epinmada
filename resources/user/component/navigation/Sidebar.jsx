@@ -1,15 +1,13 @@
 import { ImportContactsSharp } from '@mui/icons-material'
-import { Avatar, Box, Divider, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Typography, useTheme } from '@mui/material'
+import {  Box, Divider, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Typography, useTheme } from '@mui/material'
 import React from 'react'
 import menus from '../../menus'
 import { NavLink } from 'react-router-dom'
 import styled from '@emotion/styled';
-import { useUser } from '@/user/context/UserContextProvider'
-
+import UserInfo from '../UserInfo'
 
 export default function Sidebar() {
     const theme = useTheme();
-    const { user } = useUser();
     const StyledNavLink = styled(NavLink)`
    text-decoration: none;
    color: inherit;   
@@ -23,16 +21,7 @@ export default function Sidebar() {
     return (
         <Box minWidth={sidebarWidth} maxWidth={sidebarWidth}
             sx={{ display: { xs: "none", sm: "block" } }}>
-            <Box display="flex" paddingBottom={1} alignItems="center" gap={2} justifyContent="space-between">
-                <Avatar
-                    alt="Remy Sharp"
-                    src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50.jpg"
-                    sx={{ width: 55, height: 55 }}
-                />
-                <Typography variant="h5" fontWeight={500} mr={2} textAlign="right">
-                    {user?.name} {user?.surname}
-                </Typography>
-            </Box>
+            <UserInfo />
 
             <Divider />
 

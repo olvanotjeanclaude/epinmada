@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
 
 import router from './router';
-import AuthProvider from '../Context/AuthProvider';
 import LayoutProvider from '../Context/LayoutProvider';
 
 import '@fontsource/roboto/300.css';
@@ -24,9 +23,7 @@ function MainApp() {
   return (
     <QueryClientProvider client={queryClient}>
       <LayoutProvider>
-        <AuthProvider>
-          <RouterProvider router={router} />
-        </AuthProvider>
+        <RouterProvider router={router} />
       </LayoutProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

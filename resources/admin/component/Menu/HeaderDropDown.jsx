@@ -1,19 +1,12 @@
 import http from "../../Helper/makeRequest"
 import { useState } from "react";
-import { useAuthProvider } from "../../Context/useAuthProvider";
 import { capitalizeLetter } from "../../Helper/Helper";
 import { Link } from "react-router-dom";
-import { useQuery } from "react-query";
 import Error from "../Message/Error";
+import useProfile from "../../pages/Profile/useProfile";
 
 export default function HeaderDropDown() {
-    const { setToken, setUser } = useAuthProvider();
-
-    const { data: user, isError, error } = useQuery({
-        queryFn: async () => (await http.get("user")).data,
-        queryKey: ["user"],
-        staleTime:Infinity,
-    })
+    const { data: user, isError, error } = useProfile();
 
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -21,13 +14,10 @@ export default function HeaderDropDown() {
         const response = await http.post("/logout").then(response => response.data);
 
         if (response.type == "success") {
-            localStorage.removeItem("access_token");
-            localStorage.removeItem("user");
-            setToken(null);
-            setUser(null);
-
+            return location.href = "/sign-in";
         }
-        location.href = "/sign-in";
+
+        location.reload();
     }
 
     if (isError) return <Error error={error.message} />

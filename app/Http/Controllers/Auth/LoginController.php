@@ -64,13 +64,8 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $user = $request->user();
 
-            $user->tokens()->delete();
-
-            $token = $user->createToken('spa')->plainTextToken;
-
             if ($request->ajax()) {
                 return response()->json([
-                    'token' => $token,
                     'token_type' => 'Bearer',
                     "user" => [
                         "name" => $user->name,
