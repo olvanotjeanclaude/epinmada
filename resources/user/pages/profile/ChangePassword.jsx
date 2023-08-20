@@ -7,7 +7,8 @@ export default function ChangePassword() {
     const [snakbarOpen, setSnackbarOpen] = useState(false);
     const [message, setMessage] = useState("");
 
-    const { register, reset, formState: { errors, isValid }, passwordMutation, handleSubmit } = usePassword();
+    const { register, reset, formState: { errors, isValid }, 
+    passwordMutation, handleSubmit } = usePassword();
 
     const onSubmit = (data) => {
         passwordMutation.mutate(data, {
@@ -51,12 +52,13 @@ export default function ChangePassword() {
                     id='password' type='password'
                     {...register("password")}
                     role='presentation'
+                    autoComplete='new-password'
                     error={!!errors.password}
                     helperText={errors.password?.message}
                     label="Mot De Passe" required variant="outlined" />
 
                 <TextField id='confirmPassword'
-                    autoComplete='nope' type='password'
+                    autoComplete='new-password' type='password'
                     {...register("password_confirmation")}
                     label="Confirmez le mot de passe"
                     error={!!errors.password_confirmation}

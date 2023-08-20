@@ -1,43 +1,69 @@
-import { Box, Button, Card, CardContent, Stack, Typography } from '@mui/material'
-import React from 'react'
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Alert, Box, Card, CardContent, Snackbar, Stack, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors';
-import path from '../../menus/path';
+import { useAddToCartMutation } from './useProduct';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 export default function Popular({ product }) {
+    const addToCartMutation = useAddToCartMutation();
+    const [openSnackbar, setSnackbar] = useState(false);
+
+    const closeSnackbar = () => {
+        setSnackbar(false);
+    }
+
+    const addToCart = () => {
+        addToCartMutation.mutate(product.unique_id, {
+            onSuccess(data) {
+                setSnackbar(true);
+            }
+        });
+    };
+
+
     return (
-        <Card>
-            <CardContent>
-                <Box gap={1} display="flex" justifyContent={{ md: "center" }}>
-                    <Box
-                        component="img"
-                        // height:"140"
-                        width={110}
-                        height={110}
-                        alt={product.name}
-                        src={product.image_url}
-                    />
-                    <Stack flexGrow={1}>
-                        <Stack>
-                            <Typography variant="h6" noWrap>{product.name}</Typography>
-                            <Typography variant="body2" color={grey[700]}>{product.category.name}</Typography>
-                        </Stack>
+        <>
+            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={closeSnackbar}>
+                <Alert onClose={closeSnackbar} variant='filled' severity="success" sx={{ width: '100%' }}>
+                    {product.name} a été  ajouté au panier avec succès
+                </Alert>
+            </Snackbar>
 
-                        <Typography variant='h5' fontWeight="bold" mt={1}>
-                            {product.formatted_price}
-                        </Typography>
+            <Card>
+                <CardContent>
+                    <Box gap={1} display="flex" justifyContent={{ md: "center" }}>
+                        <Box
+                            component="img"
+                            // height:"140"
+                            width={110}
+                            height={110}
+                            alt={product.name}
+                            src={product.image_url}
+                        />
+                        <Box flexGrow={1}>
+                            <Stack>
+                                <Typography variant="h6" noWrap>{product.name}</Typography>
+                                <Typography variant="body2" color={grey[700]}>{product.category.name}</Typography>
+                            </Stack>
 
-                        <Link to={path.payment} style={{ textDecoration: "none" }}>
-                            <Button  sx={{ mt: 1 }}
+                            <Typography variant='h5' fontWeight="bold" mt={1}>
+                                {product.formatted_price}
+                            </Typography>
+
+                            <LoadingButton sx={{ mt: 1 }}
+                                loading={addToCartMutation.isLoading}
+                                disabled={addToCartMutation.isLoading}
+                                onClick={addToCart}
                                 variant='contained'
+                                size='small'
                                 startIcon={<AddShoppingCartIcon />}>
                                 Ajouter
-                            </Button>
-                        </Link>
-                    </Stack>
-                </Box>
-            </CardContent>
-        </Card>
+                            </LoadingButton>
+                        </Box>
+                    </Box>
+                </CardContent>
+            </Card>
+        </>
     )
 }

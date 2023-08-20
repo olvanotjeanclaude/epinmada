@@ -1,8 +1,7 @@
-import { useQuery } from "react-query"
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useState } from "react";
 import { HandleError } from "@/common/HandleError";
 import http from "@/common/http";
-
 
 export const useFetchProduct = () => {
     const [tag, setTag] = useState("all");
@@ -39,4 +38,36 @@ export const useShow = () => {
     });
 
     return { product, isLoading, error, isError }
+}
+
+export const useAddToCartMutation = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationKey: ["addToCart"],
+        mutationFn: async (product_id) => {
+            return await http.post("/baskets", { product_id })
+                .then(res => res.data)
+                .catch(HandleError.catch)
+        },
+        onSuccess(data) {
+            queryClient.invalidateQueries(["front.baskets"])
+        }
+    });
+};
+
+export const useDeleteCartMutation = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationKey: ["deleteCart"],
+        mutationFn: async (product_id) => {
+            return await http.delete(`/baskets/${product_id}`)
+                .then(res => res.data)
+                .catch(HandleError.catch)
+        },
+        onSuccess(data) {
+            queryClient.invalidateQueries(["front.baskets"])
+        }
+    });
 }
