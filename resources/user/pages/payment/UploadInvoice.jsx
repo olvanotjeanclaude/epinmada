@@ -22,6 +22,8 @@ export default function UploadInvoice() {
                     localization="FR-fr"
                     maxFileSize={10 * 1024 * 1024}
                     maxFiles={1}
+                    footer={false}
+                    label='Déposez ici votre facture'
                     headerConfig={{
                         customHeader: <Typography textAlign="left" p={1} variant="h5">
                             Maximum 10 MB

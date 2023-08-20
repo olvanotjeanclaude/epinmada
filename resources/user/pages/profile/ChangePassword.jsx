@@ -1,14 +1,14 @@
 import { Alert, Box, Button, Snackbar, Stack, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import React, { useState } from 'react'
-import usePassword from '../../../common/hook/usePassword';
+import usePassword from '@/common/hook/usePassword';
 
 export default function ChangePassword() {
     const [snakbarOpen, setSnackbarOpen] = useState(false);
     const [message, setMessage] = useState("");
 
-    const { register, reset, formState: { errors, isValid }, 
-    passwordMutation, handleSubmit } = usePassword();
+    const { register, reset, formState: { errors, isValid },
+        passwordMutation, handleSubmit } = usePassword();
 
     const onSubmit = (data) => {
         passwordMutation.mutate(data, {
@@ -39,7 +39,6 @@ export default function ChangePassword() {
                 anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
                 open={snakbarOpen}
                 onClose={() => setSnackbarOpen(false)}
-                message="I love snacks"
             >
                 <Alert variant='filled'
                     onClose={() => setSnackbarOpen(false)}
@@ -47,7 +46,7 @@ export default function ChangePassword() {
                     {message}
                 </Alert>
             </Snackbar>
-            <Stack gap={2}>
+            <Stack gap={2} maxWidth="sm">
                 <TextField
                     id='password' type='password'
                     {...register("password")}
@@ -64,13 +63,15 @@ export default function ChangePassword() {
                     error={!!errors.password_confirmation}
                     helperText={errors.password_confirmation?.message}
                     variant="outlined" />
-            </Stack>
 
-            <Button disabled={passwordMutation.isLoading || !isValid}
-                sx={{ float: "right", mt: 2 }} variant="contained" type='submit'
-                startIcon={<SaveIcon />}>
-                Mettre A Jour
-            </Button>
+                <Box>
+                    <Button disabled={passwordMutation.isLoading || !isValid}
+                        sx={{ float: "right", mt: 2 }} variant="contained" type='submit'
+                        startIcon={<SaveIcon />}>
+                        Mettre A Jour
+                    </Button>
+                </Box>
+            </Stack>
         </Box>
     );
 }

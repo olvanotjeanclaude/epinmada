@@ -8,9 +8,9 @@ import { object, string } from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import MUTextField from '@/common/component/MUITextField';
-import Error from '../error/Error';
+import Error from '@/user/pages/error/Error';
 import { HandleError } from '@/common/HandleError';
-import useUser from '../../../common/hook/useUser';
+import useUser from '@/common/hook/useUser';
 
 export default function GeneralTab({ active }) {
   const queryClient = useQueryClient();
@@ -78,7 +78,7 @@ export default function GeneralTab({ active }) {
         </Alert>
       </Snackbar>
 
-      <Box mt={2} onSubmit={handleSubmit(onSubmit)} component="form" noValidate autoComplete="off" >
+      <Box maxWidth="sm" mt={2} onSubmit={handleSubmit(onSubmit)} component="form" noValidate autoComplete="off" >
         <Stack gap={2}>
           <MUTextField label="Nom" name="name" control={control} />
           <MUTextField label="Prenom" name="surname" control={control} />

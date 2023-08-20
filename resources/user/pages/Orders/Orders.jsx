@@ -1,6 +1,6 @@
-import { Box, Grid, Stack } from '@mui/material'
+import { Grid } from '@mui/material'
 import React from 'react'
-import PageTitle from '../../component/PageTitle'
+import PageTitle from '@/user/component/PageTitle'
 import Product from './Order'
 
 export default function Orders() {

@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import BottomNavigation from '@mui/material/BottomNavigation'
 import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import { Paper } from '@mui/material';
-import { mobileMenus } from '../../menus';
 import { useNavigate } from 'react-router-dom';
+import { mobileMenus } from '@/user/menus';
 
 export default function FixedBottomBar() {
     const [value, setValue] = useState(0);

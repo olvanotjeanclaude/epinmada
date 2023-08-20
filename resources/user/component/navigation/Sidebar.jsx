@@ -1,10 +1,10 @@
 import { ImportContactsSharp } from '@mui/icons-material'
-import {  Box, Divider, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Typography, useTheme } from '@mui/material'
+import {  Box, Divider, ListItemIcon, ListItemText, MenuItem, MenuList, Typography, useTheme } from '@mui/material'
 import React from 'react'
-import menus from '../../menus'
 import { NavLink } from 'react-router-dom'
 import styled from '@emotion/styled';
-import UserInfo from '../UserInfo'
+import UserInfo from '../UserInfo';
+import menus from '@/user/menus';
 
 export default function Sidebar() {
     const theme = useTheme();

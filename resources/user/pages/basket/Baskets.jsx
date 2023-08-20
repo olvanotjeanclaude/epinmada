@@ -30,7 +30,7 @@ export default function Baskets() {
           </Stack>
         </Grid>
         <Grid item xs={12} md={4} xl={3}>
-          <Pay amount={data.sum_sub_amount} />
+          {data.baskets.length > 0 ? <Pay amount={data.sum_sub_amount} /> : <></>}
         </Grid>
       </Grid>
     </>

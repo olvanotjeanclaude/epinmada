@@ -1,4 +1,4 @@
-import http from "../admin/Helper/makeRequest";
+import http from "@/admin/Helper/makeRequest";
 
 
 export default http;

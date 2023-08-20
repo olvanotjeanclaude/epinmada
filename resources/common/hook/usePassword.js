@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import * as yup from "yup";
-import http from "../http";
+import http from "@/common/http";
 
 const usePassword = () => {
     const _updatePassword = async (data) => {

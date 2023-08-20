@@ -11,11 +11,6 @@ class BasketController extends Controller
     public function index()
     {
         return $this->reloadingList();
-
-        if (request()->ajax()) {
-        }
-
-        return redirect("/");
     }
 
     public function store(Request $request)

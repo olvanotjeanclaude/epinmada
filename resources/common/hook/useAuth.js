@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import http from "../http";
+import http from "@/common/http";
 
 const useAuth = () => {
     const [user, setUser] = useState(null);

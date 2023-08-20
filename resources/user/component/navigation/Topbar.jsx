@@ -2,12 +2,12 @@ import React from 'react'
 import { Badge, Box, Button, Container, IconButton, Stack, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { useNavigate } from 'react-router-dom'
-import path from '../../menus/path'
 import { AccountCircle } from '@mui/icons-material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useBasket } from '@/user/context/BasketContextProvider'
 import useAuth from '@/common/hook/useAuth'
+import path from '@/user/menus/path'
 
 export default function Topbar() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function Topbar() {
   const { data } = useBasket();
 
   return (
-    <Box bgcolor={grey[100]} boxShadow={1} position="sticky" top={0} zIndex={1}>
+    <Box bgcolor={grey[100]} boxShadow={1} position="sticky" top={0} zIndex={100}>
       <Container>
         <Box py={1}
           display="flex" justifyContent="space-between" alignItems="center">

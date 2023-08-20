@@ -8,7 +8,7 @@ const useLocalStorage = (key, initialValue) => {
             return JSON.parse(storedValue);
         }
 
-        return initialValue;
+        return initialValue??null;
     });
 
     useEffect(() => {

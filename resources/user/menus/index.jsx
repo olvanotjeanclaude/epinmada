@@ -6,16 +6,8 @@ import KeyIcon from '@mui/icons-material/Key';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import AddHomeIcon from '@mui/icons-material/AddHome';
-import { Dashboard } from "@mui/icons-material";
 
 const menus = [
-    // {
-    //     name: "Dashboard",
-    //     path: path.dashboard,
-    //     type: "item",
-    //     icon: <Dashboard />
-
-    // },
     {
         name: "Achats",
         type: "group",

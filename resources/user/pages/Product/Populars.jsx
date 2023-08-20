@@ -22,6 +22,10 @@ export default function Populars() {
 
       <Box>
         <Stack direction="row" gap={1} mb={1}>
+          <Chip variant="contained"
+            label="Tout"
+            color={tag == "all" ? "primary" : "default"}
+            onClick={() => handleCategory({ name: "all" })} />
           {
             data.categories.map((category) => (
               <Chip label={category.name}
@@ -30,16 +34,12 @@ export default function Populars() {
                 onClick={() => handleCategory(category)} />
             ))
           }
-          <Chip variant="contained"
-            label="Tout"
-            color={ tag=="all" ? "primary" : "default"}
-            onClick={() => handleCategory({ name: "all" })} />
         </Stack>
 
         <Grid container spacing={1}>
           {
             data.products.data.map((product, index) => (
-              <Grid sx={{ width: "100%" }} item md={6} lg={4} key={index}>
+              <Grid sx={{ width: "100%" }} item md={6} key={index}>
                 <Popular product={product} />
               </Grid>
             ))

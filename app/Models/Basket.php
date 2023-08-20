@@ -30,6 +30,24 @@ class Basket extends Model
             ->orderByDesc("id");
     }
 
+    // public static function ByCustomer()
+    // {
+    //     if (Auth::check()) {
+    //         Basket::where("anonymous_id", $_COOKIE["anonymousID"] ?? null)
+    //             ->update(["user_id" => Auth::id()]);
+
+    //         setcookie("anonymousID", "", time() - 3600);
+
+    //         return  self::with("product", "product.category")->where("user_id", Auth::id())
+    //             ->orderByDesc("id");
+    //     }
+
+    //     return self::with("product", "product.category")
+    //         ->where("anonymous_id", $_COOKIE["anonymousID"] ?? null)
+    //         ->orderByDesc("id");;
+    // }
+
+
     public function getSubAmountAttribute()
     {
         return $this->product->price * $this->quantity;

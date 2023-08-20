@@ -1,5 +1,5 @@
 import React from 'react'
-import PageTitle from '../../component/PageTitle'
+import PageTitle from '@/user/component/PageTitle'
 
 export default function Dashboard() {
   return (

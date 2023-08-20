@@ -3,9 +3,22 @@ import PageTitle from '../../component/PageTitle'
 import Typography from '@mui/material/Typography'
 import { Alert, AlertTitle, Box, Button, Card, CardContent, FormControl, FormControlLabel, Grid, Radio, RadioGroup, Stack, TextField } from '@mui/material'
 import UploadInvoice from './UploadInvoice'
-import {  grey } from '@mui/material/colors'
+import { grey } from '@mui/material/colors';
+import { useBasket } from '@/user/context/BasketContextProvider'
+import OrderSummary from './OrderSummary'
+import StepPay from '../basket/StepPay'
+import { Navigate } from 'react-router-dom'
+import path from '@/user/menus/path'
 
 export default function DoPayment() {
+  const basketData = useBasket();
+  const baskets = basketData.data?.baskets;
+
+  const isBaskethasPUBG = baskets?.filter(({ product }) => {
+    return product.category.name.toLowerCase() == "epin"
+  }).length > 0;
+
+  if (baskets?.length == 0) return <Navigate to={path.popular} />
 
   return (
     <Box
@@ -16,21 +29,21 @@ export default function DoPayment() {
       <PageTitle title="Payment" />
 
       <Grid container spacing={2}>
-        <Grid item md={8}>
+        <Grid item xs={12} md={7}>
           <Stack spacing={2}>
-            <Card>
+            {isBaskethasPUBG && <Card>
               <CardContent>
-                <Typography variant="h5" mb={1}>Information</Typography>
+                <Typography variant="h5" mb={1}>Veuillez saisir votre ID de PubG Mobile</Typography>
 
                 <TextField
                   fullWidth
                   rows={3}
-                  placeholder='Écris quelque chose...'
-                  label="Note"
+                  placeholder='Écris...'
+                  label="ID de PubG Mobile"
                   multiline
                 />
               </CardContent>
-            </Card>
+            </Card>}
 
             <Card>
               <CardContent>
@@ -53,8 +66,8 @@ export default function DoPayment() {
                     <AlertTitle>vous pouvez envoyer l'argent à :</AlertTitle>
                     <Stack>
                       <Typography variant="paragraph" component="p">032 00 000 00</Typography>
-                      <Typography variant="paragraph" component="p">032 00 000 00</Typography>
-                      <Typography variant="paragraph" component="p">032 00 000 00</Typography>
+                      <Typography variant="paragraph" component="p">033 00 000 00</Typography>
+                      <Typography variant="paragraph" component="p">034 00 000 00</Typography>
                     </Stack>
                   </Alert>
                 </Box>
@@ -65,20 +78,14 @@ export default function DoPayment() {
           </Stack>
         </Grid>
 
-        <Grid item md={4} sx={{ width: "100%" }}>
-          <Card elevation={3} sx={{ bgcolor: grey[100] }}>
-            <CardContent>
-              <Stack gap={2}>
-                <Typography variant='h4' color="primary">TOTAL A PAYER</Typography>
-                <Typography variant='h4' fontWeight={500}>
-                  100 000 Ar
-                </Typography>
-                <Button variant='contained'>
-                  Confirmer Et Payer
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
+        <Grid item xs={12} md={5}>
+
+          <Stack spacing={2}>
+            <OrderSummary basketData={basketData} />
+
+            <StepPay amount={basketData.data.sum_sub_amount} label=' Confirmer Et Payer' />
+
+          </Stack>
         </Grid>
       </Grid>
     </Box>

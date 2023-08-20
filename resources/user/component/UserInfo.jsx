@@ -1,6 +1,6 @@
 import { Avatar, Box, CircularProgress, Typography } from '@mui/material'
 import React from 'react'
-import useUser from '../../common/hook/useUser'
+import useUser from '@/common/hook/useUser'
 import Error from '../pages/error/Error';
 
 export default function UserInfo() {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import router from './router';
 import { RouterProvider } from 'react-router-dom'
 import { ThemeProvider } from '@emotion/react'

@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
-import http from "../http";
-import { HandleError } from "../HandleError";
+import http from "@/common/http";
+import { HandleError } from "@/common/HandleError";
 
 const useUser = () => {
     const query = useQuery({

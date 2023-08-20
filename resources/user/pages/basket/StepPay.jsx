@@ -2,10 +2,10 @@ import React from 'react';
 import { Button, Card, CardContent, Stack, Typography } from '@mui/material'
 import PaymentIcon from '@mui/icons-material/Payment';
 import { Link } from 'react-router-dom';
-import path from '../../menus/path';
 import { grey } from '@mui/material/colors';
+import path from '@/user/menus/path';
 
-export default function Pay({ amount }) {
+export default function StepPay({ amount, label = "continuer à payer" }) {
 
     return (
         <Card sx={{ bgcolor: grey[50] }}>
@@ -16,8 +16,8 @@ export default function Pay({ amount }) {
                         {amount}
                     </Typography>
                     <Link to={path.payment}>
-                        <Button startIcon={<PaymentIcon />} sx={{ width: "100%" }} variant='contained'>
-                            Continuer
+                        <Button startIcon={<PaymentIcon />} variant='contained'>
+                            {label}
                         </Button>
                     </Link>
                 </Stack>
