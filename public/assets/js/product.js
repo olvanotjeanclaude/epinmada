@@ -1,11 +1,9 @@
-import { Axios, settingAnonymousID } from "./helper.js";
+import { Axios } from "./helper.js";
 import { sidebarShopCartHtml } from "./basket-template.js";
 import { mountToBasketElement } from "./basket.js";
 
 $(document).ready(function () {
     loadSidebarShopCart();
-
-    settingAnonymousID();
 
     $(document).on("click", ".product__card--btn", addProductToBasket);
 
@@ -21,13 +19,13 @@ $(document).ready(function () {
 export function updateQuantity() {
     const input = $(this).parent().find(".quantity__number");
     const quantity = input.val();
-    const unique_id = input.data("id");
+    const basketID = input.data("id");
     const action = input.attr("action");
 
-    Axios().post(`/update-quantity/${unique_id}`, {
+    Axios().post(`/update-quantity/${basketID}`, {
         quantity,
         action,
-        product: unique_id
+       basketID
     }).then(response => {
         setShopCartHtml(response);
 
@@ -70,8 +68,8 @@ function addProductToBasket() {
 }
 
 function removeProductFromBasket() {
-    const product_id = $(this).data("product-id");
-    Axios().delete(`/baskets/${product_id}`).then(response => { setShopCartHtml(response) });
+    const basketID = $(this).data("id");
+    Axios().delete(`/baskets/${basketID}`).then(response => { setShopCartHtml(response) });
 }
 
 export function setShopCartHtml({ data }) {

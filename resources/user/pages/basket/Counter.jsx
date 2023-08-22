@@ -19,7 +19,7 @@ export default function Counter({ basket }) {
     const countMutation = useMutation({
         mutationKey: ["countBasket"],
         mutationFn: async (quantity) => {
-            return await http.post(`/update-quantity/${product.unique_id}`, { quantity })
+            return await http.post(`/update-quantity/${basket.id}`, { quantity })
                 .then(res => res.data)
                 .catch(HandleError.catch)
         }

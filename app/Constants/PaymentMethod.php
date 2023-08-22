@@ -2,29 +2,33 @@
 
 namespace App\Constants;
 
-class PaymentMethod{
-     const MOBILE = [
+class PaymentMethod
+{
+    const MOBILE = [
+        "orangeMoney" => [
+            "name" => "Orange Money",
+            "image" => "",
+            "key" => "orangeMoney",
+            "number" => "032 00 000 00"
+        ],
+        "airtlelMoney" => [
+            "name" => "Airtel Money",
+            "image" => "",
+            "key" => "airtlelMoney",
+            "number" => "033 00 000 00"
+        ],
         "mvola" => [
-            "name" =>"Mvola",
-            "image" =>"",
-            "key" =>"mvola"
+            "name" => "Mvola",
+            "image" => "",
+            "key" => "mvola",
+            "number" => "034 00 000 00"
         ],
-        "orangeMoney" =>[
-            "name" =>"Orange Money",
-            "key" =>"orangeMoney",
-            "image" =>""
-        ],
-        "airtlelMoney" =>[
-            "name" =>"Airtel Money",
-            "key" =>"airtlelMoney",
-            "image" =>""
-        ],
-     ];
+    ];
 
-     public static function all(){
+    public static function all()
+    {
         return [
-            "mobile" =>array_values(self::MOBILE),
-            "api" =>"ok ok"
+            "mobile" => array_values(self::MOBILE),
         ];
-     }
+    }
 }

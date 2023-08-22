@@ -16,7 +16,7 @@ export default function Product({ product }) {
                     </Stack>
 
                     <div>
-                        <h4>{product.formatted_price}</h4>
+                        <h5>{product.formatted_price}</h5>
                         <div className='d-flex  gap-2 b-dark'>
                             <a className='text-danger'>
                                 <i className="mdi mdi-trash-can font-size-18"></i>

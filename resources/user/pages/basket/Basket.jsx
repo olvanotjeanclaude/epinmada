@@ -15,7 +15,7 @@ export default function Basket({ basket }) {
   const deleteCartMutation = useDeleteCartMutation();
   const product = basket.product;
 
-  const deleteCart = () => deleteCartMutation.mutate(product.unique_id);
+  const deleteCart = () => deleteCartMutation.mutate(basket.id);
 
   return (
     <Card sx={{ border: `1px solid ${grey[300]}`, pb: 1.5 }} elevation={0}>
@@ -35,34 +35,7 @@ export default function Basket({ basket }) {
               </Box>
             </Stack>
           </Box>
-
         </Box>
-        {/* <Grid container>
-          <Grid item xs={12} md={6}>
-            <Stack direction="row" spacing={2}>
-              <img width={50} height={50} src={product.image_url} />
-              <Box>
-                <Box>
-                  <Box display="flex" alignItems="center" direction="row" justifyContent="space-between">
-                    <Typography variant="h6">{product.name}</Typography>
-                  </Box>
-                </Box>
-                <Typography variant='body2' color={grey[700]}>{product.category.name}</Typography>
-              </Box>
-            </Stack>
-          </Grid>
-
-          <Grid item xs={12} md={6} display="flex" justifyContent="space-between" alignItems="center">
-            <Counter basket={basket} />
-            <Stack>
-              <IconButton   aria-label="delete">
-                <DeleteIcon  />
-              </IconButton>
-              <Typography textAlign="center" variant="h5">{basket.formatted_sub_amount}</Typography>
-            </Stack>
-          </Grid>
-
-        </Grid> */}
       </CardContentNoPadding>
     </Card>
   )

@@ -23,7 +23,7 @@ function Filter({isLoading, data, setCheckboxes,query,setQuery }) {
                     <i className="pi pi-search" />
                     <InputText value={query}
                         onChange={e => setQuery(e.target.value)}
-                        type='search' className='w-100' placeholder="Rechercher..." />
+                        type='search' className='' placeholder="Rechercher..." />
                 </span>
             </Stack>
             <div>

@@ -1,3 +1,4 @@
+import useAuth from "@/common/hook/useAuth";
 import { createContext } from "react";
 
 const defaultValue = {
@@ -8,9 +9,16 @@ const defaultValue = {
 export const LayoutProviderContext = createContext(defaultValue);
 
 const LayoutProvider = ({ children }) => {
-    return <LayoutProviderContext.Provider value={{ defaultValue }}>
+    const { user, userLoading, userError } = useAuth();
+
+    if (userLoading) return <></>;
+
+    if (userError || (user && user.type != 1)) return window.location.replace("sign-in")
+
+    return user ? <LayoutProviderContext.Provider value={{ defaultValue }}>
         {children}
-    </LayoutProviderContext.Provider>
+    </LayoutProviderContext.Provider> :
+        <></>
 }
 
 export default LayoutProvider;

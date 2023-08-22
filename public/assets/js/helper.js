@@ -14,7 +14,15 @@ export function settingAnonymousID() {
 }
 
 export function Axios() {
-    const api = axios.create();
+    const api = axios.create({
+        baseURL: "/api",
+        headers: {
+            "Accept": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            "withCredentials": true,
+            "Content-Type": "application/json",
+        }
+    });
 
     api.interceptors.request.use(config => {
         setLoading(true);

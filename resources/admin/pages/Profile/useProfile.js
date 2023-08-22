@@ -8,6 +8,8 @@ const useProfile = () => {
                 .then((res) => res.data)
                 .catch((err) => new Error(err.message)),
         queryKey: "user",
+        keepPreviousData:true,
+        cacheTime:0
     });
 }
 

@@ -26,14 +26,14 @@ export function sidebarShopCartHtml({ baskets, sum_sub_amount }) {
                                         <button type="button" class="quantity__value decrease custom-decrease"
                                             aria-label="quantity value" data-id="" value="Decrease Value">-</button>
                                         <label>
-                                            <input type="number" class="quantity__number" data-id="${basket.product_id}"
+                                            <input type="number" class="quantity__number" data-id="${basket.id}"
                                                 value="${basket.quantity}" data-counter />
                                         </label>
                                         <button type="button" class="quantity__value increase custom-increase"
                                             aria-label="quantity value" value="Increase Value">+</button>
                                     </div>
                                     <button class="minicart__product--remove remove-product" aria-label="minicart remove btn"
-                                        data-product-id="${basket.product_id}">Retirer</button>
+                                        data-id="${basket.id}">Retirer</button>
                                 </div>
                             </div>
                         </div>

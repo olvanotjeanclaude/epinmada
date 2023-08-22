@@ -7,7 +7,7 @@ const useFetchConstants = () => {
     };
 
     const { data, isLoading, isError } = useQuery({
-        queryKey:"fetchConstants",
+        queryKey: "fetchConstants",
         queryFn: fetchConstants
     });
 
@@ -15,6 +15,7 @@ const useFetchConstants = () => {
         user_types: {
             ...data?.user_types ?? {}
         },
+        paymentMethods: data?.payementMethods ?? {},
         isLoading,
         isError
     };

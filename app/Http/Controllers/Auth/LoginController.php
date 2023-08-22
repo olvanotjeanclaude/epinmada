@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Basket;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -71,7 +72,7 @@ class LoginController extends Controller
                         "name" => $user->name,
                         "surname" => $user->surname,
                         "email" => $user->email,
-                        "type" =>array_search($user->type,User::TYPES)
+                        "type" => array_search($user->type, User::TYPES)
                     ]
                 ]);
             }
@@ -90,6 +91,8 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        $this->deleteBasket();
+
         Auth::logout();
 
         return response()->json([
@@ -97,5 +100,14 @@ class LoginController extends Controller
             'type' => "success",
             "message" => "vous êtes déconnecté avec succès"
         ]);
+    }
+
+    private function deleteBasket()
+    {
+        Basket::whereNull("user_id")
+            ->where("anonymous_id", session("anonymous_id"))
+            ->delete();
+
+        session()->forget("anonymous_id");
     }
 }

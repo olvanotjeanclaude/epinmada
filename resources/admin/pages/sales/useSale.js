@@ -1,0 +1,24 @@
+import { HandleError } from "@/common/HandleError";
+import http from "@/common/http";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
+
+
+export const userFetch = () => {
+    return useQuery({
+        queryKey: "sales",
+        queryFn: async () => await http.get("/sales")
+            .then(res => res.data)
+            .catch(HandleError.catch),
+    });
+}
+
+export const useShow = () => {
+    const { id } = useParams();
+    return useQuery({
+        queryKey: "showSale",
+        queryFn: async () => await http.get(`/sales/${id}`)
+            .then(res => res.data)
+            .catch(HandleError.catch),
+    });
+}

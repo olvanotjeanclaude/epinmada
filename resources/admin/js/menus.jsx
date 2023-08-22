@@ -26,16 +26,17 @@ export default  [
     {
         name: "Ventes",
         icon: <i className="bx bx-receipt"></i>,
-        children: [
-            {
-                name: "Ventes",
-                path: "/ventes"
-            },
-            {
-                name: "Nouveau",
-                path: "/ventes/nouveau"
-            },
-        ]
+        path: "/ventes",
+        // children: [
+        //     {
+        //         name: "Ventes",
+        //         path: "/ventes"
+        //     },
+        //     {
+        //         name: "Nouveau",
+        //         path: "/ventes/nouveau"
+        //     },
+        // ]
     },
     // {
     //     name: "Email",
