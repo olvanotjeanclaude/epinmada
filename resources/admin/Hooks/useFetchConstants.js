@@ -16,6 +16,7 @@ const useFetchConstants = () => {
             ...data?.user_types ?? {}
         },
         paymentMethods: data?.payementMethods ?? {},
+        saleTypes: data?.saleTypes,
         isLoading,
         isError
     };

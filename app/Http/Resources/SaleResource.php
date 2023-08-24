@@ -20,7 +20,7 @@ class SaleResource extends JsonResource
             "status" => $this->status,
             "note" => $this->note,
             "created_at" => $this->created_at,
-            "updated_at" => $this->updated_at,
+            "formatted_amount" => $this->formatted_amount,
             "user" => $this->user,
             "customer" => $this->customer,
             "orders" => OrderResource::collection($this->orders),

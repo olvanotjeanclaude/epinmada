@@ -1,37 +1,84 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PageTitle from '../../component/PageTitle'
 import Typography from '@mui/material/Typography'
-import { Alert, AlertTitle, Box, Button, Card, CardContent, CircularProgress, FormControl, FormControlLabel, Grid, Radio, RadioGroup, Stack, TextField } from '@mui/material'
+import { Box, Card, CardContent, Grid, Stack, TextField } from '@mui/material'
 import UploadInvoice from './UploadInvoice'
-import { grey } from '@mui/material/colors';
 import { useBasket } from '@/user/context/BasketContextProvider'
 import OrderSummary from './OrderSummary'
 import StepPay from '../basket/StepPay'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import path from '@/user/menus/path'
 import { useForm } from 'react-hook-form'
 import PaymentOptions from './PaymentOptions'
+import { useMutation, useQueryClient } from 'react-query'
+import http from '@/common/http'
+import { HandleError } from '@/common/HandleError'
+import Swal from 'sweetalert2'
+import { allErrors } from '@/admin/Helper/Helper'
+import { confirmButton } from '@/admin/Helper/sweetAlert'
 
 export default function DoPayment() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const basketData = useBasket();
   const baskets = basketData.data?.baskets;
 
-  const isBaskethasPUBG = baskets?.filter(({ product }) => {
+  const isBasketHasPUBG = baskets?.filter(({ product }) => {
     return product.category.name.toLowerCase() == "epin"
   }).length > 0;
 
-  if (baskets?.length == 0) return <Navigate to={path.popular} />
-
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, setValue, formState: { errors, isValid } } = useForm({
     defaultValues: {
       pubg_id: "",
-      paymentMethod: ""
+      paymentMethod: "",
+      files: null
     }
   });
 
+  useEffect(() => {
+    register("files", {
+      required: "veuillez entrer l'image de la facture"
+    })
+  }, []);
+
+  const payMutation = useMutation({
+    mutationKey: "payMutation",
+    mutationFn: async (data) => await http.post("/sales", data)
+      .then(res => res.data)
+      .catch(HandleError.catch)
+  })
+
   const onSubmit = data => {
-    console.log(data);
+    payMutation.mutate(data, {
+      onSuccess(data) {
+
+        if (data.code == 422) {
+          Swal.fire({
+            icon: "error",
+            title: "Erreur",
+            titleText: allErrors(data.errors).join(" "),
+            ...confirmButton
+          })
+        }
+
+        if (data.code == 200) {
+          queryClient.invalidateQueries("front.baskets");
+          navigate(path.orders, {
+            state: { ...data }
+          });
+        }
+      },
+      error(error) {
+        Swal.fire({
+          icon: "error",
+          title: "Erreur",
+          titleText: JSON.stringify(error)
+        })
+      }
+    })
   }
+
+  if (baskets?.length == 0) return <Navigate to={path.popular} />
 
   return (
     <Box
@@ -45,7 +92,7 @@ export default function DoPayment() {
       <Grid container spacing={2}>
         <Grid item xs={12} md={7}>
           <Stack spacing={2}>
-            {isBaskethasPUBG && <Card>
+            {isBasketHasPUBG && <Card>
               <CardContent>
                 <Typography variant="h5" mb={1}>Veuillez saisir votre ID de PubG Mobile</Typography>
 
@@ -64,7 +111,7 @@ export default function DoPayment() {
 
             <PaymentOptions register={register} errors={errors} />
 
-            <UploadInvoice />
+            <UploadInvoice errors={errors} register={register} setValue={setValue} />
           </Stack>
         </Grid>
 
@@ -72,7 +119,7 @@ export default function DoPayment() {
           <Stack spacing={2}>
             <OrderSummary basketData={basketData} />
 
-            <StepPay amount={basketData.data.sum_sub_amount}
+            <StepPay loading={payMutation.isLoading} isValid={isValid} amount={basketData.data.sum_sub_amount}
               buttonType='submit'
               label='Confirmer Et Payer' />
           </Stack>

@@ -3,34 +3,23 @@ import { Card, Col, Image, Row, Stack } from 'react-bootstrap';
 import PageTitle from '../../component/Layout/PageTitle';
 import { Dialog } from 'primereact/dialog';
 import { Divider } from 'primereact/divider';
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { ConfirmDialog } from 'primereact/confirmdialog';
 import { useShow } from './useSale';
-import { CircularProgress } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import Error from '@/admin/component/Message/Error';
+import PanoramaIcon from '@mui/icons-material/Panorama';
 import { camelToCapitalized, capitalizeLetter, computeAmount, formatDateTime, } from '@/common/helper';
+import { StatusForm } from './StatusForm';
 
 
 export default function SaleShow() {
   const [visible, setVisible] = useState(false);
-  const imageSrc = "https://assetsnffrgf-a.akamaihd.net/assets/m/501100078/univ/art/501100078_univ_lss_lg.jpg";
 
   const { data: sale, isLoading, error, isError } = useShow();
 
   if (isLoading) return <CircularProgress />;
 
   if (isError) return <Error error={error} />;
-
-  const confirmSale = () => {
-    confirmDialog({
-      message: 'Êtes-vous sur de vouloir continuer?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: "Oui",
-      rejectLabel: "Non",
-      accept: () => { console.log("ok") },
-      reject: () => { }
-    });
-  };
 
   return (
     <>
@@ -40,21 +29,17 @@ export default function SaleShow() {
 
       <Row>
         <Col md={4}>
-          <Image role='button' src={imageSrc} fluid onClick={() => setVisible(true)} />
-          <Dialog header="# 12345" visible={visible} onHide={() => setVisible(false)}>
-            <Image src={imageSrc} fluid />
+
+          <Button startIcon={<PanoramaIcon />} size='large' variant='contained' onClick={() => setVisible(true)}>
+            Voir la facture
+          </Button>
+          <Dialog header={sale.unique_id} visible={visible} onHide={() => setVisible(false)}>
+            <Image src={`/${sale.invoice_image}`} fluid />
           </Dialog>
 
-
-          <div className="d-flex mt-3 justify-content-center">
-            <button onClick={confirmSale}
-              type="button" className="btn btn-success waves-effect waves-light">
-              <i className="bx bx-check font-size-16 align-middle me-2"></i>
-              Confirmer
-            </button>
-          </div>
-
           <Divider />
+
+          <StatusForm sale={sale} />
         </Col>
         <Col md={8}>
           <Card>

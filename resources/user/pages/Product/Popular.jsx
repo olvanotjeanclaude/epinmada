@@ -25,7 +25,7 @@ export default function Popular({ product }) {
     return (
         <>
             <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={closeSnackbar}>
-                <Alert onClose={closeSnackbar} variant='filled' severity="success" sx={{ width: '100%' }}>
+                <Alert onClose={closeSnackbar} variant='filled' severity="success">
                     {product.name} a été  ajouté au panier avec succès
                 </Alert>
             </Snackbar>

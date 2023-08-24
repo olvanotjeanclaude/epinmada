@@ -4,8 +4,9 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import { Link, useLocation } from 'react-router-dom';
 import { grey } from '@mui/material/colors';
 import path from '@/user/menus/path';
+import { LoadingButton } from '@mui/lab';
 
-export default function StepPay({ amount, label = "continuer à payer" }) {
+export default function StepPay({ loading, isValid, amount, label = "continuer à payer" }) {
     const location = useLocation();
     return (
         <Card sx={{ bgcolor: grey[50] }}>
@@ -22,9 +23,11 @@ export default function StepPay({ amount, label = "continuer à payer" }) {
                             </Button>
                         </Link> :
                         <Box>
-                            <Button type="submit" startIcon={<PaymentIcon />} variant='contained'>
+                            <LoadingButton loading={loading}
+                                disabled={!isValid}
+                                type="submit" startIcon={<PaymentIcon />} variant='contained'>
                                 {label}
-                            </Button>
+                            </LoadingButton>
                         </Box>
                     }
                 </Stack>

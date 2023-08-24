@@ -19,7 +19,7 @@ export default function Basket({ basket }) {
 
   return (
     <Card sx={{ border: `1px solid ${grey[300]}`, pb: 1.5 }} elevation={0}>
-      <CardContentNoPadding>
+      <CardContentNoPadding sx={{ opacity: deleteCartMutation.isLoading ? .3 : 1 }}>
         <Box>
           <Box display="flex" gap={2}>
             <img width={83} height={83} src={product.image_url} />

@@ -19,6 +19,7 @@ class Sale extends Model
     ];
 
     protected $fillable = [
+        "status",
         "unique_id",
         "payment_mode",
         "amount",
@@ -48,5 +49,11 @@ class Sale extends Model
 
     public function orders(){
         return $this->hasMany(Order::class);
+    }
+
+    public function getFormattedAmountAttribute(){
+       $amount= $this->orders->sum("sub_amount");
+
+       return formatPrice($amount);
     }
 }

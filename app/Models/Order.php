@@ -18,6 +18,11 @@ class Order extends Model
 
     public function getFormattedSubAmountAttribute()
     {
-        return  formatPrice($this->price*$this->quantity);
+        return  formatPrice($this->sub_amount);
+    }
+
+    public function getSubAmountAttribute()
+    {
+        return $this->price * $this->quantity;
     }
 }

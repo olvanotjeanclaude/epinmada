@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dropzone, FileMosaic, FullScreen, ImagePreview } from '@files-ui/react'
-import { Card, CardContent, Typography } from '@mui/material'
+import { Card, CardContent, FormHelperText, Typography } from '@mui/material'
 
-export default function UploadInvoice() {
+export default function UploadInvoice({ errors, setValue }) {
     const [files, setFiles] = useState([]);
     const [imgSrc, setImgSrc] = useState(undefined);
 
@@ -10,19 +10,20 @@ export default function UploadInvoice() {
         setFiles(files.filter((x) => x.id !== id));
     };
 
+    useEffect(() => {
+        setValue("files", files[0]?.file ?? null, { shouldValidate: true });
+    }, [files]);
 
     return (
         <Card>
             <CardContent>
                 <Typography variant="h5" mb={1}>Facture</Typography>
-
                 <Dropzone
                     // fakeUpload
                     behaviour="replace"
                     localization="FR-fr"
                     maxFileSize={10 * 1024 * 1024}
                     maxFiles={1}
-                    footer={false}
                     label='Déposez ici votre facture'
                     headerConfig={{
                         customHeader: <Typography textAlign="left" p={1} variant="h5">
@@ -30,7 +31,8 @@ export default function UploadInvoice() {
                         </Typography>
                     }}
                     footerConfig={{
-                        style: { padding: "10px" }
+                        style: { padding: "10px" },
+                        customFooter: <FormHelperText sx={{ p: 1 }}>{errors.files?.message}</FormHelperText>
 
                     }}
                     cleanFiles
