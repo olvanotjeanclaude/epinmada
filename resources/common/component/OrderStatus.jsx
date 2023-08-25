@@ -3,30 +3,32 @@ import React from 'react'
 import { Badge } from 'react-bootstrap'
 import { capitalizeLetter } from '../helper';
 
-export default function OrderStatus({ namespace, status }) {
+export default function OrderStatus({ namespace, status, text }) {
     let badge = <></>;
-    let bg;
-    
+    let bg, color;
+
     switch (capitalizeLetter(status)) {
         case "Paid":
-            bg ="success";
+            bg = color = "success";
             break;
         case "Cancelled":
-            bg ="danger";
+            bg = "danger";
+            color = "error";
             break;
         case "Pending":
-            bg ="primary";
+            bg = color = "primary";
             break;
         default:
+            bg = color = "primary";
             break;
     }
 
     if (namespace == "admin") {
-        badge = <Badge bg={bg}>{capitalizeLetter(status)}</Badge>;
+        badge = <Badge bg={bg}>{capitalizeLetter(text)}</Badge>;
     }
     else {
-        badge = <Chip label={capitalizeLetter(status)} color="primary" />;
+        badge = <Chip label={capitalizeLetter(text)} color={color} />;
     }
- 
+
     return (<div>{badge}</div>);
 }

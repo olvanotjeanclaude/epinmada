@@ -18,6 +18,7 @@ class SaleResource extends JsonResource
             "pubg_id" => $this->pubg_id,
             "invoice_image" => $this->invoice_image,
             "status" => $this->status,
+            "statusText" => $this->statusText,
             "note" => $this->note,
             "created_at" => $this->created_at,
             "formatted_amount" => $this->formatted_amount,

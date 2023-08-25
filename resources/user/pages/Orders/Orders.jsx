@@ -1,4 +1,4 @@
-import { Alert, CircularProgress, Grid, Snackbar } from '@mui/material'
+import { Alert, CircularProgress, Grid, Snackbar, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import PageTitle from '@/user/component/PageTitle'
 import { useLocation } from 'react-router-dom'
@@ -12,7 +12,7 @@ export default function Orders() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { state: orderSuccess } = useLocation();
 
-  const { data:orders, isLoading, error, isError } = useQuery({
+  const { data: orders, isLoading, error, isError } = useQuery({
     queryKey: "front.orders",
     queryFn: async () => http.get("/my-orders")
       .then(res => res.data)
@@ -41,14 +41,15 @@ export default function Orders() {
       <PageTitle title="Mes Commandes" />
       <Grid container spacing={1} mb={2}>
         {
-         orders.map((order) => (
+          orders.map((order) => (
             <Grid item md={6} key={order.id} sx={{ width: "100%" }}>
-              <Order order={order}  />
+              <Order order={order} />
             </Grid>
           ))
         }
       </Grid>
 
+      {orders.length == 0 ? <Typography>Pas De commandes!</Typography> : <></>}
     </>
   )
 }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string("payment_mode");
             $table->string("pubg_id")->nullable();
             $table->string("invoice_image")->nullable();
-            $table->string("status")->default(Sale::STATUS["pending"]);
+            $table->string("status")->default("pending");
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("customer_id");
             $table->text("note")->nullable();

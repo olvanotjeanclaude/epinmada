@@ -1,35 +1,44 @@
+import OrderStatus from '@/common/component/OrderStatus';
 import { camelToCapitalized, capitalizeLetter, formatDateTime } from '@/common/helper';
-import { Box, Card, CardContent, Stack, Typography, TextField, Avatar, Chip } from '@mui/material'
+import { Box, Card, CardContent, Stack, Typography, TextField, Avatar, Chip, Grid } from '@mui/material'
 import { deepPurple, green, grey } from '@mui/material/colors'
 import React from 'react'
+import { Link } from 'react-router-dom';
 
-export default function Order({order}) {
-    const {orders} = order;
+export default function Order({ order }) {
+    const { product, sale } = order;
 
     return (
-        <Card sx={{ border: `1px solid ${grey[300]}`, padding: 0,flexGrow:1 }} elevation={0}>
+        <Card sx={{ border: `1px solid ${grey[300]}`, padding: 0, flexGrow: 1 }} elevation={0}>
             <CardContent>
-                <Stack direction="row" mb={1} justifyContent="space-between">
-                    {/* <Typography variant="h5">Netflix Product</Typography> */}
+                <Stack direction="row" mb={1} flexWrap="wrap" justifyContent="space-between">
+                    <Link to={product.route_detail} target='_blank' style={{textDecoration:"none"}}>
+                        <Typography variant="h5">{capitalizeLetter(product.name)}</Typography>
+                    </Link>
                     <Typography variant="h5">{formatDateTime(order.created_at)}</Typography>
                 </Stack>
-                <Box display="flex" gap={2} alignItems="center" flexWrap="wrap">
-                    <Stack direction="row" flexGrow={1} gap={2}>
-                        <Stack>
-                            <Typography variant="h6">Commande No</Typography>
-                            <Typography variant="body2" color={grey[700]}>#{order.unique_id}</Typography>
-                        </Stack>
-                    </Stack>
-                    <Box flexGrow={1}>
-                        <Chip size='small' variant='outlined' label={capitalizeLetter(order.status)} color="success" />
+
+                <Box display="flex" flexWrap="wrap" gap={2} justifyContent="space-between">
+                    <Box display="flex" gap={1}>
+                        <Avatar
+                            alt="Remy Sharp"
+                            src={product.image_url}
+                            sx={{ width: 50, height: 50 }}
+                        />
+                        <Box>
+                            <Typography variant="h6">No <b>{sale.unique_id}</b> </Typography>
+                            <OrderStatus text={sale.statusText} status={sale.status} />
+                        </Box>
                     </Box>
-                    <Stack direction={{xs:"row",md:"column"}} gap={{xs:2,md:0}} alignItems="center">
-                        <Typography variant="h6" color="success">{order.formatted_amount}</Typography>
-                        <Typography variant="subtitle2" color={green[500]}>{camelToCapitalized(order.payment_mode)}</Typography>
-                    </Stack>
+
+                    <Box display="flex" flexDirection={{ xs: "row", xl: "column" }} gap={{ xs: 1, xl: 0 }} alignItems="end">
+                        <Typography variant="h6" color="success">{order.formattedSubAmount}</Typography>
+                        <Typography variant="subtitle2" color={green[500]}>{camelToCapitalized(sale.payment_mode)}</Typography>
+                    </Box>
                 </Box>
             </CardContent>
         </Card>
+
 
     )
 }

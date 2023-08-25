@@ -6,6 +6,7 @@ use App\Helpers\ImageUpload;
 use App\Helpers\Message;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaleRequest;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\SaleResource;
 use App\Models\Basket;
 use App\Models\Order;
@@ -20,11 +21,14 @@ class SaleController extends Controller
     }
 
     public function myOrders(){
-        $orders = Sale::where("customer_id",auth()->id())
+        $orders = Order::has("product")
+        ->whereHas("sale",function($query){
+            $query->where("customer_id",auth()->id());
+        })
         ->orderBy("id","desc")
         ->get();
 
-        return SaleResource::collection($orders);
+        return OrderResource::collection($orders);
     }
 
     public function show(Sale $sale)

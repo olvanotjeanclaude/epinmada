@@ -1,10 +1,7 @@
+import dateFormat from "dateformat";
 export const formatDateTime = (utcDateString) => {
 
-    const utcDate = new Date(utcDateString);
-
-    const localDateString = utcDate.toLocaleString("fr-FR");
-
-    return localDateString;
+    return dateFormat(utcDateString,"d/mm/yyyy");
 }
 
 export const capitalizeLetter = (letter) => {

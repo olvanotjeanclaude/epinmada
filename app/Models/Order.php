@@ -16,6 +16,11 @@ class Order extends Model
         return $this->belongsTo(Product::class);
     }
 
+    public function sale()
+    {
+        return $this->belongsTo(Sale::class);
+    }
+
     public function getFormattedSubAmountAttribute()
     {
         return  formatPrice($this->sub_amount);

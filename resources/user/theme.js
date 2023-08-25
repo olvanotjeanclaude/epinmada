@@ -38,7 +38,16 @@ export const themeSettings = () => {
 
 const theme = createTheme(
     {
-        ...themeSettings()
+        ...themeSettings(),
+        components:{
+            MuiChip:{
+                styleOverrides:{
+                    root:{
+                        height:20
+                    }
+                }
+            }
+        }
     });
 
 export default theme;

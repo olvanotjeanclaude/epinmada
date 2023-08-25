@@ -29,7 +29,7 @@ export default function InvoiceCard({ sale }) {
                         <div className="d-flex gap-2">
                             <span className="d-block text-primary text-decoration-underline mb-2">N<sup>0</sup>{sale.unique_id}</span>
 
-                            <OrderStatus namespace="admin" status={sale.status} />
+                            <OrderStatus namespace="admin" text={sale.statusText} status={sale.status} />
                         </div>
 
                         <div className="d-flex justify-content-between flex-wrap gap-2  align-items-center">

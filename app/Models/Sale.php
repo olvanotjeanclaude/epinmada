@@ -12,8 +12,10 @@ class Sale extends Model
     protected $primaryKey ="unique_id";
     public $incrementing = false;
 
+    protected $appends = ["statusText"];
+
     const STATUS = [
-        "paid" => "payé",
+        "paid" => "payé et livré",
         "pending" => "en attente",
         "cancelled" => "annulé"
     ];
