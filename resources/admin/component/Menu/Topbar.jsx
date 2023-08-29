@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import HeaderDropDown from './HeaderDropDown';
 import SettingSpinner from './SettingSpinner';
 
@@ -39,7 +39,10 @@ function Topbar() {
               id="vertical-menu-btn">
               <i className="fa fa-fw fa-bars toggle-sidebar-icon"></i>
             </button>
-
+            <button type="button" onClick={() => open("/", "_blank")}
+              className="btn btn-sm px-3 toggle-sidebar font-size-16 header-item waves-effect">
+              <i className="fa fa-fw fa-home"></i>
+            </button>
           </div>
 
           <div className="d-flex">
@@ -57,9 +60,9 @@ function Topbar() {
 
             {/* <Notification /> */}
 
-           <HeaderDropDown />
+            <HeaderDropDown />
 
-           <SettingSpinner />
+            <SettingSpinner />
           </div>
         </div>
       </header>

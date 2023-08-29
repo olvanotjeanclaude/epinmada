@@ -81,10 +81,14 @@
                             <div class="cart__summary--footer">
                                 {{-- <p class="cart__summary--footer__desc">Shipping & taxes calculated at checkout</p> --}}
                                 <ul class="d-flex justify-content-between">
-                                    <li><button class="cart__summary--footer__btn primary__btn cart" type="submit">Metre A
-                                            Jour</button></li>
-                                    <li><a class="cart__summary--footer__btn primary__btn checkout"
-                                            href="checkout.html">Payer</a></li>
+                                    <li>
+                                        <button class="cart__summary--footer__btn primary__btn cart" type="submit">Metre A
+                                            Jour
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <a class="cart__summary--footer__btn primary__btn checkout">Payer</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -181,5 +185,5 @@
 @endsection
 
 @section('script')
-    <script src="{{asset('assets/js/basket.js')}}" type="module"></script>
+    <script src="{{ asset('assets/js/basket.js') }}" type="module"></script>
 @endsection

@@ -4,15 +4,9 @@
         {{-- <span class="old__price">$320.00</span> --}}
     </div>
     <p class="product__details--info__desc mb-15">
-        PubG Mobile, développé par Tencent Games en utilisant Unreal Engine 4 tout comme la version ordinateur, a pris
-        sa place parmi les jeux "Battleground" les plus populaires au monde. La production, qui est révolutionnaire dans
-        le monde mobile, est toujours la même dans toutes ses fonctionnalités que dans l'environnement PC.
-
-        Dans le jeu, vous pouvez équiper vos armes et votre personnage d'un costume, etc. Comme vous pouvez ajouter des
-        fonctionnalités, vous pouvez également profiter de vos concurrents avec des options telles que Royale Pass.
+        {{ $epin->short_description ?? $epin->category->description }}
     </p>
    
-        <p class="product__details--info__desc mb-15">Options de paiement:</p>
     <div class="product__variant">
         <div class="product__variant--list quantity d-flex align-items-center mb-20">
             <div class="quantity__box">
@@ -27,9 +21,9 @@
             </div>
 
             <button class="quickview__cart--btn primary__btn" type="submit">Ajouter Au Panier</button>
-
         </div>
-        <div class="product__variant--list mb-15">
+        
+        <div class="product__variant--list mt-2">
             <button class="variant__buy--now__btn primary__btn" type="submit">
                 Achetez-le maintenant
             </button>

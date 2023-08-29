@@ -6,7 +6,7 @@
 
 @section('content')
     <!-- Start breadcrumb section -->
-    <x-breadcrumb title="Contactez-nous" />
+    <x-breadcrumb title="à propos de nous" />
     <!-- End breadcrumb section -->
 
     <!-- Start about section -->
@@ -38,19 +38,15 @@
                                     permettant de profiter d'une vaste sélection de films, de séries et de documentaires.
                                 </li>
                             </ul>
-                            <p class="about__content--desc style2">
-                                Nous sommes fiers de vous offrir des produits de qualité à des prix compétitifs. Profitez de
-                                nos offres exceptionnelles et découvrez une nouvelle dimension de jeu et de divertissement.
-                                Contactez-nous dès aujourd'hui pour plus d'informations ou pour passer une commande.
-                            </p>
+                          
                         </div>
 
-                        <a class="about__content--btn primary__btn" href="contact.html">Demander le prix</a>
+                        <a class="about__content--btn primary__btn" href="/contact">Demander le prix</a>
                     </div>
                 </div>
                 <div class="col">
                     <div class="about__thumbnail">
-                        <img class="display-block" src="assets/img/other/about-thumb.webp" alt="about-thumb">
+                        <img class="display-block" src="https://www.ozgeozdemir.com/wp-content/uploads/elementor/thumbs/oyun-sekto%CC%88ru%CC%88-2-pimlialmnjawjlvv7uxillfxff7mtjqaj8iqtntpt0.png" alt="about-thumb">
                     </div>
                 </div>
             </div>

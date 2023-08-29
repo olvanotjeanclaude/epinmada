@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -12,34 +13,24 @@ class FrontController extends Controller
     {
         $categories = Category::all();
         $epin = Product::Epins()->first();
-        return view("index", compact("categories", "epin"));
+        $teams = User::where("is_team",true)->get();
+        return view("index", compact("categories", "epin","teams"));
     }
 
     public function getProducts($slug)
     {
         $category = Category::has("products")->where("slug", $slug)->firstOrFail();
-        $product = $category->products->first();
-
-        switch ($category->name) {
-            case 'EPIN':
-                return redirect()->route("front.getEpin", $product->slug);
-            case "NETFLIX":
-                return view("netflix", compact("product"));
-            case "SPOTIFY":
-                return view("spotify", compact("product"));
-        }
-
-        abort(404);
+        $selected = $category->products->first();
+        $products = $category->products()->where("id","!=",$selected?->id)->get();
+        return view("getProducts",compact("category","products","selected"));
     }
 
-    public function getEpin($slug)
+    public function getProduct($category,$slug)
     {
-        $category = Category::where("slug", "epin")->firstOrFail();
-        $selectedEpin = Product::where("slug", $slug)->firstOrFail();
-
-        $products = $category->products()->where("slug", "!=", $selectedEpin->name)->get();
-
-        return view("epins", compact("category", "products", "selectedEpin"));
+        $category = Category::has("products")->where("slug", $category)->firstOrFail();
+        $selected = Product::where("slug",$slug)->firstOrFail();
+        $products = $category->products()->where("id","!=",$selected->id)->get();
+        return view("getProducts",compact("category","products","selected"));
     }
 
     public function getContact()

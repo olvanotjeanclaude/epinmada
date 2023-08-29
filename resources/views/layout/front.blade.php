@@ -33,6 +33,8 @@
             object-fit: cover
         }
     </style>
+
+    @vite(['resources/front/js/index.js'])
 </head>
 
 <body>

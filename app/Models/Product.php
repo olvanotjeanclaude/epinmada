@@ -58,11 +58,7 @@ class Product extends Model
 
     public function getRouteDetailAttribute()
     {
-        if ($this->category?->name == "EPIN") {
-            return route("front.getEpin", $this->slug);
-        }
-
-        return route("front.getProducts", $this->category?->slug);
+        return route('front.getProduct', [$this->category->slug, $this->slug]);
     }
 
     public static function Tops()
