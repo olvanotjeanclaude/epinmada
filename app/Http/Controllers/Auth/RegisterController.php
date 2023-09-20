@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -41,7 +42,7 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-  
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -64,5 +65,18 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function signUp(Request $request)
+    {
+       $data= $request->validate([
+            "name" => "required",
+            "surname" => "required",
+            "email" => "required|email|unique:users",
+            "password" => "required",
+            "confirm_password" => "required|same:password"
+        ]);
+
+        return $data;
     }
 }

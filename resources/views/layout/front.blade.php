@@ -32,6 +32,14 @@
             width: 100%;
             object-fit: cover
         }
+
+        .account__login--input {
+            margin-bottom: 0;
+        }
+
+        .account__login--inner label{
+            margin-bottom: 1rem;
+        }
     </style>
 
     @vite(['resources/front/js/index.js'])
