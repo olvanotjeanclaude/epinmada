@@ -4,7 +4,7 @@
     <!-- Start Header topbar -->
 
     <!-- Start main header -->
-    <div class="main__header position__relative header__sticky">
+    <div class="main__header position__relative header__sticky shadow-sm">
         <div class="container">
             <div class="main__header--inner d-flex justify-content-between align-items-center">
                 <div class="offcanvas__header--menu__open ">
@@ -144,7 +144,7 @@
     <!-- End Offcanvas header menu -->
 
     <!-- Start Offcanvas stikcy toolbar -->
-    <div class="offcanvas__stikcy--toolbar" tabindex="-1">
+    <div class="offcanvas__stikcy--toolbar dno" tabindex="-1">
         <ul class="d-flex justify-content-between">
             <li class="offcanvas__stikcy--toolbar__list">
                 <a class="offcanvas__stikcy--toolbar__btn" href="index.html">

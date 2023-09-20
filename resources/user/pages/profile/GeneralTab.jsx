@@ -54,8 +54,13 @@ export default function GeneralTab({ active }) {
 
   const onSubmit = (data) => {
     profileMutation.mutate(data, {
-      onSuccess: () => {
-        setSeverity("success");
+      onSuccess: (response) => {
+        if(response.code==422){
+          setSeverity("error")
+        }
+        else if(response.code==200){
+          setSeverity("success");
+        }
         setSnackbarOpen(true)
         queryClient.invalidateQueries(["user"])
       },

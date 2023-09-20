@@ -3,8 +3,10 @@
     Connexion
 @endsection
 @section('content')
-    <div class="container"  style="margin-bottom: 20rem; margin-top:5rem">
-        <form action="{{route('api.signUp')}}" class="needs-validation" novalidate id="sign-up-form" autocomplete="false">
+    {{-- <x-breadcrumb title="S'inscrire" /> --}}
+
+    <div class="container">
+        <form action="{{ route('api.signUp') }}" class="needs-validation" novalidate id="sign-up-form" autocomplete="false">
             <div class="row">
                 <div class="col-lg-6 mx-auto">
                     <div class="account__login register">
@@ -15,7 +17,8 @@
                         <div class="account__login--inner">
                             <div class="d-flex flex-column flex-md-row gap-2">
                                 <label class="flex-grow-1">
-                                    <input class="account__login--input" name="name" placeholder="Nom" required type="text">
+                                    <input class="account__login--input" name="name" placeholder="Nom" required
+                                        type="text">
                                     <small class="text-danger error" id="error-name"></small>
                                 </label>
                                 <label class="flex-grow-1">
@@ -24,19 +27,23 @@
                                 </label>
                             </div>
                             <label>
-                                <input class="account__login--input" name="email" placeholder="Adresse e-mail" type="email">
+                                <input class="account__login--input" name="email" placeholder="Adresse e-mail"
+                                    type="email">
                                 <small class="text-danger error" id="error-email"></small>
                             </label>
                             <label>
-                                <input class="account__login--input" name="password" autocomplete="new-password" placeholder="Mot de passe" type="password">
+                                <input class="account__login--input" name="password" autocomplete="new-password"
+                                    placeholder="Mot de passe" type="password">
                                 <small class="text-danger error" id="error-password"></small>
                             </label>
                             <label>
-                                <input class="account__login--input" name="confirm_password" autocomplete="new-password" placeholder="Confirmez le mot de passe" type="password">
+                                <input class="account__login--input" name="confirm_password" autocomplete="new-password"
+                                    placeholder="Confirmez le mot de passe" type="password">
                                 <small class="text-danger error" id="error-confirm_password"></small>
                             </label>
                             <label>
-                                <button class="account__login--btn primary__btn mb-10" id="submitBtn" type="submit">Enregistrer</button>
+                                <button class="account__login--btn primary__btn mb-10" id="submitBtn"
+                                    type="submit">Enregistrer</button>
                             </label>
 
 
@@ -55,6 +62,8 @@
             </div>
         </form>
     </div>
+@endsection
 
+@section('script')
     @vite(['resources/front/js/sign-up.js'])
 @endsection

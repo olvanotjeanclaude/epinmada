@@ -76,9 +76,9 @@ export function setShopCartHtml({ data }) {
     $("#countBasket").text(data.count);
     $("#loadShopCardData").html(sidebarShopCartHtml(data))
 
-    if (!hasCartTable()) {
-        $(".offCanvas__minicart").addClass("active");
-    }
+    // if (!hasCartTable()) {
+    //     $(".offCanvas__minicart").addClass("active");
+    // }
 }
 
 function loadSidebarShopCart() {

@@ -86,14 +86,17 @@ class RegisterController extends Controller
             "confirm_password.required" => "Confirmer le mot de passe",
         ]);
 
-        return response()->json([
-            "code" => 200,
-            'type' => "success",
-            "message" => "Votre compte a été enregistré avec succès"
-        ]);
+        
+        $data["password"] = Hash::make($data["password"]);
+        
         $newUser = User::create($data);
-
+        
         if ($newUser) {
+            return response()->json([
+                "code" => 200,
+                'type' => "success",
+                "message" => "Votre compte a été enregistré avec succès"
+            ]);
         }
 
         return Message::error("Erreur Inconnue. Veuillez réessayer plus tard", 500);
