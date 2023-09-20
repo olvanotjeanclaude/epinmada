@@ -1,17 +1,7 @@
 import axios from "axios";
-import { Cookie } from "../../front/Cookie.js";
 
 export function generateUniqueID() {
     return crypto.randomUUID();
-}
-
-export function settingAnonymousID() {
-    const uniqueID = generateUniqueID();
-    const userID = Cookie.get('anonymousID');
-
-    if (!userID) {
-        Cookie.set('anonymousID', uniqueID, 30);
-    }
 }
 
 export function Axios() {

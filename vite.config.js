@@ -8,6 +8,9 @@ export default defineConfig({
         react(),
         laravel({
             input: [
+                // FRONT
+                "resources/front/css/index.css",
+               
                 "resources/front/js/index.js",
                 'resources/admin/main.jsx',
                 'resources/front/main.jsx',

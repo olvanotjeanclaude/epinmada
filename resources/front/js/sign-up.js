@@ -1,7 +1,9 @@
+import axios from "axios";
 
 $(document).ready(function () {
     $("#sign-up-form").submit(async function (e) {
         e.preventDefault();
+        $(".error").html("");
 
         const data = {};
 
@@ -9,17 +11,15 @@ $(document).ready(function () {
 
         await axios.post("/api/sign-up", data)
             .then(res => {
+                localStorage.setItem('signupMessage', res.data.message);
+                window.location.href = "/sign-in"
             })
             .catch(err => {
                 const errors = err.response.data.errors;
 
-                for(const key in errors){
-                    console.log(errors[key][0])
+                for (const key in errors) {
                     $(`#error-${key}`).html(errors[key][0]);
                 }
-
-            //    console.log(errors);
-              
             });
     });
 });

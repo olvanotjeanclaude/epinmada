@@ -33,10 +33,10 @@
                             </label>
                             <label>
                                 <input class="account__login--input" name="confirm_password" autocomplete="new-password" placeholder="Confirmez le mot de passe" type="password">
-                                <small class="text-danger error" id="error-confirm-password"></small>
+                                <small class="text-danger error" id="error-confirm_password"></small>
                             </label>
                             <label>
-                                <button class="account__login--btn primary__btn mb-10" type="submit">Enregistrer</button>
+                                <button class="account__login--btn primary__btn mb-10" id="submitBtn" type="submit">Enregistrer</button>
                             </label>
 
 

@@ -31,7 +31,7 @@ class Message
             "code" => $code,
             'type' => "error",
             "message" => $messsage
-        ]);
+        ],$code);
     }
 
     public static function delete($model = "data")

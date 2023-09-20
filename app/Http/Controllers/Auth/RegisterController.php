@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\Message;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -69,14 +70,32 @@ class RegisterController extends Controller
 
     public function signUp(Request $request)
     {
-       $data= $request->validate([
+        $data = $request->validate([
             "name" => "required",
             "surname" => "required",
             "email" => "required|email|unique:users",
-            "password" => "required",
-            "confirm_password" => "required|same:password"
+            "password" => "required|same:confirm_password",
+            "confirm_password" => "required"
+        ], [
+            "name.required" => "Nom ne peut pas être vide",
+            "surname.required" => "Prénom ne peut pas être vide",
+            "email.required" => "L'email ne peut pas être vide",
+            "email.unique" => "L'email existe déjà. Veuillez entrer un nouvel e-mail",
+            "password.required" => "le nom ne peut pas être vide",
+            "password.same" => "Les mots de passe ne correspondent pas",
+            "confirm_password.required" => "Confirmer le mot de passe",
         ]);
 
-        return $data;
+        return response()->json([
+            "code" => 200,
+            'type' => "success",
+            "message" => "Votre compte a été enregistré avec succès"
+        ]);
+        $newUser = User::create($data);
+
+        if ($newUser) {
+        }
+
+        return Message::error("Erreur Inconnue. Veuillez réessayer plus tard", 500);
     }
 }

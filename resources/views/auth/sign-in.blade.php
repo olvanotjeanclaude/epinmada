@@ -3,7 +3,7 @@
     Connexion
 @endsection
 @section('content')
-    <x-breadcrumb title="Contactez-nous" />
+    <x-breadcrumb title="Connexion" />
 
     <div class="container   d-flex align-items-center justify-content-center" style="margin-bottom: 20rem; margin-top:5rem">
         <form id="loginForm" autocomplete="off">
@@ -45,5 +45,8 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('script')
     @vite(['resources/front/js/sign-in.js'])
 @endsection
