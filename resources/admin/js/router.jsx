@@ -9,7 +9,7 @@ import {
     PersonalInfo,
     ProductForm, ProductList, ProductShow,
     ProfileForm,
-    UserForm, UserList, UserShow, Sales, SaleForm, SaleShow
+    UserForm, UserList, UserShow, Sales, SaleForm, SaleShow, Contact, Contacts
 } from '../pages';
 
 import Admin from './Admin';
@@ -45,6 +45,14 @@ const routeList = [
             { path: 'nouveau', element: <SaleForm /> },
             { path: ':id', element: <SaleShow /> },
             { path: ':id/edit', element: <SaleForm /> },
+        ]
+    },
+    {
+        path: 'contacts',
+        element: <Outlet />,
+        children: [
+            { index: true, element: <Contacts /> },
+            { path: ':id', element: <Contact /> },
         ]
     },
     {

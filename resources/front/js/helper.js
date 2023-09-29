@@ -55,7 +55,7 @@ export function formatPrice(price) {
 
 
 export function printError(message) {
-    return message &&`<small className="p-error">${message}</small>`;
+    return message && `<small className="p-error">${message}</small>`;
 }
 
 export function getBadgeStatus(status) {
@@ -65,4 +65,21 @@ export function getBadgeStatus(status) {
     };
 
     return maps[status] ?? { severity: "info", value: "Inconnu" };
+}
+
+export function bootstrapValidation() {
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
 }

@@ -4,9 +4,7 @@ import RightContent from '../component/Layout/RightContent';
 import Menu from '../component/Menu/Menu';
 
 function Admin() {
-  const { userLoading, userError } = useAuth();
-
-  if (userLoading) return <CircularProgress />;
+  const {  userError } = useAuth();
 
   if (userError) window.location.href = "/sign-in";
 

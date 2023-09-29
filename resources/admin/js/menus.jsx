@@ -38,11 +38,11 @@ export default  [
         //     },
         // ]
     },
-    // {
-    //     name: "Email",
-    //     icon: <i className="bx bx-envelope"></i>,
-    //     path: "",
-    // },
+    {
+        name: "Contacts",
+        icon: <i className="bx bx-envelope"></i>,
+        path: "/contacts",
+    },
     {
         name: "Clients",
         icon: <i className="bx bxs-user-detail"></i>,

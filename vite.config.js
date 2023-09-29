@@ -10,6 +10,7 @@ export default defineConfig({
             input: [
                 // FRONT
                 "resources/front/css/index.css",
+                "resources/front/css/auth.css",
                
                 "resources/front/js/index.js",
                 'resources/admin/main.jsx',
@@ -17,6 +18,7 @@ export default defineConfig({
 
                 "resources/front/js/sign-in.js",
                 "resources/front/js/sign-up.js",
+                "resources/front/js/contact-us.js",
             ],
             refresh: true,
         }),

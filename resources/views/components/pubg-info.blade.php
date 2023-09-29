@@ -4,7 +4,7 @@
         {{-- <span class="old__price">$320.00</span> --}}
     </div>
     <p class="product__details--info__desc mb-15">
-        {{ $epin->short_description ?? $epin->category->description }}
+        {{ $epin->short_description  }}
     </p>
    
     <div class="product__variant">

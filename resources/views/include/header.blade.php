@@ -144,7 +144,7 @@
     <!-- End Offcanvas header menu -->
 
     <!-- Start Offcanvas stikcy toolbar -->
-    <div class="offcanvas__stikcy--toolbar dno" tabindex="-1">
+    <div class="offcanvas__stikcy--toolbar d-none" tabindex="-1">
         <ul class="d-flex justify-content-between">
             <li class="offcanvas__stikcy--toolbar__list">
                 <a class="offcanvas__stikcy--toolbar__btn" href="index.html">

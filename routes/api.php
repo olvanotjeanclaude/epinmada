@@ -63,5 +63,6 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 });
 
 Route::resource("baskets", \App\Http\Controllers\api\front\BasketController::class);
+Route::resource("contact-us", \App\Http\Controllers\api\front\ContactUsController::class);
 Route::post('/empty-panier', [\App\Http\Controllers\api\front\BasketController::class, "emptyCart"])->name("emptyCart");
 Route::post('/update-quantity/{basket}', [\App\Http\Controllers\api\front\BasketController::class, "updateQuantity"])->name("updateQuantity");

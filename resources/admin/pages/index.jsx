@@ -18,6 +18,8 @@ import OrderShow from './orders/OrderShow';
 import Sales from './sales/Sales';
 import SaleShow from './sales/SaleShow';
 import SaleForm from './sales/SaleForm';
+import Contact from './contacts/Contact';
+import Contacts from './contacts/Contacts';
 // import InvoiceList from './invoice/InvoiceList';
 // import InvoiceShow from './invoice/InvoiceShow';
 // import InvoiceForm from './invoice/InvoiceForm';
@@ -53,6 +55,10 @@ export {
     Sales,
     SaleShow,
     SaleForm,
+
+    // Contacts
+    Contact,
+    Contacts,
 
     //Profile
     PersonalInfo,

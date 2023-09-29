@@ -6,7 +6,7 @@
 
 @section('content')
     <!-- Start breadcrumb section -->
-     <x-breadcrumb title="Contactez-nous" />
+    <x-breadcrumb title="Contactez-nous" />
     <!-- End breadcrumb section -->
 
     <!-- Start contact section -->
@@ -134,57 +134,66 @@
                     </div>
                     <div class="col-lg-7">
                         <div class="contact__form">
-                            <form class="contact__form--inner" action="#">
+                            <form class="contact__form--inner needs-validation" id="contact__form" novalidate method="POST" action="#">
                                 <div class="row">
-                                    <div class="col-lg-6 col-md-6">
+                                    <div class="col-md-6">
                                         <div class="contact__form--list mb-20">
-                                            <label class="contact__form--label" for="name">Prénom<span
+                                            <label class="contact__form--label" for="name">Nom<span
                                                     class="contact__form--label__star">*</span></label>
-                                            <input class="contact__form--input" name="name" id="name"
-                                                placeholder="Prénom" type="text">
+                                            <input class="contact__form--input" name="name" required id="name"
+                                                type="text">
+                                            <div class="text-danger error" id="error-name"></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6">
+                                    <div class="col-md-6">
                                         <div class="contact__form--list mb-20">
-                                            <label class="contact__form--label" for="surname">Nom de famille<span
+                                            <label class="contact__form--label" for="surname">Prénom<span
                                                     class="contact__form--label__star">*</span></label>
-                                            <input class="contact__form--input" name="lastname" id="surname"
-                                                placeholder="Nom de famille" type="text">
+                                            <input class="contact__form--input" name="surname" required id="surname"
+                                                type="text">
+                                            <div class="text-danger error" id="error-surname"></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6">
+                                    <div class="col-md-6">
                                         <div class="contact__form--list mb-20">
                                             <label class="contact__form--label" for="phone">Numéro de téléphone
                                                 <span class="contact__form--label__star">*</span>
                                             </label>
-                                            <input class="contact__form--input" name="number" id="phone"
-                                                placeholder="Numéro de téléphone" type="text">
+                                            <input class="contact__form--input" name="phone" required id="phone"
+                                                type="text">
+                                            <div class="text-danger error" id="error-phone"></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6">
+                                    <div class="col-md-6">
                                         <div class="contact__form--list mb-20">
                                             <label class="contact__form--label" for="email">E-mail<span
                                                     class="contact__form--label__star">*</span></label>
                                             <input class="contact__form--input" name="email" id="email"
-                                                placeholder="E-mail" type="text">
+                                               required type="email">
+                                                <div class="text-danger error" id="error-email"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="contact__form--list mb-20">
+                                            <label class="contact__form--label" for="subject">Objet<span
+                                                    class="contact__form--label__star">*</span></label>
+                                            <input class="contact__form--input" name="subject" id="subject"
+                                               required type="text">
+                                                <div class="text-danger error" id="error-subject"></div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="contact__form--list mb-10">
                                             <label class="contact__form--label" for="body">Rédigez votre message<span
                                                     class="contact__form--label__star">*</span></label>
-                                            <textarea class="contact__form--textarea" name="message" id="body" placeholder=">Rédigez votre message"></textarea>
+                                            <textarea class="contact__form--textarea" name="body" id="body" required 
+                                            placeholder=">Rédigez votre message"></textarea>
+                                            <div class="text-danger error" id="error-body"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="account__login--remember position__relative mb-15">
-                                    <input class="checkout__checkbox--input" id="check2" type="checkbox">
-                                    <span class="checkout__checkbox--checkmark"></span>
-                                    <label class="checkout__checkbox--label login__remember--label" for="check2">
-                                        Accepter les termes et conditions
-                                    </label>
-                                </div>
-                                <button class="contact__form--btn primary__btn" type="submit">Soumettre
+                                
+                                <button class="contact__form--btn primary__btn" type="submit" id="submit-contact-button">Soumettre
                                     maintenant</button>
                                 <p class="form-messege"></p>
                             </form>
@@ -200,7 +209,13 @@
     <div class="contact__map--area section--padding pt-0">
         <iframe class="contact__map--iframe"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3046.078133313063!2d28.8458466760243!3d40.22956496700956!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14ca0e19d35d5d07%3A0x9a3ded38a46b0a11!2zR8O2csO8a2xlLCDDnMOnb2x1ayBDZC4gTm86MzgsIDE2Mjg1IE5pbMO8ZmVyL0J1cnNh!5e0!3m2!1sfr!2str!4v1687935596092!5m2!1sfr!2str"
-            style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            style="border:0;" allowfullscreen="" loading="lazy">
+        </iframe>
     </div>
     <!-- End contact map area -->
+@endsection
+
+
+@section('script')
+    @vite(["resources/front/js/contact-us.js"])
 @endsection
