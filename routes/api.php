@@ -45,14 +45,15 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
   Route::resource("users", App\Http\Controllers\api\UserController::class);
   Route::put("users/update-status/{id}", [App\Http\Controllers\api\UserController::class, "updateStatus"]);
-  
+
   Route::resource("customers", App\Http\Controllers\api\CustomerController::class);
+  Route::resource("contact-us", \App\Http\Controllers\api\front\ContactUsController::class)->except("store");
   Route::resource("products", App\Http\Controllers\api\ProductController::class);
   Route::resource("categories", App\Http\Controllers\api\CategoryController::class)->only("index");
-  
+
   Route::resource("sales", App\Http\Controllers\api\SaleController::class);
-  Route::get("/my-orders",[ App\Http\Controllers\api\SaleController::class,"myOrders"]);
-  Route::put("/update-sale-status/{unique_id}",[ App\Http\Controllers\api\SaleController::class,"updateStatus"]);
+  Route::get("/my-orders", [App\Http\Controllers\api\SaleController::class, "myOrders"]);
+  Route::put("/update-sale-status/{unique_id}", [App\Http\Controllers\api\SaleController::class, "updateStatus"]);
 
   Route::get("constants", [\App\Http\Controllers\api\ConstantController::class, "constants"]);
 
@@ -63,6 +64,6 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 });
 
 Route::resource("baskets", \App\Http\Controllers\api\front\BasketController::class);
-Route::resource("contact-us", \App\Http\Controllers\api\front\ContactUsController::class);
+Route::post("contact-us", [\App\Http\Controllers\api\front\ContactUsController::class, "store"]);
 Route::post('/empty-panier', [\App\Http\Controllers\api\front\BasketController::class, "emptyCart"])->name("emptyCart");
 Route::post('/update-quantity/{basket}', [\App\Http\Controllers\api\front\BasketController::class, "updateQuantity"])->name("updateQuantity");

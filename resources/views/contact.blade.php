@@ -142,7 +142,7 @@
                                                     class="contact__form--label__star">*</span></label>
                                             <input class="contact__form--input" name="name" required id="name"
                                                 type="text">
-                                            <div class="text-danger error" id="error-name"></div>
+                                            <div class="text-danger small error" id="error-name"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -151,7 +151,7 @@
                                                     class="contact__form--label__star">*</span></label>
                                             <input class="contact__form--input" name="surname" required id="surname"
                                                 type="text">
-                                            <div class="text-danger error" id="error-surname"></div>
+                                            <div class="text-danger small error" id="error-surname"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -161,7 +161,7 @@
                                             </label>
                                             <input class="contact__form--input" name="phone" required id="phone"
                                                 type="text">
-                                            <div class="text-danger error" id="error-phone"></div>
+                                            <div class="text-danger small error" id="error-phone"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -170,7 +170,7 @@
                                                     class="contact__form--label__star">*</span></label>
                                             <input class="contact__form--input" name="email" id="email"
                                                required type="email">
-                                                <div class="text-danger error" id="error-email"></div>
+                                                <div class="text-danger small error" id="error-email"></div>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -179,7 +179,7 @@
                                                     class="contact__form--label__star">*</span></label>
                                             <input class="contact__form--input" name="subject" id="subject"
                                                required type="text">
-                                                <div class="text-danger error" id="error-subject"></div>
+                                                <div class="text-danger small error" id="error-subject"></div>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -188,7 +188,7 @@
                                                     class="contact__form--label__star">*</span></label>
                                             <textarea class="contact__form--textarea" name="body" id="body" required 
                                             placeholder=">Rédigez votre message"></textarea>
-                                            <div class="text-danger error" id="error-body"></div>
+                                            <div class="text-danger small error" id="error-body"></div>
                                         </div>
                                     </div>
                                 </div>

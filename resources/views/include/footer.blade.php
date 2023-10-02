@@ -1,4 +1,4 @@
-<footer class="footer__section footer__bg">
+<footer class="footer__section footer__bg p-0">
     <div class="container">
         <div class="main__footer section--padding d-none">
             <div class="row">

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Error from '../../component/Message/Error';
-
 import { DataTable } from "primereact/datatable";
 import { Tag } from 'primereact/tag';
 import { Column } from 'primereact/column';
@@ -15,7 +14,6 @@ import { Button } from 'primereact/button';
 import { onDeleteData } from '../../Helper/sweetAlert';
 import { useQueryClient } from 'react-query';
 import customerService from '../../service/CustomerService';
-import PageTitle from '../../component/Layout/PageTitle';
 import { useNavigate } from 'react-router-dom';
 
 function Customers() {
