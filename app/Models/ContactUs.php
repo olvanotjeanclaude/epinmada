@@ -10,7 +10,7 @@ class ContactUs extends Model
     use HasFactory;
 
     protected $casts = [
-        'created_at' => 'datetime:d-m-Y H:i:s',
+        'created_at' => 'datetime:d/m/Y H:i:s',
     ];
 
     protected $fillable = [

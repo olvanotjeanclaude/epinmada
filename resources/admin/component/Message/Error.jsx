@@ -7,11 +7,10 @@ Error.propTypes ={
 }
 
 function Error({ error }) {
-    const navigate = useNavigate();
     return (
         <div className='text-danger'>
             <p>Erreur: {error}</p>
-            <Button onClick={() => navigate(-1)}>Retourner</Button>
+            {/* <Button onClick={() => navigate(-1)}>Retourner</Button> */}
         </div>
     )
 }

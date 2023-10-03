@@ -1,35 +1,30 @@
 import PageTitle from '@/admin/component/Layout/PageTitle'
 import Error from '@/admin/component/Message/Error';
-import contactService from '@/admin/service/ContactService';
 import { capitalizeLetter } from '@/common/helper';
-import { Card, CircularProgress, Stack } from '@mui/material';
-import React, { useEffect, useState } from 'react'
+import { Box, Card, CircularProgress, Stack, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import Table from 'react-bootstrap/Table';
 import Pagination from 'react-bootstrap/Pagination';
-
-import { useQuery } from 'react-query';
 import SearchBox from './SearchBox';
-import Checkbox from '@mui/material/Checkbox';
-import Action from './Action';
 import ShowContactModal from './ShowContactModal';
+import { onDeleteData } from '@/admin/Helper/sweetAlert';
+import { useContact } from './useContact';
 
 export default function Contacts() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [query, setQuery] = useState("");
-  const [checkBoxs, setCheckBoxs] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selected, setSelected] = useState(null);
+  const {
+    currentPage, setCurrentPage,
+    query, setQuery,
+    selected, setSelected,
+    isModalOpen, setIsModalOpen,
+    fetchContact,
+    showContact,
+    deleteMutation
+  } = useContact();
 
-  const { data, error, isLoading, isError } = useQuery({
-    queryKey: [contactService.endPoint, currentPage, query],
-    queryFn: () => contactService.fetchAll(currentPage, { query }),
-    keepPreviousData: true,
-    onError: (error) => new Error(error.message)
-  });
+  const { data, isError, isLoading, error } = fetchContact();
 
   if (isError) return <Error error={error} />
-
-  useEffect(() => { setCurrentPage(prev => parseInt(prev)) }, [currentPage]);
 
   return (
     <>
@@ -40,36 +35,48 @@ export default function Contacts() {
           <CircularProgress /> :
           <Card>
             <SearchBox query={query} setQuery={setQuery} />
-            <Table striped hover responsive>
+            <Table striped hover responsive style={{minHeight:"400px"}}>
               <thead>
                 <tr>
-                  {/* <th>#</th> */}
                   <th>Status</th>
                   <th>Expéditeur</th>
                   <th>Email</th>
                   <th>Téléphone</th>
-                  <th style={{ minHeight: "300px" }}>Objet</th>
+                  <th>Objet</th>
                   <th>Date</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 {
-                  data.data.map(contact => (
-                    <tr key={contact.id} onClick={() => setSelected(contact)}>
-                      {/* <td className='align-middle'><Checkbox  /></td> */}
-                      <td className='align-middle'>
-                        {contact.status=="new" ? <span className='badge bg-success'>Nouveau</span>:<></>}
-                        {contact.status=="seen"? <span className='badge bg-info'>Vu</span>:<></>}
-                      </td>
-                      <td className='align-middle'>{capitalizeLetter(`${contact.name} ${contact.surname}`)}</td>
-                      <td className='align-middle'>{contact.email}</td>
-                      <td className='align-middle'>{contact.phone}</td>
-                      <td className='align-middle'>{contact.subject}</td>
-                      <td className='align-middle'>{(contact.created_at)}</td>
-                      <td className='align-middle'><Action contact={contact} setIsModalOpen={setIsModalOpen} /></td>
-                    </tr>
-                  ))
+                  data.data.length == 0 ?
+                    <tr>
+                      <td colSpan={7} className='text-center'>Aucun Data</td>
+                    </tr> :
+                    data.data.map(contact => (
+                      <tr key={contact.id} onClick={() => setSelected(contact)}>
+                        <td className='align-middle'>
+                          {contact.status == "new" ? <span className='badge bg-success'>Nouveau</span> : <></>}
+                          {contact.status == "seen" ? <span className='badge bg-info'>Vu</span> : <></>}
+                        </td>
+                        <td className='align-middle'>{capitalizeLetter(`${contact.name} ${contact.surname}`)}</td>
+                        <td className='align-middle'>{contact.email}</td>
+                        <td className='align-middle'>{contact.phone}</td>
+                        <td className='align-middle'>{contact.subject}</td>
+                        <td className='align-middle'>{(contact.created_at)}</td>
+                        <td className='align-middle'>
+                          <Box display="flex">
+                            <IconButton onClick={() => showContact(contact)} size="small" aria-label='Voir'>
+                              <VisibilityIcon />
+                            </IconButton>
+
+                            <IconButton onClick={() => onDeleteData({ id: contact.id }, deleteMutation)} size="small" aria-label='Delete'>
+                              <DeleteIcon />
+                            </IconButton>
+                          </Box>
+                        </td>
+                      </tr>
+                    ))
                 }
               </tbody>
             </Table>

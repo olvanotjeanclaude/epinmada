@@ -23,42 +23,38 @@ export default function ShowContactModal({ contact, isModalOpen, setIsModalOpen 
         setIsModalOpen(false);
     };
 
-    if(!contact) return <></>
-
-    return (
-        <div>
-            <BootstrapDialog
-               fullWidth
-                onClose={handleClose}
-                aria-labelledby="customized-dialog-title"
-                open={isModalOpen}
+    return contact ? (
+        <BootstrapDialog
+            fullWidth
+            onClose={handleClose}
+            aria-labelledby="customized-dialog-title"
+            open={isModalOpen}
+        >
+            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                {contact.subject}
+            </DialogTitle>
+            <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                    position: 'absolute',
+                    right: 8,
+                    top: 8,
+                    color: (theme) => theme.palette.grey[500],
+                }}
             >
-                <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                    {contact.subject}
-                </DialogTitle>
-                <IconButton
-                    aria-label="close"
-                    onClick={handleClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                    }}
-                >
-                    <CloseIcon />
-                </IconButton>
-                <DialogContent dividers>
-                    <Typography gutterBottom>
-                       {contact.body}
-                    </Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleClose}>
-                        Fermer
-                    </Button>
-                </DialogActions>
-            </BootstrapDialog>
-        </div>
-    );
+                <CloseIcon />
+            </IconButton>
+            <DialogContent dividers>
+                <Typography gutterBottom whiteSpace="pre-line">
+                    {contact.body}
+                </Typography>
+            </DialogContent>
+            <DialogActions>
+                <Button autoFocus onClick={handleClose}>
+                    Fermer
+                </Button>
+            </DialogActions>
+        </BootstrapDialog>
+    ) : <></>;
 }

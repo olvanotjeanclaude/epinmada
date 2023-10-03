@@ -56,4 +56,13 @@ class ContactUsController extends Controller
 
         return response()->json(["success" => "Message status updated to seen"]);
     }
+
+    public function destroy($id)
+    {
+        $contact = ContactUs::findOrFail($id);
+
+        $contact->delete();
+
+        return Message::delete(("Contact"));
+    }
 }
