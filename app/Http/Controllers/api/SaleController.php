@@ -17,7 +17,7 @@ class SaleController extends Controller
 {
     public function index()
     {
-        return SaleResource::collection(Sale::orderBy("id", "desc")->paginate(9));
+        return SaleResource::collection(Sale::has("customer")->orderBy("id", "desc")->paginate(9));
     }
 
     public function myOrders(){

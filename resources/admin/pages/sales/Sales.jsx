@@ -1,36 +1,29 @@
+import PageTitle from '@/admin/component/Layout/PageTitle'
 import React from 'react'
-import PageTitle from '../../component/Layout/PageTitle'
-import { Col, Row } from 'react-bootstrap'
-import SaleCard from './SaleCard'
-import { useQuery } from 'react-query'
-import http from '@/common/http'
-import { HandleError } from '@/common/HandleError'
-import { CircularProgress } from '@mui/material'
-import Error from '@/admin/component/Message/Error'
+import { useFetch } from './useSale'
+import Error from '@/admin/component/Message/Error';
+import { CircularProgress, Grid } from '@mui/material';
+import SaleCard from './SaleCard';
 
 export default function Sales() {
-  const { data, isLoading, error, isError } = useQuery({
-    queryKey: "sales",
-    queryFn: async () => await http.get("/sales")
-      .then(res => res.data)
-      .catch(HandleError.catch),
-  });
+  const { data, isLoading, isError, error } = useFetch();
 
   if (isError) return <Error error={error} />
 
   return (
     <>
-      <PageTitle pageTitle="Ventes" title="Liste De Ventes" />
+      <PageTitle pageTitle="Liste" title="Ventes" />
 
-      <Row>
-        {
-          isLoading ? <CircularProgress /> : data.data.map((sale, key) => (
-            <Col sm={6} md={4} key={key}>
-              <SaleCard sale={sale} />
-            </Col>
-          ))
-        }
-      </Row>
+      {isLoading ? <CircularProgress /> :
+        <Grid container spacing={1}>
+          {
+            data.data.map((sale, key) => (
+              <Grid item xs={12} sm={6} md={4} key={key}>
+                <SaleCard sale={sale} />
+              </Grid>
+            ))
+          }
+        </Grid>}
     </>
   )
 }

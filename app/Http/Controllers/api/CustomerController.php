@@ -19,7 +19,8 @@ class CustomerController extends Controller
                     ->orWhere("email", "LIKE", "%" . request("query") . "%")
                     ->orWhere("phone", "LIKE", "%" . request("query") . "%");
             })
-            ->paginate(7);
+            ->orderByDesc("id")
+            ->paginate(12);
 
         return response()->json($customers);
     }

@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 
 
-export const userFetch = () => {
+export const useFetch = () => {
     return useQuery({
         queryKey: "sales",
         queryFn: async () => await http.get("/sales")

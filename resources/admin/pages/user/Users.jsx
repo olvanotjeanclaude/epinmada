@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import User from './User'
 import { Col, Row, Spinner } from 'react-bootstrap'
-import Paginate from '../../component/Pagination/Paginate';
 import Error from '../../component/Message/Error';
 import userService from '../../service/userService';
 import { useQuery } from 'react-query';
@@ -10,6 +9,7 @@ import PCreateButton from '../../component/Button/PCreateButton';
 import useFetchConstants from '../../Hooks/useFetchConstants';
 import { capitalizeLetter } from '../../Helper/Helper';
 import { Checkbox, FormControlLabel, Stack } from '@mui/material';
+import MUIPagination from '@/common/component/MUIPagination';
 
 function Users() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -87,10 +87,7 @@ function Users() {
                     }
                 </Row>
 
-                <Paginate data={users}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                />
+                <MUIPagination data={users} setCurrentPage={setCurrentPage} currentPage={currentPage} />
             </>
     );
 }

@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { Card, Col, Image, Row, Stack } from 'react-bootstrap';
+import { Card, Col, Row, Stack } from 'react-bootstrap';
 import PageTitle from '../../component/Layout/PageTitle';
-import { Dialog } from 'primereact/dialog';
-import { Divider } from 'primereact/divider';
-import { ConfirmDialog } from 'primereact/confirmdialog';
 import { useShow } from './useSale';
 import { Button, CircularProgress } from '@mui/material';
 import Error from '@/admin/component/Message/Error';
 import PanoramaIcon from '@mui/icons-material/Panorama';
 import { camelToCapitalized, capitalizeLetter, computeAmount, formatDateTime, } from '@/common/helper';
 import { StatusForm } from './StatusForm';
+import ModalInvoiceImage from './ModalInvoiceImage';
 
 
 export default function SaleShow() {
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const { data: sale, isLoading, error, isError } = useShow();
 
@@ -25,19 +23,14 @@ export default function SaleShow() {
     <>
       <PageTitle pageTitle="Ventes" title="Detail du facture" />
 
-      <ConfirmDialog />
-
-      <Row>
+      {isLoading ? <CircularProgress /> : <Row>
         <Col md={4}>
 
-          <Button startIcon={<PanoramaIcon />} size='large' variant='contained' onClick={() => setVisible(true)}>
+          <Button startIcon={<PanoramaIcon />} size='large' variant='contained' onClick={() => setOpen(true)}>
             Voir la facture
           </Button>
-          <Dialog header={sale.unique_id} visible={visible} onHide={() => setVisible(false)}>
-            <Image src={`/${sale.invoice_image}`} fluid />
-          </Dialog>
 
-          <Divider />
+         <hr />
 
           <StatusForm sale={sale} />
         </Col>
@@ -115,7 +108,9 @@ export default function SaleShow() {
             </Card.Body>
           </Card>
         </Col>
-      </Row>
+      </Row>}
+
+      <ModalInvoiceImage open={open} sale={sale} setOpen={setOpen} />
     </>
   );
 };

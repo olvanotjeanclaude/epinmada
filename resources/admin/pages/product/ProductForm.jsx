@@ -8,6 +8,8 @@ import { Toast } from 'primereact/toast';
 import Submit from '../../component/Button/Submit';
 import Error from '../../component/Message/Error';
 import { useProductMutation } from './useProducts';
+import { useQuery } from 'react-query';
+import http from '@/common/http';
 
 function ProductForm() {
   const [text, setText] = useState("");
@@ -19,8 +21,12 @@ function ProductForm() {
     addMutation, updateMutation, setValue,
   } = useProductMutation();
 
+  const categories = useQuery({
+    queryFn: async () => http.get("categories").then(res => res.data).catch(e => new Error(e.message)),
+    queryKey: "categories"
+});
 
-  useEffect(() => setText(product.data?.long_description) , [product.data]);
+  useEffect(() => setText(product.data?.long_description), [product.data]);
 
   const onChangeLongDescription = (e) => {
     setText(e.htmlValue);
@@ -82,19 +88,14 @@ function ProductForm() {
                       {printError("price")}
                     </FloatingLabel>
 
-                    {/* <InputNumber placeholder='Prix'
-                      {...register("price")}
-                      className='w-100 mb-3'
-                      inputId="locale-user"
-                      locale='mg-MG'
-                      onValueChange={(e) => { }}
-                      minFractionDigits={2} /> */}
-
-                    <PrimeFilterableSelect
-                      control={control}
-                      name="category"
-                      apiUrl="categories"
-                      placeholder="Catégorie" />
+                    <Form.Select  {...register("category")}>
+                      <option value="">Catégorie</option>
+                      {
+                        categories?.data?.map(cat =>(
+                          <option value="1" key={cat.id}>{cat.name}</option>
+                        ))
+                      }
+                    </Form.Select>
                     {printError("category")}
                   </Col>
                   <Col sm={true}>

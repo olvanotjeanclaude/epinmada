@@ -35,6 +35,11 @@
                         <small class="text-danger error" id="error-email"></small>
                     </label>
                     <label>
+                        <input class="account__login--input" name="phone" placeholder="Téléphone"
+                            type="phone">
+                        <small class="text-danger error" id="error-phone"></small>
+                    </label>
+                    <label>
                         <input class="account__login--input" name="password" autocomplete="new-password"
                             placeholder="Mot de passe" type="password">
                         <small class="text-danger error" id="error-password"></small>

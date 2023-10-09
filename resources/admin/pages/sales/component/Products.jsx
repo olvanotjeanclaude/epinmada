@@ -3,11 +3,10 @@ import { useFetchAll } from '../../product/useProducts'
 import Error from '../../../component/Message/Error';
 import { Spinner } from 'react-bootstrap';
 import Product from './Product';
-import Paginate from '../../../component/Pagination/Paginate';
 import Filter from '../../product/Filter';
 
 export default function Products() {
-    const { data, isLoading, error, isError, query, setQuery, setCurrentPage, setCheckboxs } = useFetchAll();
+    const { data, isLoading, error, isError, query, setQuery,currentPage, setCurrentPage, setCheckboxs } = useFetchAll();
 
     if (isError) return <Error error={error} />
 
@@ -26,7 +25,8 @@ export default function Products() {
                 {products.map(product => <Product key={product.unique_id} product={product} />)}
             </div>
 
-            <Paginate data={data.products} setCurrentPage={setCurrentPage} />
+
+            <MUIPagination data={data.products} setCurrentPage={setCurrentPage} currentPage={currentPage} />
         </>
     );
 }

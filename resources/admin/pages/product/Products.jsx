@@ -1,11 +1,11 @@
 import { Spinner, Table } from 'react-bootstrap'
 import Error from '../../component/Message/Error';
 import { Link } from 'react-router-dom';
-import Paginate from '../../component/Pagination/Paginate';
 import Filter from './Filter';
 import { useDeleteMutation, useFetchAll } from './useProducts';
 import { onDeleteData } from '../../Helper/sweetAlert';
 import { capitalizeLetter } from '../../Helper/Helper';
+import MUIPagination from '@/common/component/MUIPagination';
 
 function Products() {
 
@@ -73,9 +73,7 @@ function Products() {
         </tbody>
       </Table>
       <br />
-      <Paginate data={data?.products}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage} />
+      <MUIPagination data={data} setCurrentPage={setCurrentPage} currentPage={currentPage} />
     </>
   )
 }

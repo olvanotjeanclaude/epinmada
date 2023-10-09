@@ -25,17 +25,11 @@ export const StatusForm = ({ sale }) => {
 
     if (isError) return <Error error="Erreur inconnue" />;
 
-
-
-
     const onSubmit = (status) => {
         statusMutation.mutate(status, {
             onSuccess(res) {
                 setMessage(res.message);
                 setOpen(true);
-            },
-            onError() {
-
             }
         })
     }

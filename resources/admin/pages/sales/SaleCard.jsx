@@ -2,12 +2,13 @@ import OrderStatus from '@/common/component/OrderStatus';
 import { computeAmount, formatDateTime } from '@/common/helper';
 import { Avatar } from '@mui/material';
 import React from 'react'
-import { Button, Card, Stack } from 'react-bootstrap'
+import {  Card, Stack } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import PersonIcon from '@mui/icons-material/Person';
 
-export default function InvoiceCard({ sale }) {
+export default function SaleCard({ sale }) {
     const { customer } = sale;
+
     return (
         <Link to={sale.unique_id}>
             <Card>
@@ -20,7 +21,7 @@ export default function InvoiceCard({ sale }) {
                             <h5 className="mb-1 font-size-15 text-truncate">{customer.name}</h5>
                             <Stack>
                                 <span className="text-muted">{customer.email}</span>
-                                <span className="text-muted">{customer.phone}</span>
+                                <span className="text-muted">{customer.phone??"-"}</span>
                             </Stack>
                         </div>
                     </div>

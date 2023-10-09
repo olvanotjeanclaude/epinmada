@@ -31,8 +31,8 @@ Route::post("auth-social/{social}", [\App\Http\Controllers\Auth\SocialController
 
 
 Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, "login"])->name("login");
-Route::post('/sign-up', [\App\Http\Controllers\Auth\RegisterController::class, "signUp"])->name("signUp");
-Route::post("/logout", [\App\Http\Controllers\Auth\LoginController::class, "logout"])->name("api.signUp");
+Route::post('/sign-up', [\App\Http\Controllers\Auth\RegisterController::class, "signUp"])->name("api.signUp");
+Route::post("/logout", [\App\Http\Controllers\Auth\LoginController::class, "logout"])->name("api.logout");
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
