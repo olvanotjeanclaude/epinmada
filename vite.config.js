@@ -27,5 +27,8 @@ export default defineConfig({
         alias:{
             '@/': `${path.resolve(__dirname, 'resources')}/`
         }
+    },
+    define:{
+        global: "window"
     }
 });

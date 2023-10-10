@@ -7,7 +7,7 @@ function ProductList() {
   return (
     <>
       <PageTitle pageTitle="Produits" title="Liste de produit" />
-      
+
       <CreateButton />
 
       <Card>

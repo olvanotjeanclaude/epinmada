@@ -73,7 +73,7 @@ function Products() {
         </tbody>
       </Table>
       <br />
-      <MUIPagination data={data} setCurrentPage={setCurrentPage} currentPage={currentPage} />
+      <MUIPagination data={data?.products} setCurrentPage={setCurrentPage} currentPage={currentPage} />
     </>
   )
 }

@@ -1,9 +1,9 @@
 import { Button, Card, Col, Row, Spinner, Stack } from 'react-bootstrap';
 import Error from '../../component/Message/Error';
-import PageTitle from '../../component/Layout/PageTitle';
 import { useDeleteMutation, useShow } from './useProducts';
 import { onDeleteData } from '../../Helper/sweetAlert';
 import { Link, Navigate } from 'react-router-dom';
+import PageTitle from '@/admin/component/Layout/PageTitle';
 
 function ProductShow() {
   const { isError, error, isLoading, product } = useShow();
@@ -11,9 +11,7 @@ function ProductShow() {
 
   const onDelete = async (product) => await onDeleteData(product, deleteMutation);
 
-  if (deleteMutation.isSuccess) {
-    return <Navigate to="/produits" />
-  }
+  if (deleteMutation.isSuccess) return <Navigate to="/produits" />
 
   if (isError) return <Error error={error} />;
 

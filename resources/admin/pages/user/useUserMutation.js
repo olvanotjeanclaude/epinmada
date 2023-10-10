@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
-import userService from "../../service/userService";
 import useUserForm from "../../Hooks/useUserForm";
 import useApiCallback from "../../Hooks/useApiCallback";
+import userService from "@/admin/service/userService";
 
 const useUserMutation = () =>{
     const toast = useRef(null);

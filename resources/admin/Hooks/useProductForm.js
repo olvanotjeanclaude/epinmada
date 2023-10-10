@@ -4,15 +4,13 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 
 const useProductForm = (product) => {
-    const categorySchema = yup.object().shape({
-        name: yup.string().required("Le champ 'name' ne peut pas être vide"),
-      });
-      
     const schema = yup.object({
         name: yup.string().required("le nom ne peut pas être vide"),
         short_description: yup.string().required('Brève Description ne peut pas être vide'),
         price: yup.string().required("Prix ne peut pas être vide"),
-        category: categorySchema.required("Selectionnez le catégorie"),
+        category: yup.string().required("Catégorie ne peut pas être vide"),
+        long_description: yup.string(),
+        // file: yup.string().required("ooo")
     }).required();
 
 
@@ -36,6 +34,7 @@ const useProductForm = (product) => {
                 .map(([inputName]) => form.setValue(inputName, product[inputName]));
 
             form.setValue("id", product.id)
+            form.setValue("category", product.category_id)
         }
 
     }, [form, product]);

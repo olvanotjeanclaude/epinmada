@@ -87,4 +87,9 @@ class User extends Authenticatable
     {
         return $query->where("type", self::TYPES["client"]);
     }
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class,"customer_id");
+    }
 }

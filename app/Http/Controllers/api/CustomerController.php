@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Helpers\Message;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CustomerResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -27,9 +28,7 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-        $customer = User::findOrFail($id);
-
-        return response()->json($customer);
+        return new CustomerResource(User::findOrFail($id));
     }
 
     public function destroy($customerIDs)

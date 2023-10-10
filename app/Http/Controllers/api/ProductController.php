@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Helpers\ImageUpload;
 use App\Helpers\Message;
 use App\Models\File;
 use App\Models\Product;
@@ -50,28 +51,15 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->validated();
+       
+        // dd($data);
         $data["category_id"] = $request->category;
-
-        $image = File::where("user_id", auth()->id())
-            ->where("model", "product")
-            ->where("key", $request->imageKey)
-            ->orderByDesc("id")
-            ->first();
-
-        if (is_null($image)) {
-            return Message::error("veuillez fournir l'image du produit", 400);
-        }
-
-        $data["image_url"] = $image->path ?? "";
+        $data["image_url"] = ImageUpload::upload(Str::slug($request->name),"product",$request->file("file"));
         $data["category_id"] = $request->category;
         $data["unique_id"] = generateNo();
         $data["slug"] = Str::slug($request->name);
 
         Product::updateOrCreate(["name" => $request->name], $data);
-
-        $image->update(["status" => File::STATUS["done"]]);
-
-        $this->deleteImage();
 
         return Message::success("Produit");
     }
@@ -83,36 +71,11 @@ class ProductController extends Controller
         $data = $request->validated();
 
         $data["category_id"] = $request->category;
-
-        $image = File::where("user_id", auth()->id())
-            ->where("model", "product")
-            ->where("key", $request->imageKey)
-            ->orderByDesc("id")
-            ->first();
-
-        if ($image) {
-            $data["image_url"] = $image->path ?? "";
-        }
-
-        $data["category_id"] = $request->category;
         $data["slug"] = Str::slug($request->name);
 
         $product->update($data);
 
-        $image?->update(["status" => File::STATUS["done"]]);
-
-        $this->deleteImage();
-
         return Message::success("Produit");
-    }
-
-    private function deleteImage()
-    {
-        $deleted = File::where("key", request("imageKey"))->delete();
-
-        setcookie("product", "", time() - 3600);
-
-        return $deleted;
     }
 
     public function destroy($unique_id)

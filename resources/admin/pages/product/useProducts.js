@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import productService from "../../service/ProductService";
 import { useParams } from "react-router-dom";
@@ -8,13 +8,15 @@ import useApiCallback from "../../Hooks/useApiCallback";
 export const useFetchAll = () => {
     const [checkboxs, setCheckboxs] = useState({});
 
-    const [query,setQuery] = useState("");
-
+    const [query, setQuery] = useState("");
+    
     const [currentPage, setCurrentPage] = useState(1);
+    
+    useEffect(()=>{setCurrentPage(1)},[query]);
 
     const { data, error, isLoading, isError } = useQuery({
-        queryKey: [productService.name, currentPage,query, checkboxs],
-        queryFn: () => productService.fetchAll(currentPage, {checkboxs,query}),
+        queryKey: [productService.name, currentPage, query, checkboxs],
+        queryFn: () => productService.fetchAll(currentPage, { checkboxs, query }),
         keepPreviousData: true,
         onError: (error) => new Error(error.message)
     });
@@ -23,7 +25,7 @@ export const useFetchAll = () => {
         checkboxs, setCheckboxs,
         currentPage, setCurrentPage,
         data, error, isLoading, isError,
-        query,setQuery
+        query, setQuery
     }
 }
 
@@ -43,6 +45,7 @@ export const useProductMutation = () => {
     const toast = useRef(null);
     const { id } = useParams();
     const queryClient = useQueryClient();
+    const [text, setText] = useState("");
 
     const product = useQuery({
         queryKey: [id],
@@ -60,6 +63,10 @@ export const useProductMutation = () => {
         onSuccess: () => queryClient.invalidateQueries({ queryKey: [productService.endPoint] })
     });
 
+    useEffect(() => setText(product.data?.long_description), [product.data]);
+
+    useEffect(() => setValue("long_description", text), [text]);
+
     const { register, handleSubmit, errors, setValue, setError, control } = useProductForm(product.data);
 
     const { onError, onSuccess } = useApiCallback(toast, setError);
@@ -69,8 +76,6 @@ export const useProductMutation = () => {
     const onSubmit = async (data) => {
         const payload = {
             ...data,
-            category: data.category.id,
-            imageKey: localStorage.getItem("product")
         };
 
         switch (action) {
@@ -91,6 +96,7 @@ export const useProductMutation = () => {
     }
 
     return {
+        text, setText,
         addMutation,
         updateMutation,
         product,
