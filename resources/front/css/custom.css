@@ -19,3 +19,7 @@
 .swal2-popup {
     font-size: 1.6rem !important;
 }
+
+.widget__categories--menu__img{
+    width: 8rem;
+}

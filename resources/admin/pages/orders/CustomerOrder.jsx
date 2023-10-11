@@ -1,11 +1,9 @@
 import React from 'react'
-import { Button, Card, Image, Stack } from 'react-bootstrap'
-import { today } from '../../Helper/date'
-import { Link, useNavigate } from 'react-router-dom'
+import {  Card, Image } from 'react-bootstrap'
 import { capitalizeLetter } from '@/admin/Helper/Helper';
 import { formatDateTime } from '@/common/helper';
 import OrderStatus from '@/common/component/OrderStatus';
-import Typography from '@mui/material/Typography'
+import { useNavigate } from 'react-router-dom';
 
 export default function CustomerOrder({ order }) {
     const { product, sale } = order;
@@ -26,7 +24,6 @@ export default function CustomerOrder({ order }) {
                         <div className='d-flex justify-content-between align-items-center'>
                             <h6 className="text-muted">{capitalizeLetter(product.category.name)}</h6>
                             <h6>{order.formattedSubAmount ?? "0 Ariary"}</h6>
-                            {/* <Typography variant="body1">{order.formattedSubAmount ?? "0 Ariary"}</Typography> */}
                         </div>
                     </div>
                 </div>

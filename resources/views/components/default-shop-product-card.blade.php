@@ -4,42 +4,25 @@
 
 <div class="row">
     <div class="col-sm-5">
-        <img  src="{{ getImage($product->image_url) }}" class="img img-fluid" alt="">
+        <img src="{{ getImage($product->image_url) }}" class="img img-fluid" alt="">
     </div>
     <div class="col-sm-7">
-        <form action="#">
-            <div class="product__details--info__price mt-3 mb-10">
-                <span class="current__price">{{ $product->formatted_price }}</span>
-                {{-- <span class="old__price">$320.00</span> --}}
+        <div class="product__details--info__price mt-3 mb-10">
+            <span class="current__price">{{ $product->formatted_price }}</span>
+            {{-- <span class="old__price">$320.00</span> --}}
+        </div>
+        <div class="product__details--info__desc mb-15">
+            {!! $product->short_description !!}
+            {!! $product->long_description !!}
+        </div>
+
+        <div class="product__variant">
+            <div class="product__variant--list quantity d-flex align-items-center gap-2 mb-20">
+                <button class="product__card--btn primary__btn" data-product-id="{{ $product->unique_id }}">
+                    Ajouter Au Panier
+                </button>
             </div>
-            <div class="product__details--info__desc mb-15">
-             {!! $product->long_description  !!}
-            </div>
-        
-            <div class="product__variant">
-                <div class="product__variant--list quantity d-flex align-items-center mb-20">
-                    <div class="quantity__box">
-                        <button type="button" class="quantity__value quickview__value--quantity decrease"
-                            aria-label="quantity value" value="Decrease Value">-</button>
-                        <label>
-                            <input type="number" class="quantity__number quickview__value--number"
-                                value="1" data-counter />
-                        </label>
-                        <button type="button" class="quantity__value quickview__value--quantity increase"
-                            aria-label="quantity value" value="Increase Value">+</button>
-                    </div>
-        
-                    <button class="quickview__cart--btn primary__btn" type="button">
-                        Ajouter AuPanier
-                    </button>
-        
-                </div>
-                <div class="product__variant--list mb-15">
-                    <button class="variant__buy--now__btn primary__btn" type="submit">
-                        Achetez-le maintenant
-                    </button>
-                </div>
-            </div>
-        </form>
+            <x-button-buy-product :product="$product" />
+        </div>
     </div>
 </div>

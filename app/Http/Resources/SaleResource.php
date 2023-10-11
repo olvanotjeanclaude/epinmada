@@ -20,7 +20,7 @@ class SaleResource extends JsonResource
             "status" => $this->status,
             "statusText" => $this->statusText,
             "note" => $this->note,
-            "created_at" => $this->created_at,
+            "created_at" => format_date_time($this->created_at,"/"),
             "formatted_amount" => $this->formatted_amount,
             "user" => $this->user,
             "customer" => $this->customer,

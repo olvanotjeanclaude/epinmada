@@ -4,30 +4,18 @@
         {{-- <span class="old__price">$320.00</span> --}}
     </div>
     <p class="product__details--info__desc mb-15">
-        {{ $epin->short_description  }}
+        {!! $epin->short_description !!}
+        {!! $epin->long_description??$epin->category?->description !!}
     </p>
    
     <div class="product__variant">
         <div class="product__variant--list quantity d-flex align-items-center mb-20">
-            <div class="quantity__box">
-                <button type="button" class="quantity__value quickview__value--quantity decrease"
-                    aria-label="quantity value" value="Decrease Value">-</button>
-                <label>
-                    <input type="number" class="quantity__number quickview__value--number" value="1"
-                        data-counter />
-                </label>
-                <button type="button" class="quantity__value quickview__value--quantity increase"
-                    aria-label="quantity value" value="Increase Value">+</button>
-            </div>
-
-            <button class="quickview__cart--btn primary__btn" type="submit">Ajouter Au Panier</button>
-        </div>
-        
-        <div class="product__variant--list mt-2">
-            <button class="variant__buy--now__btn primary__btn" type="submit">
-                Achetez-le maintenant
+            <button class="product__card--btn primary__btn"  data-product-id="{{ $epin->unique_id }}">
+                Ajouter Au Panier
             </button>
         </div>
+        
+        <x-button-buy-product :product="$epin" />
     </div>
 
     {{-- <div class="guarantee__safe--checkout">

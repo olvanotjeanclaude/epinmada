@@ -22,7 +22,7 @@ export default function BasicInfo({ customer }) {
                                 <CardRow label="Nom" value={capitalizeLetter(customer.name)} />
                                 <CardRow label="Prénom" value={capitalizeLetter(customer.surname)} />
                                 <CardRow label="Email" value={customer.email?.toLowerCase()} />
-                                <CardRow label="Téléphone" value={customer.phone} />
+                                <CardRow label="Téléphone" value={customer.phone??"-"} />
                             </div>
                         </Col>
                     </Row>

@@ -50,7 +50,7 @@ export default function ChangePassword() {
                 <TextField
                     id='password' type='password'
                     {...register("password")}
-                    role='presentation'
+                    // role='presentation'
                     autoComplete='new-password'
                     error={!!errors.password}
                     helperText={errors.password?.message}
@@ -60,6 +60,7 @@ export default function ChangePassword() {
                     autoComplete='new-password' type='password'
                     {...register("password_confirmation")}
                     label="Confirmez le mot de passe"
+                    required
                     error={!!errors.password_confirmation}
                     helperText={errors.password_confirmation?.message}
                     variant="outlined" />

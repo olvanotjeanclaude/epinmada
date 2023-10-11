@@ -26,9 +26,7 @@
                     </h3>
                 
                     <div class="product__details--info">
-                        <form action="#">
-                            <x-pubg-info :epin="$epin" />
-                        </form>
+                        <x-pubg-info :epin="$epin" />
                     </div>
                 </div>
             </div>

@@ -30,15 +30,17 @@ export default function SaleShow() {
             Voir la facture
           </Button>
 
-         <hr />
+          <hr />
 
           <StatusForm sale={sale} />
         </Col>
         <Col md={8}>
           <Card>
             <Card.Body>
-              <div className="invoice-title">
-                <h4 className="float-en font-size-16">Ordre No <strong>{sale.unique_id}</strong></h4>
+              <div className="invoice-title d-flex justify-content-between">
+                <h4 className="font-size-16">Ordre No <strong>{sale.unique_id}</strong></h4>
+
+                <h4 className='font-size-16'>{formatDateTime(sale.created_at)}</h4>
               </div>
 
               <hr />
@@ -47,21 +49,15 @@ export default function SaleShow() {
                 <div className='d-flex flex-column'>
                   <strong className='d-block'>Facturé à</strong>
                   <Stack>
-                    <span>{capitalizeLetter(sale.customer.name)}</span>
-                    <span>{capitalizeLetter(sale.customer.surname)}</span>
+                    <span>{capitalizeLetter(sale.customer.full_name)}</span>
                     <span>{sale.customer.email}</span>
                     <span>{sale.customer.phone}</span>
                   </Stack>
                 </div>
 
-                <div className='d-flex flex-column justify-content-end'>
-                  <Stack className='text-end mt-2'>
-                    <strong>Date</strong>
-                    <span>{formatDateTime(sale.created_at)}</span>
-                  </Stack>
-
+                <div className='d-flex flex-column gap-1 justify-content-end'>
                   <Stack className='text-end'>
-                    <strong>Mode de paiement</strong>
+                    <strong>Paiement</strong>
                     <span>{camelToCapitalized(sale.payment_mode)}</span>
                   </Stack>
 

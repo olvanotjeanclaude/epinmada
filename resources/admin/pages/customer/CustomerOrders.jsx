@@ -7,13 +7,13 @@ import { Typography } from '@mui/material';
 const CustomerOrders = ({ orders }) => {
 
   return <>
-    <h4>Ses Commandes</h4>
+    <h4>Commandes</h4>
 
     {orders.length == 0 ? <Typography>Pas De commandes!</Typography> : <></>}
     <Row>
       {
         orders?.map(order => (
-          <Col sm={6} md={4} key={order.id}>
+          <Col sm={6} md={4} xl={3} key={order.id}>
             <CustomerOrder order={order} />
           </Col>
         ))

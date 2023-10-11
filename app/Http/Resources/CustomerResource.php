@@ -7,14 +7,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CustomerResource extends JsonResource
 {
- 
+
     public function toArray($request)
     {
-        $orders = Order::has("product")->whereHas("sale",function($query){
-            $query->where("customer_id",$this->id);
-        })
-        ->orderBy("id","desc")
-        ->get();
+        $orders = Order::has("product")->whereHas("sale", function ($query) {
+            $query->where("customer_id", $this->id);
+        })->get();
 
 
         return [

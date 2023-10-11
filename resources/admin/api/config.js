@@ -8,4 +8,5 @@ export const END_POINTS = {
     members: "members",
     customers: "customers",
     contacts: "contact-us",
+    sales: "sales",
 }

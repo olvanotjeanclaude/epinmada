@@ -11,7 +11,7 @@ export default function SaleCard({ sale }) {
 
     return (
         <Link to={sale.unique_id}>
-            <Card>
+            <Card className='m-0'>
                 <Card.Body>
                     <div className="d-flex  gap-2">
                         <Avatar>
@@ -44,7 +44,7 @@ export default function SaleCard({ sale }) {
                                 <li className="list-inline-item date">
                                     <h5 className="font-size-14 m-0 p-0">
                                         <i className="bx bx-calendar me-1 text-muted"></i>
-                                        {formatDateTime(sale.created_at)}
+                                        {sale.created_at}
                                     </h5>
                                 </li>
                             </ul>

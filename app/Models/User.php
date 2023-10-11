@@ -78,6 +78,11 @@ class User extends Authenticatable
         return $type;
     }
 
+    public function isCustomer()
+    {
+        array_search($this->type, User::TYPES) == "client";
+    }
+
     public function getFullNameAttribute()
     {
         return Str::title("$this->name $this->surname");
@@ -90,6 +95,6 @@ class User extends Authenticatable
 
     public function sales()
     {
-        return $this->hasMany(Sale::class,"customer_id");
+        return $this->hasMany(Sale::class, "customer_id");
     }
 }

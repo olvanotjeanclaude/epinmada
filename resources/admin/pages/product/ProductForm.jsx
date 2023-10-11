@@ -82,7 +82,7 @@ function ProductForm() {
                     </Form.Group>
 
                     <Form.Group>
-                      <Box mt={2}>
+                      <Box my={2}>
                         <h4 className="card-title mb-2">Images du produit</h4>
                         <SimpleUploadFile setValue={setValue} />
                         {errors.file && printError("file")}

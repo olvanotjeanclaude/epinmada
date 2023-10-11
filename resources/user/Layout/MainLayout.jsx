@@ -9,9 +9,9 @@ import FixedBottomBar from '@/user/component/navigation/FixedBottomBar'
 export default function MainLayout() {
     const { user, userLoading, userError } = useAuth();
 
-    if (userLoading) return <CircularProgress />;
+    // if (userLoading) return <CircularProgress />;
 
-    if (userError || (user && user.type != 3)) return window.location.replace("sign-in")
+    if (userError || (user && user.type != 3)) return window.location.href ="/"
 
     return user ? (
         <Box position="relative" bgcolor={grey[50]}>

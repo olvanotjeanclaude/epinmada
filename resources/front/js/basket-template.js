@@ -49,7 +49,7 @@ export function sidebarShopCartHtml({ baskets, sum_sub_amount }) {
 
         html += (`<div class="minicart__button d-flex justify-content-center mt-4">
                         <a class="primary__btn minicart__button--link" href="/panier">Voir le panier</a>
-                        <a class="primary__btn minicart__button--link" href="#">Payer</a>
+                        <a class="primary__btn minicart__button--link" href="/u/my-basket">Payer</a>
                     </div>`);
     }
     else {
@@ -71,12 +71,13 @@ export function basketHtml({ baskets, sum_sub_amount }) {
         html += baskets.map(basket => {
             const product = basket.product;
             const category = product.category;
+            
 
             return `
             <tr class="cart__table--body__items">
                 <td class="cart__table--body__list">
                     <div class="cart__product d-flex align-items-center">
-                        <button data-id="${product.unique_id}" class="cart__remove--btn" aria-label="search button"
+                        <button data-id="${basket.id}" class="cart__remove--btn" aria-label="search button"
                             type="button"><svg fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                 width="16px" height="16px">
@@ -84,14 +85,14 @@ export function basketHtml({ baskets, sum_sub_amount }) {
                                     d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z" />
                             </svg></button>
                         <div class="cart__thumbnail">
-                            <a href="#">
-                                <img class="border-radius-5" src="${product.image_url}"
+                            <a href="${product.route_detail}">
+                                <img style="height:50px; width:50px" class="border-radius-5" src="${product.image_url}"
                                     alt="cart-product">
                             </a>
                         </div>
                         <div class="cart__content">
                             <h3 class="cart__content--title h4">
-                                <a href="product-details.html">
+                            <a href="${product.route_detail}">
                                     ${product.name}
                                 </a>
                             </h3>
@@ -108,7 +109,7 @@ export function basketHtml({ baskets, sum_sub_amount }) {
                             aria-label="quantity value" value="Decrease Value">-</button>
                         <label>
                             <input type="number"
-                                data-id="${basket.product_id}"
+                                data-id="${basket.id}"
                                 class="quantity__number quickview__value--number"
                                 value="${basket.quantity}" data-counter />
                         </label>
@@ -129,7 +130,7 @@ export function basketHtml({ baskets, sum_sub_amount }) {
     }
     else {
         html = `<tr class="bg-light">
-                    <td colspan="4">Votre panier est vide!</td>
+                    <td colspan="4" class="p-3">Votre panier est vide!</td>
                 </tr>`;
     }
 

@@ -27,7 +27,7 @@
                                         </svg>
                                         <a href="{{$team->phone}}">{{ $team->phone }}</a>
                                     </li>
-                                    <li class="team__card--content__info--list">
+                                    <li class="team__card--content__info--list overflow-hidden">
                                         <svg class="team__card--content__info--icon" xmlns="http://www.w3.org/2000/svg"
                                             width="20.57" height="13.13" viewBox="0 0 31.57 31.13">
                                             <path

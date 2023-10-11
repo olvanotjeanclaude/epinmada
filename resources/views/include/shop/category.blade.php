@@ -5,7 +5,7 @@
             <li class="widget__categories--menu__list">
                 <a href="{{ route('front.getProducts', $category->slug) }}">
                     <label class="widget__categories--menu__label d-flex align-items-center">
-                        <img class="widget__categories--menu__img" src="assets/img/product/small-product1.webp"
+                        <img class="widget__categories--menu__img" src="{{getImage($category->image)}}"
                             alt="categories-img">
                         <span class="widget__categories--menu__text">
                             {{ $category->name }}

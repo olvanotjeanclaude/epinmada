@@ -30,11 +30,12 @@ export default function Contacts() {
     <>
       <PageTitle pageTitle="Contacts" title="Liste" />
 
+      <SearchBox query={query} setQuery={setQuery} />
+      
       {
         isLoading ?
           <CircularProgress /> :
           <Card>
-            <SearchBox query={query} setQuery={setQuery} />
             <Table striped hover responsive style={{ minHeight: "400px" }}>
               <thead>
                 <tr>

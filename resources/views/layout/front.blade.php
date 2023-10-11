@@ -13,7 +13,7 @@
     @vite(['resources/front/css/index.css'])
 </head>
 
-<body>
+<body @if (Auth::check()) data-auth="true" @endif>
 
     <!-- Start preloader -->
     @include('include.preloader')
@@ -33,7 +33,6 @@
 
     <!-- Start News letter popup -->
     {{-- @include('modal.newsletter') --}}
-
     <!-- End News letter popup -->
 
     <!-- Scroll top bar -->

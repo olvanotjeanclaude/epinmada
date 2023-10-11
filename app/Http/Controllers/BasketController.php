@@ -70,7 +70,7 @@ class BasketController extends Controller
 
     public function emptyCart()
     {
-        Basket::where("anonymous_id", $_COOKIE["anonymousID"] ?? null)->delete();
+        Basket::ByCustomer()->delete();
 
         return back();
     }

@@ -17,16 +17,34 @@ class SaleController extends Controller
 {
     public function index()
     {
-        return SaleResource::collection(Sale::has("customer")->orderBy("id", "desc")->paginate(9));
+        $checkboxs = array_filter(request("checkboxs") ?? [], fn ($checkbox) => $checkbox == "true");
+
+        $sales = Sale::whereHas("customer", function ($query) {
+            $search = request("query");
+            $query->where("name", "LIKE", "%$search%")
+                ->orWhere("surname", "LIKE", "%$search%")
+                ->orWhere("phone", "LIKE", "%$search%")
+                ->orWhere("email", "LIKE", "%$search%");
+        });
+
+        if (count($checkboxs)) {
+            $sales = $sales->whereIn("status", array_keys($checkboxs));
+        }
+
+        $sales = $sales->orderByRaw("CASE WHEN status = 'pending' THEN 1 ELSE 2 END, id DESC")
+        ->paginate(9);
+
+        return SaleResource::collection($sales);
     }
 
-    public function myOrders(){
+    public function myOrders()
+    {
         $orders = Order::has("product")
-        ->whereHas("sale",function($query){
-            $query->where("customer_id",auth()->id());
-        })
-        ->orderBy("id","desc")
-        ->get();
+            ->whereHas("sale", function ($query) {
+                $query->where("customer_id", auth()->id());
+            })
+            ->orderBy("id", "desc")
+            ->get();
 
         return OrderResource::collection($orders);
     }

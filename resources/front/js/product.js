@@ -14,7 +14,14 @@ $(document).ready(function () {
     $(document).on("click", "button.custom-decrease", computateQuantity);
 
     $(document).on("click", "button.quantity__value", updateQuantity);
+
+    $(document).on("click", "button#buy-now-button", buyProductNow);
 });
+
+function buyProductNow() {
+    addProductToBasket.bind(this)();
+    window.location.replace("/u/my-basket");
+}
 
 export function updateQuantity() {
     const input = $(this).parent().find(".quantity__number");
@@ -25,7 +32,7 @@ export function updateQuantity() {
     Axios().post(`/update-quantity/${basketID}`, {
         quantity,
         action,
-       basketID
+        basketID
     }).then(response => {
         setShopCartHtml(response);
 

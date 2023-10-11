@@ -4,7 +4,9 @@
 
 <div class="row">
     <div class="col-sm-5">
-        <img src="{{ getImage($epin->image_url) }}" class="img img-fluid" alt="">
+        <div class="img-container">
+            <img height="300" src="{{ getImage($epin->image_url) }}" class="img img-fluid" alt="">
+        </div>
     </div>
     <div class="col-sm-7">
         <div class="product__details--info">

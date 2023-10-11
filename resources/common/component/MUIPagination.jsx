@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function MUIPagination({ data, setCurrentPage, currentPage }) {
   return (
-    data && data.total > data.per_page ? <Stack alignItems="end" spacing={2} mt={3}>
+    data && data.total > data.per_page ? <Stack alignItems="end" spacing={2} mt={2}>
       <Pagination
         showFirstButton
         showLastButton
