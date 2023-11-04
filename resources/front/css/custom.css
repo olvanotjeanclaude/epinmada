@@ -8,14 +8,6 @@
     object-fit: cover
 }
 
-.account__login--input {
-    margin-bottom: 0;
-}
-
-.account__login--inner label {
-    margin-bottom: 1rem;
-}
-
 .swal2-popup {
     font-size: 1.6rem !important;
 }

@@ -48,7 +48,7 @@ export default function SaleShow() {
               <div className="d-flex justify-content-between">
                 <div className='d-flex flex-column'>
                   <strong className='d-block'>Facturé à</strong>
-                  <Stack>
+                  <Stack gap={1}>
                     <span>{capitalizeLetter(sale.customer.full_name)}</span>
                     <span>{sale.customer.email}</span>
                     <span>{sale.customer.phone}</span>
@@ -57,7 +57,7 @@ export default function SaleShow() {
 
                 <div className='d-flex flex-column gap-1 justify-content-end'>
                   <Stack className='text-end'>
-                    <strong>Paiement</strong>
+                    <strong>Payement</strong>
                     <span>{camelToCapitalized(sale.payment_mode)}</span>
                   </Stack>
 

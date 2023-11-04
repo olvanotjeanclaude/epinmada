@@ -1,11 +1,25 @@
-.auth-form {
-    width: 100%;
-    padding: 10px;
-    min-height: 75vh;
+.account__login .logo{
+    margin-bottom: 2.5rem;
+    text-align: center;    
+}
+
+.account__login img{
+   max-width: 300px;
+}
+
+.account__login--input {
+    margin-bottom: 0;
+}
+
+.account__login--inner label {
+    margin-bottom: 1rem;
+}
+
+.main__content_wrapper{
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 2rem;
 }
 
 .account__login{
