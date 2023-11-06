@@ -1,3 +1,7 @@
+body{
+ background-repeat: no-repeat;
+}
+
 .account__login .logo{
     margin-bottom: 2.5rem;
     text-align: center;    
@@ -17,6 +21,7 @@
 
 .main__content_wrapper{
     min-height: 100vh;
+    margin: auto 10px;
     display: flex;
     align-items: center;
     justify-content: center;

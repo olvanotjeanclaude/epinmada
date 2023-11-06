@@ -25,14 +25,15 @@ class SaleController extends Controller
                 ->orWhere("surname", "LIKE", "%$search%")
                 ->orWhere("phone", "LIKE", "%$search%")
                 ->orWhere("email", "LIKE", "%$search%");
-        });
+        })
+            ->orWhere("unique_id", "LIKE", "%" . request("query") . "%");
 
         if (count($checkboxs)) {
             $sales = $sales->whereIn("status", array_keys($checkboxs));
         }
 
         $sales = $sales->orderByRaw("CASE WHEN status = 'pending' THEN 1 ELSE 2 END, id DESC")
-        ->paginate(9);
+            ->paginate(9);
 
         return SaleResource::collection($sales);
     }

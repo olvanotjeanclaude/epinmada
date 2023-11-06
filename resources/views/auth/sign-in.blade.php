@@ -13,7 +13,7 @@
     @vite(['resources/front/css/auth.css'])
 </head>
 
-<body @if (Auth::check()) data-auth="true" @endif>
+<body @if (Auth::check()) data-auth="true" @endif style="background-image: url('{{asset('assets/img/bg.jpg')}}');">
 
     <!-- Start preloader -->
     @include('include.preloader')
@@ -24,7 +24,9 @@
             <form id="loginForm" autocomplete="off">
                 <div class="account__login">
                     <div class="logo">
-                        <img  src="{{asset('assets/img/logo/nav-logo.webp')}}" alt="">
+                        <a href="/">
+                            <img  src="{{asset('assets/img/logo/nav-logo.webp')}}" alt="">
+                        </a>
                     </div>
                     <div class="account__login--header mb-25">
                         <div class="error"></div>

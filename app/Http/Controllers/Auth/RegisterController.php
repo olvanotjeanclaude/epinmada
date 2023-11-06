@@ -49,6 +49,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            "phone" =>["required"],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -74,12 +75,13 @@ class RegisterController extends Controller
             "name" => "required",
             "surname" => "required",
             "email" => "required|email|unique:users",
-            "phone" =>"",
+            "phone" =>"required",
             "password" => "required|same:confirm_password",
             "confirm_password" => "required"
         ], [
             "name.required" => "Nom ne peut pas être vide",
             "surname.required" => "Prénom ne peut pas être vide",
+            "phone.required" => "Le champ téléphone est obligatoire.",
             "email.required" => "L'email ne peut pas être vide",
             "email.unique" => "L'email existe déjà. Veuillez entrer un nouvel e-mail",
             "password.required" => "le nom ne peut pas être vide",

@@ -1,4 +1,6 @@
 import axios from "axios";
+import "toastr/build/toastr.min.css";
+import toastr from "toastr";
 
 export function generateUniqueID() {
     return crypto.randomUUID();
@@ -82,4 +84,10 @@ export function bootstrapValidation() {
                 form.classList.add('was-validated')
             }, false)
         })
+}
+
+export function alertToastr() {
+    toastr.options.closeButton = true;
+
+    return toastr;
 }

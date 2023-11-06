@@ -1,4 +1,4 @@
-import { Axios } from "./helper.js";
+import { Axios, alertToastr } from "./helper.js";
 import { sidebarShopCartHtml } from "./basket-template.js";
 import { mountToBasketElement } from "./basket.js";
 
@@ -67,11 +67,14 @@ export function computateQuantity() {
 function addProductToBasket() {
     const product_id = $(this).data("product-id");
 
-    const basket = {
-        product_id,
-    };
-
-    Axios().post("/baskets", basket).then(response => setShopCartHtml(response));
+    Axios().post("/baskets", { product_id })
+        .then(response => {
+            setShopCartHtml(response)
+            alertToastr().success(`<span>Le produit a été ajouté avec succès au panier</span>
+        <a href="/panier" class='link' target="_blank">Aller au panier</a>`);
+        }).catch(e => {
+            alertToastr().error("Erreur innconue");
+        });
 }
 
 function removeProductFromBasket() {

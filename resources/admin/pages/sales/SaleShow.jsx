@@ -86,8 +86,8 @@ export default function SaleShow() {
                     {
                       sale.orders.map((order, index) => (
                         <tr key={index}>
-                          <td>{order.product.unique_id}</td>
-                          <td>{order.product.name}</td>
+                          <td>{order.product?.unique_id}</td>
+                          <td>{order.product?.name}</td>
                           <td>{order.quantity}</td>
                           <td className="text-end">{order.formattedSubAmount}</td>
                         </tr>
