@@ -2,11 +2,12 @@ import http from "../../Helper/makeRequest"
 import { useState } from "react";
 import { capitalizeLetter } from "../../Helper/Helper";
 import { Link } from "react-router-dom";
-import Error from "../Message/Error";
-import useProfile from "../../pages/Profile/useProfile";
 
 export default function HeaderDropDown() {
-    const { data: user, isError, error } = useProfile();
+    const user = {
+        name:"olvanot jean claude",
+        surname: "rakotonirina"
+    };
 
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -19,8 +20,6 @@ export default function HeaderDropDown() {
 
         location.reload();
     }
-
-    if (isError) return <Error error={error.message} />
 
     return (
         <div className="dropdown d-inline-block">

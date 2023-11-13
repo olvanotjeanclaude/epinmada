@@ -11,14 +11,12 @@ export const LayoutProviderContext = createContext(defaultValue);
 const LayoutProvider = ({ children }) => {
     const { user, userLoading, userError } = useAuth();
 
-    if (userLoading) return <></>;
+    return <></>;
 
-    if (userError || (user && user.type != 1)) return window.location.replace("sign-in")
-
-    return user ? <LayoutProviderContext.Provider value={{ defaultValue }}>
-        {children}
-    </LayoutProviderContext.Provider> :
-        <></>
+    return userError ? window.location.replace("/sign-in") :
+        <LayoutProviderContext.Provider value={{ defaultValue }}>
+            {children}
+        </LayoutProviderContext.Provider>;
 }
 
 export default LayoutProvider;
