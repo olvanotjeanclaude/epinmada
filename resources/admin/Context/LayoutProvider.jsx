@@ -11,9 +11,9 @@ export const LayoutProviderContext = createContext(defaultValue);
 const LayoutProvider = ({ children }) => {
     const { user, userLoading, userError } = useAuth();
 
-    return <></>;
+    if (userLoading) return <></>
 
-    return userError ? window.location.replace("/sign-in") :
+    return userError || !user ? window.location.replace("/sign-in") :
         <LayoutProviderContext.Provider value={{ defaultValue }}>
             {children}
         </LayoutProviderContext.Provider>;

@@ -1,43 +1,36 @@
-import { useEffect, useState } from "react";
-import http from "@/common/http";
+import { useQuery } from 'react-query';
+import http from '@/common/http';
+
+const fetchUser = async () => await http.get('/user').then(res => res.data);
 
 const useAuth = () => {
-    const [user, setUser] = useState(null);
-    const [userLoading, setUserLoading] = useState(false);
-    const [userError, setUserError] = useState(false);
-
-    useEffect(() => async () => {
-        setUserLoading(true);
-        await http.get("/user")
-            .then(res => {
-                setUser(res.data);
-            })
-            .catch(e => {
-                setUserError(true);
-            })
-            .finally(e => {
-                setUserLoading(false);
-            })
-    }, []);
+    const { data: user, isLoading: userLoading, isError: userError } = useQuery('user', fetchUser, {
+        retry: 1,
+        staleTime: 1000 * 60 * 5,
+    });
 
     const logout = async () => {
-        const response = await http.post("/logout").then(response => response.data);
+        const response = await http.post('/logout').then((response) => response.data);
 
-        if (response.type == "success") {
-            return location.href = "/sign-in";
+        if (response.type === 'success') {
+            return (location.href = '/sign-in');
         }
 
-        location.reload();
-    }
+        location.replace("/");
+    };
+
+    const isAdministrationPage = user && (user.type == 1 || user.type == 2);
+
+    const isCustomerPage = user && user.type == 3;
 
     return {
         logout,
         user,
         userLoading,
-        userError
-    }
-}
-
-
+        userError,
+        isAdministrationPage,
+        isCustomerPage
+    };
+};
 
 export default useAuth;

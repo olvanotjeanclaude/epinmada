@@ -37,6 +37,7 @@ export default function Popular({ product }) {
                             component="img"
                             // height:"140"
                             width={110}
+                            sx={{objectFit:"cover"}}
                             height={110}
                             alt={product.name}
                             src={product.image_url}

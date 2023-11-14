@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\Basket;
 use App\Models\User;
+use App\Models\Basket;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -63,17 +64,19 @@ class LoginController extends Controller
 
 
         if (Auth::attempt($credentials)) {
-            $user = $request->user();
+            $user = Auth::user();
+
+            $user->tokens()->delete();
+
+            $ability = $user->type == User::TYPES["client"] ? "customer" : "administration";
+
+            $token = Auth::user()->createToken("access_token", [$ability])->plainTextToken;
 
             if ($request->ajax()) {
                 return response()->json([
                     'token_type' => 'Bearer',
-                    "user" => [
-                        "name" => $user->name,
-                        "surname" => $user->surname,
-                        "email" => $user->email,
-                        "type" => array_search($user->type, User::TYPES)
-                    ]
+                    "type" => array_search($user->type, User::TYPES),
+                    "token" => $token
                 ]);
             }
 

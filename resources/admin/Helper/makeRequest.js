@@ -8,7 +8,6 @@ const http = axios.create({
         "X-Requested-With": "XMLHttpRequest",
         "withCredentials": true,
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
     }
 });
 
@@ -22,13 +21,5 @@ http.interceptors.request.use((config) => {
 
     return config;
 });
-
-// http.interceptors.response.use(response => response, (error) => {
-//     if (error?.response?.status == 401) {
-//        window.location.href="/sign-in";
-//     }
-
-//     return Promise.reject(error);
-// });
 
 export default http;

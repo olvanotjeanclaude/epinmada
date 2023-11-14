@@ -1,29 +1,25 @@
-import axios from "axios";
+import http from "@/common/http";
 import Swal from "sweetalert2";
 
 $(document).ready(function () {
     checkSignUpMessage();
-    
+
     $("#loginForm").submit(postLoginForm);
 });
 
-async  function postLoginForm(e) {
+async function postLoginForm(e) {
     e.preventDefault();
     const data = {
         email: $("input[type='email']").val(),
         password: $("input[type='password']").val(),
     };
 
-    await axios.post("/api/login", data, {
-        headers: {
-            "Accept": "application/json",
-            "X-Requested-With": "XMLHttpRequest",
-            "withCredentials": true,
-            "Content-Type": "application/json",
-        }
-    })
-        .then(res => {
-            const user = res.data.user;
+    await http.get("/token");
+
+    await http.post("/login", data)
+        .then(async (res) => {
+            const user = res.data;
+           
             if (user) {
                 if (user.type == "admin" || user.type == "staff") {
                     return location.href = "/admin"

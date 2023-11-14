@@ -33,7 +33,6 @@ export default function User({ user }) {
         const data = { id: user.id };
 
         const _showFeedback = (data) => {
-            console.log(data);
             toast.current.show({ severity: data.type??"error", summary: data.type ?? "Erreur", detail: data.message })
         }
 

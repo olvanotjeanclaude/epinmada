@@ -2,12 +2,10 @@ import http from "../../Helper/makeRequest"
 import { useState } from "react";
 import { capitalizeLetter } from "../../Helper/Helper";
 import { Link } from "react-router-dom";
+import useAuth from "@/common/hook/useAuth";
 
 export default function HeaderDropDown() {
-    const user = {
-        name:"olvanot jean claude",
-        surname: "rakotonirina"
-    };
+    const { user } = useAuth();
 
     const [showDropdown, setShowDropdown] = useState(false);
 

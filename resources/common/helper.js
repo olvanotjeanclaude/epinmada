@@ -1,7 +1,10 @@
 import dateFormat from "dateformat";
 export const formatDateTime = (utcDateString) => {
-
-    return dateFormat(utcDateString,"d/mm/yyyy");
+    try {
+        return dateFormat(utcDateString,"d/mm/yyyy");
+    } catch (error) {
+        return utcDateString;
+    }
 }
 
 export const capitalizeLetter = (letter) => {

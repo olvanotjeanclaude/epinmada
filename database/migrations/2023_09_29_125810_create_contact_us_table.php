@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('contact_us', function (Blueprint $table) {
             $table->id();
+            $table->enum("status",["new","seen"])->default("new");
             $table->string("name");
             $table->string("surname");
             $table->string("phone");
