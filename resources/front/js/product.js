@@ -16,7 +16,22 @@ $(document).ready(function () {
     $(document).on("click", "button.quantity__value", updateQuantity);
 
     $(document).on("click", "button#buy-now-button", buyProductNow);
+
+    $(document).on("click", "button#checkout", checkout);
 });
+
+function checkout() {
+    const auth = $("body").data("auth");
+    const url = "/u/my-basket";
+
+    if (auth) {
+        location.href = url;
+    }
+    else {
+        localStorage.setItem("redirectTo", url);
+        location.href = "/sign-in";
+    }
+}
 
 function buyProductNow() {
     addProductToBasket.bind(this)();

@@ -106,3 +106,8 @@ function currentUser()
         return request()->user();
     }
 }
+
+function camelToCapitalized($input)
+{
+    return implode(' ', array_map('ucfirst', preg_split('/(?=[A-Z])/', $input)));
+}

@@ -13,19 +13,23 @@ async function postLoginForm(e) {
         email: $("input[type='email']").val(),
         password: $("input[type='password']").val(),
     };
+    const redirectTo = localStorage.getItem("redirectTo");
 
     await http.get("/token");
 
     await http.post("/login", data)
         .then(async (res) => {
             const user = res.data;
-           
-            if (user) {
-                if (user.type == "admin" || user.type == "staff") {
-                    return location.href = "/admin"
-                }
 
-                return location.href = "/u";
+            if (user.type == "admin" || user.type == "staff") {
+                location.href = "/admin"
+            }
+            else if (redirectTo) {
+                localStorage.removeItem("redirectTo");
+                location.href = redirectTo;
+            }
+            else {
+                location.href = "/u";
             }
         })
         .catch(e => {

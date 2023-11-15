@@ -25,6 +25,8 @@ Route::group(["prefix" => "auth", "as" => "auth.", "middleware" => "auth"], func
 Route::view('/admin/{any_path?}', 'admin')->where('any_path', '(.*)');
 Route::view('/u/{any_path?}', 'user')->where('any_path', '(.*)');
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::group(["as" => "front."], function () {
     Route::get('/', [\App\Http\Controllers\FrontController::class, "index"])->name("index");
     Route::get('/contact', [\App\Http\Controllers\FrontController::class, "getContact"])->name("getContact");
@@ -40,4 +42,3 @@ Route::group(["as" => "front."], function () {
     Route::get('/{slug}', [\App\Http\Controllers\FrontController::class, "getProducts"])->name("getProducts");
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

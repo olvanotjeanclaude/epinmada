@@ -49,7 +49,7 @@ export function sidebarShopCartHtml({ baskets, sum_sub_amount }) {
 
         html += (`<div class="minicart__button d-flex justify-content-center mt-4">
                         <a class="primary__btn minicart__button--link" href="/panier">Voir le panier</a>
-                        <a class="primary__btn minicart__button--link" href="/u/my-basket">Payer</a>
+                        <button class="primary__btn minicart__button--link" id="checkout">Payer</button>
                     </div>`);
     }
     else {

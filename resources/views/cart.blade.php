@@ -61,7 +61,7 @@
                                 <div class="cart__summary--footer">
                                     <ul class="d-flex justify-content-end">
                                         <li>
-                                            <a href="/u/my-basket" class="cart__summary--footer__btn primary__btn checkout">Payer</a>
+                                            <button id="checkout" class="cart__summary--footer__btn primary__btn">Payer</button>
                                         </li>
                                     </ul>
                                 </div>

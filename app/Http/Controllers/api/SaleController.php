@@ -8,10 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SaleRequest;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\SaleResource;
+use App\Mail\InvoiceOfProduct;
 use App\Models\Basket;
 use App\Models\Order;
 use App\Models\Sale;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class SaleController extends Controller
 {
@@ -78,11 +81,20 @@ class SaleController extends Controller
 
         if ($sale) {
             $this->saveOrder($sale);
-
+            $this->sendMail($sale);
             return Message::success("Achat");
         }
 
         return Message::error("Erreur survenue", 400);
+    }
+
+    private function sendMail($sale){
+        try {
+            $invoice = new InvoiceOfProduct($sale);
+             Mail::to("olvanotjeanclaude@gmail.com")->send($invoice);
+        } catch (\Throwable $th) {
+            Log::info($th->getMessage());
+        }
     }
 
     private function saveSale($request)
