@@ -88,10 +88,11 @@ class SaleController extends Controller
         return Message::error("Erreur survenue", 400);
     }
 
-    private function sendMail($sale){
+    private function sendMail($sale)
+    {
         try {
             $invoice = new InvoiceOfProduct($sale);
-             Mail::to("olvanotjeanclaude@gmail.com")->send($invoice);
+            Mail::to("olvanotjeanclaude@gmail.com")->send($invoice);
         } catch (\Throwable $th) {
             Log::info($th->getMessage());
         }

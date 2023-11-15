@@ -31,16 +31,16 @@ function getImage($image)
     return $image;
 }
 
-function formatPrice($price)
+function formatPrice($price,$devise="Ariary")
 {
     $price = intval($price);
 
     if (is_numeric($price)) {
         $price =  number_format($price, 0, ',', ' ');
-        return $price . " Ariary";
+        return $price . " $devise";
     }
 
-    return "0 arairy";
+    return "0 $devise";
 }
 
 

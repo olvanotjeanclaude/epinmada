@@ -134,8 +134,8 @@
                     <tr>
                         {{-- <th style="width: 70px;">No.</th> --}}
                         <th>Produit</th>
-                        <th>Qté</th>
-                        <th class="text-end">Montant</th>
+                        <th style="text-align: center">Qté</th>
+                        <th style="text-align: end">Montant</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -143,16 +143,10 @@
                         <tr>
                             {{-- <td>{{ $order->product->unique_id }}</td> --}}
                             <td>{{ Str::upper($order->Product->name) }}</td>
-                            <td>{{ $order->quantity }}</td>
-                            <td style="white-space: nowrap;">{{ $order->sub_amount }} Ar</td>
+                            <td style="text-align: center">{{ $order->quantity }}</td>
+                            <td style="white-space: nowrap; text-align:end">{{ formatPrice($order->sub_amount,"Ar") }}</td>
                         </tr>
                     @endforeach
-                    {{-- <tr>
-                        <td>9222390</td>
-                        <td>PAQUET NETFLIX</td>
-                        <td>100</td>
-                        <td class="text-end">11 002 Ariary</td>
-                    </tr> --}}
                 </tbody>
                 <tfoot>
                     <tr>

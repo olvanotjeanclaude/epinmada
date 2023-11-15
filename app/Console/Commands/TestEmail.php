@@ -32,8 +32,11 @@ class TestEmail extends Command
     public function handle()
     {
         try {
-            $invoice = new InvoiceOfProduct(Sale::first());
-             Mail::to("olvanotjeanclaude@gmail.com")->send($invoice);
+            $sale = Sale::first();
+            $invoice = new InvoiceOfProduct($sale);
+            Mail::to("olvanotpoint@gmail.com")
+                ->cc(["olvanotjeanclaude@gmail.com"])
+                ->send($invoice);
         } catch (\Throwable $th) {
             Log::info($th->getMessage());
         }
