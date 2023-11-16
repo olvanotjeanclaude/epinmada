@@ -28,6 +28,6 @@ class HomeController extends Controller
         $sale = Sale::first();
         $user = User::first();
 
-        return view('email.email-confirm', compact("sale", "user"));
+        return view('email.invoice', compact("sale", "user"));
     }
 }

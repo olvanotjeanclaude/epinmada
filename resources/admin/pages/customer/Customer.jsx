@@ -17,7 +17,7 @@ export default function Customer({ customer }) {
                 <Box display="flex" gap={2}>
                     <Avatar sx={{ width: 50, height: 50 }} />
 
-                    <Stack flexGrow={1} width={{ xs: "13.5rem", xl: "15rem" }}>
+                    <Stack flexGrow={1} minHeight="100px" width={{ xs: "13.5rem", xl: "15rem" }}>
                         <Typography variant="body1" noWrap>{capitalizeLetter(`${customer.name} ${customer.surname}`)}</Typography>
                         <Typography variant="body2">{customer.email}</Typography>
                         <Typography variant="body2">{customer.phone ?? "-"}</Typography>

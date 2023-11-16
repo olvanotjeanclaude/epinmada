@@ -105,6 +105,7 @@ export default function DoPayment() {
                   })}
                   placeholder='Écris...'
                   label="ID de PubG Mobile"
+                  onChange={event => setValue("pubg_id",event.target.value.toUpperCase())}
                 />
               </CardContent>
             </Card>}

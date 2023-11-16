@@ -15,13 +15,14 @@
 
         .card {
             background-color: #f4f4f4;
+            padding-top: 40px;
+            padding-bottom: 60px;
         }
 
         .card-body {
-            min-height: 500px;
-            margin: 0 auto;
-            padding: .4rem;
-            max-width: 700px;
+            margin: auto;
+            padding: .5rem;
+            max-width: 600px;
             background: #fff;
         }
 

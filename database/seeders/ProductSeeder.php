@@ -82,6 +82,7 @@ class ProductSeeder extends Seeder
                 "user_id" => 1
             ],
         ];
+        $this->call(CategorySeeder::class);
 
         foreach ($products as $key => $product) {
             $product["slug"] = Str::slug($product["name"]);

@@ -22,7 +22,7 @@ export default function Basket({ basket }) {
       <CardContentNoPadding sx={{ opacity: deleteCartMutation.isLoading ? .3 : 1 }}>
         <Box>
           <Box display="flex" gap={2}>
-            <img width={83} height={83} src={product.image_url} />
+            <img width={83} style={{objectFit:"cover"}} height={83} src={product.image_url} />
             <Stack flexGrow={1}>
               <Typography variant="h6">{product.name}</Typography>
               <Typography variant='body2' color={grey[700]}>{product.category.name}</Typography>

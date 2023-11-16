@@ -13,12 +13,13 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                "name" => "Olvanot Jean Claude",
-                "surname" => "Rakotonirina",
+                "name" => "Admin",
+                "surname" => "Admin",
                 "type" => User::TYPES["admin"],
                 "phone" => "05418869037",
-                "email" => "olvanotjcs@gmail.com",
-                "password" => Hash::make("123456")
+                "email" => "admin@epin.com",
+                "password" => Hash::make("123456"),
+                "status" =>true
             ],
             [
                 "name" => "Bona",
@@ -26,7 +27,8 @@ class UserSeeder extends Seeder
                 "type" => User::TYPES["admin"],
                 "phone" => "0541000000",
                 "email" => "bona@gmail.com",
-                "password" => Hash::make("123456")
+                "password" => Hash::make("123456"),
+                "status" =>true
             ],
             [
                 "name" => "Jess",
@@ -34,7 +36,8 @@ class UserSeeder extends Seeder
                 "type" => User::TYPES["staff"],
                 "phone" => "0541000000",
                 "email" => "jess@gmail.com",
-                "password" => Hash::make("123456")
+                "password" => Hash::make("123456"),
+                "status" =>true
             ],
             [
                 "name" => "Ivanna",
@@ -42,7 +45,8 @@ class UserSeeder extends Seeder
                 "type" => User::TYPES["staff"],
                 "phone" => "0541000000",
                 "email" => "ivanna@gmail.com",
-                "password" => Hash::make("123456")
+                "password" => Hash::make("123456"),
+                "status" =>true
             ],
         ];
 
@@ -50,6 +54,6 @@ class UserSeeder extends Seeder
             User::create($user);
         }
 
-        User::factory(200)->create();
+        // User::factory(200)->create();
     }
 }
