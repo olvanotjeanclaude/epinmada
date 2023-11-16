@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -25,6 +26,8 @@ class HomeController extends Controller
     public function index()
     {
         $sale = Sale::first();
-        return view('email.invoice', compact("sale"));
+        $user = User::first();
+
+        return view('email.email-confirm', compact("sale", "user"));
     }
 }

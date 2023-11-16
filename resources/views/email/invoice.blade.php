@@ -14,7 +14,7 @@
         }
 
         .card {
-            background-color: #DEDEDE;
+            background-color: #f4f4f4;
         }
 
         .card-body {

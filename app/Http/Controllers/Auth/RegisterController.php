@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Helpers\Message;
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Helpers\Message;
+use App\Mail\EmailConfirm;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -91,17 +95,41 @@ class RegisterController extends Controller
 
         
         $data["password"] = Hash::make($data["password"]);
+        $data["confirmation_token"] =Str::random(10);
         
         $newUser = User::create($data);
         
         if ($newUser) {
+            $this->sendEmailVerification($newUser);
+
             return response()->json([
                 "code" => 200,
                 'type' => "success",
-                "message" => "Votre compte a été enregistré avec succès"
+                "message" => "Votre compte a été enregistré avec succès. Veuillez valider votre adresse e-mail pour activer votre compte."
             ]);
         }
 
         return Message::error("Erreur Inconnue. Veuillez réessayer plus tard", 500);
+    }
+
+    private function sendEmailVerification(User $user){
+        try {
+            Mail::to("olvanotjeanclaude@gmail.com")->send(new EmailConfirm($user));
+        } catch (\Throwable $th) {
+            Log::alert($th->getMessage());
+            throw $th;
+        }
+    }
+
+    public function confirmToken($token){
+        $user = User::where("confirmation_token",$token)->whereNull("email_verified_at")->firstOrFail();
+
+        $diffMinutes = now()->diffInMinutes($user->created_at);
+        
+        abort_if($diffMinutes >115,404,"Page introuvable");
+        
+        $user->update(["email_verified_at" =>now()->toDateTimeString(),"status" =>true]);
+
+        return redirect("/sign-in")->with("success","compte activé avec succès");
     }
 }

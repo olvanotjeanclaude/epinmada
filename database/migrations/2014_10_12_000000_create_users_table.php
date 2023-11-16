@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->boolean("status")->default(true);
+            $table->boolean("status")->default(false);
+            $table->string("confirmation_token");
+            $table->dateTime('email_verified_at')->nullable();
             $table->string('name');
             $table->string('surname');
-            $table->boolean("is_team")->comment("show on front");
+            $table->boolean("is_team")->comment("show on front")->default(false);
             $table->string("province")->nullable();
             $table->string("district")->nullable();
             $table->string("neighborhood")->nullable();
@@ -26,12 +28,11 @@ return new class extends Migration
             $table->integer("type")->default(3);
             $table->string('identity_number')->nullable();
             $table->string("phone")->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string("image")->nullable();
             $table->string("google_id")->nullable();
             $table->string("facebook_id")->nullable();
-            $table->json("social_value")->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->timestamps();
         });
     }

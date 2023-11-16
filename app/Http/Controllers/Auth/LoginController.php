@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Http;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -25,7 +27,7 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    // use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
@@ -42,7 +44,7 @@ class LoginController extends Controller
     public function __construct()
     {
         if (!request()->ajax()) {
-            $this->middleware('guest')->except('logout');
+            // $this->middleware('guest')->except('logout');
         }
     }
 
@@ -61,6 +63,8 @@ class LoginController extends Controller
             "email.email" => "L'e-mail doit être une adresse e-mail valide.",
             "password.required" => "Le champ mot de passe est obligatoire."
         ]);
+
+        $credentials["status"] = true;
 
 
         if (Auth::attempt($credentials)) {
@@ -112,5 +116,77 @@ class LoginController extends Controller
             ->delete();
 
         session()->forget("anonymous_id");
+    }
+
+    public function socialiteRedirect($socialite)
+    {
+        abort_if(!in_array($socialite, User::SOCIALITES), 404);
+
+        return Socialite::driver($socialite)->redirect();
+    }
+
+    public function socialiteCallback($socialite)
+    {
+        abort_if(!in_array($socialite, User::SOCIALITES), 404);
+
+        $user = null;
+
+        switch ($socialite) {
+            case 'google':
+                $googleUser = Socialite::driver("google")->user()->user;
+                $user = $this->saveGoogleUser($googleUser);
+                break;
+            case 'facebook':
+                $facebookUser = Socialite::driver("facebook")->user();
+                $user = $this->saveFacebookUser($facebookUser);
+                break;
+            default:
+                abort(404);
+                break;
+        }
+
+
+        Auth::login($user);
+
+        return redirect("/u");
+    }
+
+
+    private function saveGoogleUser($googleUser): User
+    {
+        $user = User::where("google_id", $googleUser["id"])->first();
+
+        if (is_null($user)) {
+            $user = User::create([
+                "name" => $googleUser["given_name"],
+                "surname" => $googleUser["family_name"],
+                "image" => $googleUser["picture"],
+                "email" => $googleUser["email"],
+                "google_id" => $googleUser["id"],
+                "status" => true
+            ]);
+        }
+
+        return $user;
+    }
+
+    private function saveFacebookUser($facebookUser): User
+    {
+        $user = User::where("facebook_id", $facebookUser["id"])->first();
+
+        $fullname =  explode(" ", $facebookUser->name);
+
+        if (is_null($user)) {
+            $user = User::create([
+                "name" => $fullname[0] ?? "",
+                "surname" =>  join(" ", array_slice($fullname, 1)) ?? "",
+                "image" => $facebookUser->avatar,
+                "email" => $facebookUser->email,
+                "facebook_id" => $facebookUser->id,
+                "status" => true
+            ]);
+        }
+
+        return $user;
     }
 }

@@ -13,7 +13,8 @@
     @vite(['resources/front/css/auth.css'])
 </head>
 
-<body @if (Auth::check()) data-auth="true" @endif style="background-image: url('{{asset('assets/img/bg.jpg')}}');">
+<body @if (Auth::check()) data-auth="true" @endif
+    style="background-image: url('{{ asset('assets/img/bg.jpg') }}');">
 
     <!-- Start preloader -->
     @include('include.preloader')
@@ -25,8 +26,11 @@
                 <div class="account__login">
                     <div class="logo">
                         <a href="/">
-                            <img  src="{{asset('assets/img/logo/nav-logo.webp')}}" alt="">
+                            <img src="{{ asset('assets/img/logo/nav-logo.webp') }}" alt="">
                         </a>
+                        @if (session('success'))
+                            <p class="text-success mt-5">{{ session('success') }}</p>
+                        @endif
                     </div>
                     <div class="account__login--header mb-25">
                         <div class="error"></div>
@@ -50,14 +54,15 @@
                             <button class="account__login--forgot" type="submit">Forgot Your Password?</button>
                         </div> --}}
                         <button class="account__login--btn primary__btn" type="submit">Se connecter</button>
-                        {{-- <div class="account__login--divide">
+                        <div class="account__login--divide">
                             <span class="account__login--divide__text">OR</span>
                         </div>
                         <div class="account__social d-flex justify-content-center mb-15">
-                            <a class="account__social--link facebook" target="_blank" href="https://www.facebook.com">Facebook</a>
-                            <a class="account__social--link google" target="_blank" href="https://www.google.com">Google</a>
-                            <a class="account__social--link twitter" target="_blank" href="https://twitter.com">Twitter</a>
-                        </div> --}}
+                            <a class="account__social--link facebook" target="_blank"
+                                href="{{ route('socialite.redirect', 'facebook') }}">Facebook</a>
+                            <a class="account__social--link google" target="_blank"
+                                href="{{ route('socialite.redirect', 'google') }}">Google</a>
+                        </div>
                         <p class="account__login--signup__text mt-3">Vous n'avez pas de compte ?
                             <a class="text__secondary" href="/sign-up">S'inscrire maintenant</a>
                         </p>

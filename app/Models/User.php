@@ -13,6 +13,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const SOCIALITES = ["google", "facebook"];
 
     const TYPES = [
         "admin" => 1,
@@ -21,7 +22,9 @@ class User extends Authenticatable
     ];
 
     protected $fillable = [
-        "id",
+        "status",
+        "confirmation_token",
+        "email_verified_at",
         "name",
         "surname",
         "is_team",
@@ -36,7 +39,6 @@ class User extends Authenticatable
         "image",
         "google_id",
         "facebook_id",
-        "social_value",
         "password",
     ];
 
