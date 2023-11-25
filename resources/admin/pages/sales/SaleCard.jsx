@@ -18,10 +18,10 @@ export default function SaleCard({ sale }) {
                             <PersonIcon />
                         </Avatar>
                         <div style={{ maxWidth: "15rem" }}>
-                            <h5 className="mb-1 font-size-15 text-truncate">{customer.name}</h5>
+                            <h5 className="mb-1 font-size-15 text-truncate">{customer?.name}</h5>
                             <Stack>
-                                <span className="text-muted">{customer.email}</span>
-                                <span className="text-muted">{customer.phone??"-"}</span>
+                                <span className="text-muted">{customer?.email}</span>
+                                <span className="text-muted">{customer?.phone??"-"}</span>
                             </Stack>
                         </div>
                     </div>

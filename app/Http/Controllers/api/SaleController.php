@@ -24,12 +24,15 @@ class SaleController extends Controller
 
         $sales = Sale::whereHas("customer", function ($query) {
             $search = request("query");
-            $query->where("name", "LIKE", "%$search%")
-                ->orWhere("surname", "LIKE", "%$search%")
-                ->orWhere("phone", "LIKE", "%$search%")
-                ->orWhere("email", "LIKE", "%$search%");
-        })
-            ->orWhere("unique_id", "LIKE", "%" . request("query") . "%");
+            if($search){
+                $query->where("name", "LIKE", "%$search%")
+                    ->orWhere("surname", "LIKE", "%$search%")
+                    ->orWhere("phone", "LIKE", "%$search%")
+                    ->orWhere("email", "LIKE", "%$search%");
+            }
+        })->when(request("query"),function($query){
+            $query->orWhere("unique_id", "LIKE", "%" . request("query") . "%");
+        });
 
         if (count($checkboxs)) {
             $sales = $sales->whereIn("status", array_keys($checkboxs));
