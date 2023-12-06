@@ -1,0 +1,1 @@
+import{j as t}from"./700-2286912f.js";import{P as r}from"./PageTitle-327b543a.js";import"./_commonjsHelpers-59ed3296.js";import"./makeRequest-91bdc274.js";import"./axios-5779fc5d.js";function e(){return t.jsx(r,{title:"Dashboard"})}export{e as default};

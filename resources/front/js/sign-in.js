@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 
 $(document).ready(function () {
     checkSignUpMessage();
+    $("#preloader").addClass("loaded");
 
     $("#loginForm").submit(postLoginForm);
 });

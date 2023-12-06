@@ -80,9 +80,7 @@
         </svg>
     </button>
 
-    @vite(['resources/front/js/index.js'])
-
-
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     @vite(['resources/front/js/sign-in.js'])
 </body>
 

@@ -14,7 +14,7 @@ export default defineConfig({
                
                 "resources/front/js/index.js",
                 'resources/admin/main.jsx',
-                'resources/front/main.jsx',
+                'resources/user/main.jsx',
 
                 "resources/front/js/sign-in.js",
                 "resources/front/js/sign-up.js",
@@ -30,5 +30,8 @@ export default defineConfig({
     },
     define:{
         global: "window"
+    },
+    build: {
+        chunkSizeWarningLimit: "3000"
     }
 });

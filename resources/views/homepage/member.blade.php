@@ -1,4 +1,4 @@
-<section class="team__section section--padding">
+<section class="team__section section--padding bg-light">
     <div class="container">
         <div class="section__heading text-center mb-50">
             <h2 class="section__heading--maintitle text__secondary mb-10 text-capitalize">Les membres de notre équipe</h2>

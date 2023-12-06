@@ -1,0 +1,1 @@
+import{j as o,w as r}from"./700-2286912f.js";import"./_commonjsHelpers-59ed3296.js";import"./makeRequest-91bdc274.js";import"./axios-5779fc5d.js";function p(){return o.jsx(r,{variant:"h2",color:"initial",children:"Page Introuvable"})}export{p as default};

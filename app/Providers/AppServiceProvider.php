@@ -16,6 +16,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind('path.public', function () {
+            $entryPoint = env("APP_ENTRY_POINT_PATH");
+
+            if ($entryPoint && is_dir(base_path($entryPoint))) {
+                return base_path(env("APP_ENTRY_POINT_PATH"));
+            }
+
+            return base_path("../public_html/epin.suarego.com");
+        });
     }
 
     /**
