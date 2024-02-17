@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
                 return base_path(env("APP_ENTRY_POINT_PATH"));
             }
 
-            return base_path("../public_html/epin.suarego.com");
+            return base_path("public");
         });
     }
 
