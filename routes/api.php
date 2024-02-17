@@ -30,6 +30,7 @@ Route::get('/token', function (Request $request) {
 Route::post("auth-social/{social}", [\App\Http\Controllers\Auth\SocialController::class, "authSocial"]);
 
 
+
 Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, "login"])->name("login");
 Route::post('/sign-up', [\App\Http\Controllers\Auth\RegisterController::class, "signUp"])->name("api.signUp");
 Route::post("/logout", [\App\Http\Controllers\Auth\LoginController::class, "logout"])->name("api.logout");
@@ -61,7 +62,14 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::get("generate-key", [\App\Http\Controllers\api\FileController::class, "generateKey"]);
     Route::post("upload", [\App\Http\Controllers\api\FileController::class, "upload"]);
   });
+
 });
+Route::group(["prefix" => "mvola"], function () {
+  Route::post("/transaction", [\App\Http\Controllers\api\MvolaController::class, "initiateTransaction"]);
+  Route::put("/callback", [\App\Http\Controllers\api\MvolaController::class, "callback"]);
+  Route::get("/transaction/{transID}", [\App\Http\Controllers\api\MvolaController::class, "getTransactionDetail"]);
+  Route::get("/transaction/status/{serverCorrelationId}", [\App\Http\Controllers\api\MvolaController::class, "getTransactionStatus"]);
+});  
 
 Route::resource("baskets", \App\Http\Controllers\api\front\BasketController::class);
 Route::post("contact-us", [\App\Http\Controllers\api\front\ContactUsController::class, "store"]);
