@@ -24,7 +24,6 @@ export default function StepPay({ loading, isValid, amount, label = "continuer Ã
                         </Link> :
                         <Box>
                             <LoadingButton loading={loading}
-                                disabled={!isValid}
                                 type="submit" startIcon={<PaymentIcon />} variant='contained'>
                                 {label}
                             </LoadingButton>

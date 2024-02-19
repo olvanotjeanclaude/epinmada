@@ -24,7 +24,7 @@ class Basket extends Model
     {
         return $this->belongsTo(Product::class, "product_id")->orderByDesc("created_at");
     }
-    
+
     public static function ByCustomer()
     {
         if (Auth::check()) {
@@ -50,5 +50,10 @@ class Basket extends Model
     public function getFormattedSubAmountAttribute()
     {
         return  formatPrice($this->sub_amount);
+    }
+
+    public static function SumSubAmount()
+    {
+        return Basket::ByCustomer()->get()->sum("sub_amount");
     }
 }

@@ -31,7 +31,6 @@ class BasketController extends Controller
 
     public function index()
     {
-        dd("ok");
         return $this->reloadingList();
     }
 

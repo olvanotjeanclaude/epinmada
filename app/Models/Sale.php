@@ -30,7 +30,8 @@ class Sale extends Model
         "status",
         "user_id",
         "customer_id",
-        "note"
+        "note",
+        "transaction"
     ];
 
 

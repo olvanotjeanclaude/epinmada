@@ -15,7 +15,8 @@ class ConstantController extends Controller
         $constants = [
             "user_types" => User::TYPES,
             "payementMethods" =>PaymentMethod::all(),
-            "saleTypes" => Sale::STATUS 
+            "saleTypes" => Sale::STATUS,
+            "comechantPhone" => env("MVOLA_COMERCHANT_PHONE")
         ];
 
         return response()->json($constants);

@@ -21,7 +21,7 @@ class PaymentMethod
             "name" => "Mvola",
             "image" => "",
             "key" => "mvola",
-            "number" => "034 00 000 00"
+            "number" => "034 35 000 04"
         ],
     ];
 

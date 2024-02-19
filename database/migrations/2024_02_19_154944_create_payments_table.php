@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Sale;
+use App\Models\Payment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,18 +14,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sales', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string("unique_id");
-            $table->string("payment_mode");
-            $table->string("pubg_id")->nullable();
-            $table->text("comment")->nullable();
-            $table->string("invoice_image")->nullable();
-            $table->string("status")->default("pending");
+            $table->enum("status", array_keys(Payment::STATUS));
+            $table->json("transaction")->nullable();
+            $table->string("payment_phone_number",15);
+            $table->string("reference",20);
             $table->unsignedBigInteger("user_id");
-            $table->unsignedBigInteger("customer_id");
-            $table->text("note")->nullable();
-            $table->string("payment_unique_id");
             $table->timestamps();
         });
     }
@@ -37,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sales');
+        Schema::dropIfExists('payments');
     }
 };

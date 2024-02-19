@@ -24,7 +24,6 @@ class SaleRequest extends FormRequest
         return [
             "pubg_id" => request("pubg_id") ? "required":"",
             "paymentMethod" => "required",
-            "files" => "required|image|mimes:jpeg,png,jpg,gif"
         ];
     }
 }

@@ -12,7 +12,6 @@ class MvolaAuth extends Auth
 
         $this->setHeaders([
             "Authorization" => "Basic " . base64_encode("$consumerKey:$consumerSecret"),
-            // "Content-Type" => "application/x-www-form-urlencoded",
             "Cache-Control" => "no-cache",
         ]);
 

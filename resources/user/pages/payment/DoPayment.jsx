@@ -16,6 +16,7 @@ import { HandleError } from '@/common/HandleError'
 import Swal from 'sweetalert2'
 import { allErrors } from '@/admin/Helper/Helper'
 import { confirmButton } from '@/admin/Helper/sweetAlert'
+import PaymentPusher from '@/common/component/PaymentPusher'
 
 export default function DoPayment() {
   const navigate = useNavigate();
@@ -27,19 +28,14 @@ export default function DoPayment() {
     return product.category.name.toLowerCase() == "epin"
   }).length > 0;
 
-  const { register, handleSubmit, setValue, formState: { errors, isValid } } = useForm({
+  const { register, handleSubmit, setValue, getValues, formState: { errors, isValid } } = useForm({
     defaultValues: {
       pubg_id: "",
       paymentMethod: "",
-      files: null
+      payment_phone_number: ""
+      // files: null
     }
   });
-
-  useEffect(() => {
-    register("files", {
-      required: "veuillez entrer l'image de la facture"
-    })
-  }, []);
 
   const payMutation = useMutation({
     mutationKey: "payMutation",
@@ -48,10 +44,15 @@ export default function DoPayment() {
       .catch(HandleError.catch)
   })
 
+  const handlePayment = data => {
+    console.log(data);
+  }
+
   const onSubmit = data => {
+    handlePayment(data);
+    return
     payMutation.mutate(data, {
       onSuccess(data) {
-
         if (data.code == 422) {
           Swal.fire({
             icon: "error",
@@ -69,6 +70,7 @@ export default function DoPayment() {
         }
       },
       error(error) {
+        console.log(error);
         Swal.fire({
           icon: "error",
           title: "Erreur",
@@ -105,14 +107,14 @@ export default function DoPayment() {
                   })}
                   placeholder='Écris...'
                   label="ID de PubG Mobile"
-                  onChange={event => setValue("pubg_id",event.target.value.toUpperCase())}
+                  onChange={event => setValue("pubg_id", event.target.value.toUpperCase())}
                 />
               </CardContent>
             </Card>}
 
             <PaymentOptions register={register} errors={errors} />
 
-            <UploadInvoice errors={errors} register={register} setValue={setValue} />
+            {/* <UploadInvoice errors={errors} register={register} setValue={setValue} /> */}
           </Stack>
         </Grid>
 
@@ -120,9 +122,11 @@ export default function DoPayment() {
           <Stack spacing={2}>
             <OrderSummary basketData={basketData} />
 
-            <StepPay loading={payMutation.isLoading} isValid={isValid} amount={basketData.data.sum_sub_amount}
-              buttonType='submit'
-              label='Confirmer Et Payer' />
+            <PaymentPusher>
+              <StepPay loading={payMutation.isLoading} isValid={isValid} amount={basketData?.data?.sum_sub_amount}
+                buttonType='submit'
+                label='Confirmer Et Payer' />
+            </PaymentPusher>
           </Stack>
         </Grid>
       </Grid>

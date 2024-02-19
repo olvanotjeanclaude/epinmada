@@ -7,6 +7,7 @@ use App\Api\Service\IPayment;
 use App\Api\Service\MvolaAuth;
 use Illuminate\Support\Facades\Http;
 use App\Api\Service\MvolaTransaction;
+use Illuminate\Support\Facades\Log;
 
 class Mvola implements IPayment
 {
@@ -16,8 +17,10 @@ class Mvola implements IPayment
     const PARTNER_NAME = "TestMvola";
 
     private $merchantPhone = "0343500004";
+
     private  $baseUrl = null;
     private $token;
+
     private $headers = [
         'Accept' => '*/*',
         'Version' => '1.0',
@@ -38,7 +41,7 @@ class Mvola implements IPayment
             "X-CorrelationID" => Str::uuid()->toString(),
             "partnerName" => self::PARTNER_NAME,
             "UserAccountIdentifier" => "msisdn;{$this->merchantPhone}",
-            'X-Callback-URL' =>  "http://epin.suarego.com/api/mvola-callback"
+            'X-Callback-URL' =>  "http://epin.suarego.com/api/mvola/callback"
         ]);
     }
 
@@ -68,13 +71,20 @@ class Mvola implements IPayment
     public function initiateTransaction($amount, $subscriberPhone)
     {
         $transactionUrl = $this->baseUrl . self::BASE_PATH;
-        $transaction = new MvolaTransaction($amount,  $subscriberPhone, $this->merchantPhone);
+        $transPayload = new MvolaTransaction($amount,  $subscriberPhone, $this->merchantPhone);
 
-        $response = Http::withHeaders($this->headers)
-            ->post($transactionUrl, $transaction->serialize())
-            ->json();
+        $response = Http::withHeaders($this->headers)->post($transactionUrl, $transPayload->serialize());
 
-        return $response;
+
+        if ($response->ok()) {
+            return $response->json();
+        }
+
+        return [
+            "status" => "failed",
+            "type" => "error",
+            "message" => "Payment failed. please verify your balance!"
+        ];
     }
 
     public function getTransactionStatus($serverCorrelationId)
@@ -82,10 +92,14 @@ class Mvola implements IPayment
         $statusurl =  $this->baseUrl . self::BASE_PATH . "/status/$serverCorrelationId";
 
         $response = Http::withHeaders($this->headers)
-            ->get($statusurl, ["serverCorrelationId" => $serverCorrelationId])
-            ->json();
+            ->get($statusurl, ["serverCorrelationId" => $serverCorrelationId]);
 
-        return $response;
+
+        if (!$response->ok()) {
+            Log::error(["error_status" => $response->json()]);
+        }
+
+        return $response->json();
     }
 
     public function getTransactionDetail(string $transID)

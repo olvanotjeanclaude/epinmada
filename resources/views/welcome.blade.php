@@ -12,6 +12,16 @@
 
 <body>
     <p>Epin mada service</p>
+
+    <script>
+        const event = new EventSource("/api/stream");
+
+        // console.log(event)
+        // event.onmesssage = event => {
+        //     const data = JSON.parse(event.data);
+        //     console.log(data);
+        // }
+    </script>
 </body>
 
 </html>

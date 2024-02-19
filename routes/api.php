@@ -71,6 +71,8 @@ Route::group(["prefix" => "mvola"], function () {
   Route::get("/transaction/status/{serverCorrelationId}", [\App\Http\Controllers\api\MvolaController::class, "getTransactionStatus"]);
 });  
 
+Route::get("transactions", [\App\Http\Controllers\api\MvolaController::class, "transactions"]);
+
 Route::resource("baskets", \App\Http\Controllers\api\front\BasketController::class);
 Route::post("contact-us", [\App\Http\Controllers\api\front\ContactUsController::class, "store"]);
 Route::post('/empty-panier', [\App\Http\Controllers\api\front\BasketController::class, "emptyCart"])->name("emptyCart");

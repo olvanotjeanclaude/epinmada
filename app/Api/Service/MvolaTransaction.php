@@ -8,11 +8,9 @@ use Illuminate\Support\Str;
 
 class MvolaTransaction
 {
-    const STATUS = [
-        "pending" => "pending",
-        "completed" =>  "completed",
-        "failed" => "failed"
-    ];
+    CONST PENDING = "pending";
+    CONST COMPLETED = "completed";
+    CONST FAILED = "failed";
 
     private $transactionInfos = [];
 
