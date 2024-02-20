@@ -2,8 +2,9 @@
 
 namespace App\Api\Service;
 
-interface IPayment{
+interface IPayment
+{
     public function generateToken();
 
-    public function initiateTransaction($amount,$subscriberPhone);
+    public function initiateTransaction($amount, $subscriberPhone, $description);
 }

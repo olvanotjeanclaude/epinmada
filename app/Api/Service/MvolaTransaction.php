@@ -8,17 +8,17 @@ use Illuminate\Support\Str;
 
 class MvolaTransaction
 {
-    CONST PENDING = "pending";
-    CONST COMPLETED = "completed";
-    CONST FAILED = "failed";
+    const PENDING = "pending";
+    const COMPLETED = "completed";
+    const FAILED = "failed";
 
     private $transactionInfos = [];
 
     public function __construct(
         public $amount,
         private $subscriberPhone,
+        private $description,
         private $merchantPhone,
-        private $descriptionText = "Test Mvola ity ein",
         private $currency = "Ar",
     ) {
     }
@@ -30,14 +30,14 @@ class MvolaTransaction
         $this->transactionInfos = [
             "amount" => (string)$this->amount,
             "currency" => $this->currency,
-            "descriptionText" => $this->descriptionText,
+            "descriptionText" => $this->description,
             "requestingOrganisationTransactionReference" => $transactionID,
             "requestDate" => now()->format("Y-m-d\TH:i:s\.000\Z"),
             "originalTransactionReference" => $transactionID,
             "debitParty" => [
                 [
                     "key" => "msisdn",
-                    "value" => $this->subscriberPhone
+                    "value" => env("APP_ENV") == "production" ? $this->subscriberPhone : "0343500002"
                 ]
             ],
             "creditParty" => [

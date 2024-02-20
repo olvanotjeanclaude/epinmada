@@ -19,9 +19,10 @@ return new class extends Migration
             $table->string("unique_id");
             $table->enum("status", array_keys(Payment::STATUS));
             $table->json("transaction")->nullable();
-            $table->string("payment_phone_number",15);
-            $table->string("reference",20);
-            $table->unsignedBigInteger("user_id");
+            $table->string("payment_phone_number", 15);
+            $table->string("pubg_id")->nullable();
+            $table->string("reference", 20)->nullable();
+            $table->unsignedBigInteger("customer_id");
             $table->timestamps();
         });
     }

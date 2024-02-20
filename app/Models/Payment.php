@@ -17,7 +17,15 @@ class Payment extends Model
         "failed" => "failed",
     ];
 
-    protected $fillable = ["unique_id","status", "transaction", "payment_phone_number","reference"];
+    protected $fillable = [
+        "unique_id",
+        "status",
+        "transaction",
+        "payment_phone_number",
+        "reference",
+        "pubg_id",
+        "user_id"
+    ];
 
 
     // protected static function booted(): void

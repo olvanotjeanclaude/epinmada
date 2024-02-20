@@ -18,12 +18,9 @@ return new class extends Migration
             $table->id();
             $table->string("unique_id");
             $table->string("payment_mode");
-            $table->string("pubg_id")->nullable();
             $table->text("comment")->nullable();
             $table->string("invoice_image")->nullable();
-            $table->string("status")->default("pending");
-            $table->unsignedBigInteger("user_id");
-            $table->unsignedBigInteger("customer_id");
+            $table->unsignedBigInteger("user_id")->default(0);
             $table->text("note")->nullable();
             $table->string("payment_unique_id");
             $table->timestamps();

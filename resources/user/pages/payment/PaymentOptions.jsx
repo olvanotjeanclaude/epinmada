@@ -42,7 +42,8 @@ export default function PaymentOptions({ register, errors }) {
                                 {
                                     isLoading ? <CircularProgress /> :
                                         paymentMethods.mobile.map(mobile => (
-                                            <FormControlLabel value={mobile.key}
+                                            <FormControlLabel
+                                             value={mobile.key}
                                                 key={mobile.key}
                                                 {...register("paymentMethod", {
                                                     required: "Veuillez entrer le mode de paiement"

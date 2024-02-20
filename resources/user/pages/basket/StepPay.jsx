@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Card, CardContent, Stack, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, LinearProgress, Stack, Typography } from '@mui/material'
 import PaymentIcon from '@mui/icons-material/Payment';
 import { Link, useLocation } from 'react-router-dom';
 import { grey } from '@mui/material/colors';
@@ -27,6 +27,10 @@ export default function StepPay({ loading, isValid, amount, label = "continuer Ã
                                 type="submit" startIcon={<PaymentIcon />} variant='contained'>
                                 {label}
                             </LoadingButton>
+                            {loading ? <Typography mt={2}>
+                                Traitement du paiement en cours... Veuillez ne pas actualiser votre page pendant le traitement du paiement. Merci pour votre patience.
+                                <LinearProgress />
+                            </Typography> : <></>}
                         </Box>
                     }
                 </Stack>

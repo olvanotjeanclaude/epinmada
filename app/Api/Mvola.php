@@ -68,15 +68,14 @@ class Mvola implements IPayment
         return $this->token;
     }
 
-    public function initiateTransaction($amount, $subscriberPhone)
+    public function initiateTransaction($amount, $subscriberPhone, $description)
     {
         $transactionUrl = $this->baseUrl . self::BASE_PATH;
-        $transPayload = new MvolaTransaction($amount,  $subscriberPhone, $this->merchantPhone);
+        $transPayload = new MvolaTransaction($amount,  $subscriberPhone, $description, $this->merchantPhone);
 
         $response = Http::withHeaders($this->headers)->post($transactionUrl, $transPayload->serialize());
 
-
-        if ($response->ok()) {
+        if ($response->successful()) {
             return $response->json();
         }
 

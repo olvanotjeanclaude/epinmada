@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PageTitle from '../../component/PageTitle'
 import Typography from '@mui/material/Typography'
 import { Box, Card, CardContent, Grid, Stack, TextField } from '@mui/material'
@@ -17,12 +17,14 @@ import Swal from 'sweetalert2'
 import { allErrors } from '@/admin/Helper/Helper'
 import { confirmButton } from '@/admin/Helper/sweetAlert'
 import PaymentPusher from '@/common/component/PaymentPusher'
+import axios from 'axios'
 
 export default function DoPayment() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const basketData = useBasket();
   const baskets = basketData.data?.baskets;
+  const [paymentResult, setPaymentResult] = useState({ isLoading: false, data: null });
 
   const isBasketHasPUBG = baskets?.filter(({ product }) => {
     return product.category.name.toLowerCase() == "epin"
@@ -39,46 +41,71 @@ export default function DoPayment() {
 
   const payMutation = useMutation({
     mutationKey: "payMutation",
-    mutationFn: async (data) => await http.post("/sales", data)
-      .then(res => res.data)
+    mutationFn: async (data) => await http.post(data.endpoint, data)
+      .then(res => { return res.data })
       .catch(HandleError.catch)
-  })
+  });
+
+  const handleMvolaPayment = data => {
+    const successMessage = {
+      icon: "success",
+      title: "Success",
+      titleText: "Paiement effectué avec succès",
+      ...confirmButton
+    };
+
+    const errorMessage = {
+      icon: "error",
+      title: "Erreur",
+      titleText: "Paiement échoué. Veuillez répéter plus tard.",
+      ...confirmButton
+    };
+
+    payMutation.mutate({ ...data, endpoint: "/mvola/initiate-transaction" }, {
+      onSuccess(data) {
+        const checkPayment = setInterval(async () => {
+          const transaction = await http.get(`mvola/transactions/${data.serverCorrelationId}`)
+            .then(res => res.data)
+            .catch(() => Swal.fire(errorMessage));
+          const transactionStatus = transaction?.status;
+
+          switch (transactionStatus) {
+            case "completed":
+              Swal.fire(successMessage);
+              break;
+            case "failed":
+              Swal.fire(errorMessage);
+              break;
+          }
+
+          if (transactionStatus == "completed" || transactionStatus == "failed") {
+            setPaymentResult({ data: transaction, isLoading: false });
+            clearInterval(checkPayment);
+          }
+        }, 5000);
+      },
+      onError(error) {
+        Swal.fire(errorMessage)
+        setPaymentResult({ data: error, isLoading: false });
+      }
+    });
+  }
 
   const handlePayment = data => {
-    console.log(data);
+    setPaymentResult(prev => ({ ...prev, isLoading: true }));
+    switch (data.paymentMethod) {
+      case "Mvola":
+        handleMvolaPayment(data);
+        break;
+
+      default:
+        Swal.fire({ icon: "info", title: "Message", titleText: "Payment API not yet ready", ...confirmButton })
+        setPaymentResult(prev => ({ ...prev, isLoading: false }));
+        break;
+    }
   }
 
-  const onSubmit = data => {
-    handlePayment(data);
-    return
-    payMutation.mutate(data, {
-      onSuccess(data) {
-        if (data.code == 422) {
-          Swal.fire({
-            icon: "error",
-            title: "Erreur",
-            titleText: allErrors(data.errors).join(" "),
-            ...confirmButton
-          })
-        }
-
-        if (data.code == 200) {
-          queryClient.invalidateQueries("front.baskets");
-          navigate(path.orders, {
-            state: { ...data }
-          });
-        }
-      },
-      error(error) {
-        console.log(error);
-        Swal.fire({
-          icon: "error",
-          title: "Erreur",
-          titleText: JSON.stringify(error)
-        })
-      }
-    })
-  }
+  const onSubmit = data => { handlePayment(data) }
 
   if (baskets?.length == 0) return <Navigate to={path.popular} />
 
@@ -113,8 +140,6 @@ export default function DoPayment() {
             </Card>}
 
             <PaymentOptions register={register} errors={errors} />
-
-            {/* <UploadInvoice errors={errors} register={register} setValue={setValue} /> */}
           </Stack>
         </Grid>
 
@@ -122,11 +147,12 @@ export default function DoPayment() {
           <Stack spacing={2}>
             <OrderSummary basketData={basketData} />
 
-            <PaymentPusher>
-              <StepPay loading={payMutation.isLoading} isValid={isValid} amount={basketData?.data?.sum_sub_amount}
-                buttonType='submit'
-                label='Confirmer Et Payer' />
-            </PaymentPusher>
+            <StepPay
+              loading={paymentResult.isLoading}
+              isValid={isValid}
+              amount={basketData?.data?.sum_sub_amount}
+              buttonType='submit'
+              label='Confirmer Et Payer' />
           </Stack>
         </Grid>
       </Grid>

@@ -65,10 +65,9 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 
 });
 Route::group(["prefix" => "mvola"], function () {
-  Route::post("/transaction", [\App\Http\Controllers\api\MvolaController::class, "initiateTransaction"]);
+  Route::post("/initiate-transaction", [\App\Http\Controllers\api\MvolaController::class, "initiateTransaction"]);
   Route::put("/callback", [\App\Http\Controllers\api\MvolaController::class, "callback"]);
-  Route::get("/transaction/{transID}", [\App\Http\Controllers\api\MvolaController::class, "getTransactionDetail"]);
-  Route::get("/transaction/status/{serverCorrelationId}", [\App\Http\Controllers\api\MvolaController::class, "getTransactionStatus"]);
+  Route::get("/transactions/{transID}", [\App\Http\Controllers\api\MvolaController::class, "getTransactionDetail"]);
 });  
 
 Route::get("transactions", [\App\Http\Controllers\api\MvolaController::class, "transactions"]);

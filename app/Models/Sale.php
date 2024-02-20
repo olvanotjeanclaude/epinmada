@@ -25,7 +25,6 @@ class Sale extends Model
         "unique_id",
         "payment_mode",
         "amount",
-        "pubg_id",
         "invoice_image",
         "status",
         "user_id",
