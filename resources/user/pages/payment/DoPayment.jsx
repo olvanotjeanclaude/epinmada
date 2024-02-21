@@ -66,7 +66,11 @@ export default function DoPayment() {
         const checkPayment = setInterval(async () => {
           const transaction = await http.get(`mvola/transactions/${data.serverCorrelationId}`)
             .then(res => res.data)
-            .catch(() => Swal.fire(errorMessage));
+            .catch(() => {
+              Swal.fire(errorMessage);
+              clearInterval(checkPayment);
+            });
+            
           const transactionStatus = transaction?.status;
 
           switch (transactionStatus) {

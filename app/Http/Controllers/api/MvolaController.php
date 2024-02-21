@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaleRequest;
 use App\Models\Basket;
+use App\Models\Sale;
 use App\Traits\Saleable;
 use Illuminate\Support\Facades\Event;
 
@@ -27,9 +28,9 @@ class MvolaController extends Controller
 
     public function callback()
     {
-        $data = file_get_contents('php://input') ?? null;
+        $original = file_get_contents('php://input') ?? null;
 
-        $data = json_decode($data);
+        $data = json_decode($original);
 
         if (!$data && !is_object($data)) {
             return response()->json([
@@ -39,61 +40,50 @@ class MvolaController extends Controller
         }
 
         $transaction =  [
-            "status" => $data->transactionStatus ?? "",
+            "status" => $data->transactionStatus,
             "reference" => $data->transactionReference ?? "",
             "payment_phone_number" => $data->debitParty[0]?->value ?? "",
+            "transaction" => json_encode($data) ?? "",
+            "amount" =>$data->amount??0
         ];
 
         Log::info($transaction);
 
-        if (isset($data->transactionReference)) {
-            $payment = Payment::where("unique_id", $data->serverCorrelationId)->firstOrFail();
+        $sale = Sale::where("api_unique_id", $data->serverCorrelationId)->firstOrFail();
+       
+        $sale->update($transaction);
 
-            $payment->update(array_merge($transaction, ["transaction" => json_encode($data) ?? ""]));
-
-            $sale = $this->saveSale("mvola",$payment);
-
+        if ($data->transactionStatus == "completed") {
+            Log::info("Payment success");
+           
             $this->saveOrder($sale);
-
             $this->sendMail($sale);
-
-            return $payment;
+            return $sale;
         }
 
-        return response()->json([
-            "type" => "error",
-            "message" => "Payment failed"
-        ]);
+        $sale->update(["status" => "failed"]);
     }
 
     public function initiateTransaction(SaleRequest $request)
     {
-        $request->validate(["payment_phone_number" => "required|numeric"]);
-
-        $res = $this->mvola->initiateTransaction(
+        $transaction = $this->mvola->initiateTransaction(
             Basket::SumSubAmount(),
             $request->payment_phone_number,
             auth()->user()->full_name . " " . env("APP_NAME")
         );
 
-        if (isset($res["status"])) {
-            Payment::create([
-                "payment_phone_number" => $request->payment_phone_number,
-                "paymentMethod" => $request->paymentMethod,
-                "status" => $res["status"],
-                "unique_id" => $res["serverCorrelationId"],
-                "user_id" => auth()->id()
-            ]);
-        }
+        if (isset($transaction["status"])) $this->saveSale("mvola", $transaction);
 
-        return response()->json($res);
+        return response()->json($transaction);
     }
-
 
 
     public function getTransactionDetail($transID, Request $request)
     {
-        return Payment::where("unique_id", $transID)->first();
+        $response = $this->mvola->getTransactionStatus($transID);
+        return [
+            "status" => $response["status"]??null
+        ];
     }
 
     public function transactions()

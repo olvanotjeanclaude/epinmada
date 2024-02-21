@@ -24,6 +24,7 @@ class SaleRequest extends FormRequest
         return [
             "pubg_id" => request("pubg_id") ? "required":"",
             "paymentMethod" => "required",
+            "payment_phone_number" => "required|numeric"
         ];
     }
 }

@@ -38,20 +38,20 @@ trait Saleable
         }
     }
 
-    private function saveSale($paymentMethod, Payment $payment)
+    private function saveSale($paymentMethod, $transaction = null, $user_id = 0)
     {
-        $lastSale = Sale::orderByDesc("id")->first();
-        $filename = $lastSale ? $lastSale->id + 1 : 1;
-
-        $data =  [
+        return  Sale::create([
+            "amount" =>  Basket::SumSubAmount() ?? $transaction["amount"] ?? 0,
+            "status" => $transaction["status"] ?? "",
+            "api_unique_id" => $transaction["serverCorrelationId"] ?? 0,
             "payment_mode" => $paymentMethod,
+            "user_id" => $user_id,
+            "pubg_id" => request("pubg_id") ?? null,
             "unique_id" => generateNo(),
-            "status" => $payment->status,
-            "customer_id" => $payment->user_id,
-            "user_id" => auth()?->id() ?? 0
-        ];
-
-        return Sale::create($data);
+            "customer_id" => auth()->id() ?? 0,
+            "payment_phone_number" => request("payment_phone_number") ?? "",
+            "transaction" => $transaction ? json_encode($transaction) : null
+        ]);
     }
 
     private function saveOrder($sale)

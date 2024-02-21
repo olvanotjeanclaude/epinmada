@@ -12,25 +12,28 @@ use App\Mail\InvoiceOfProduct;
 use App\Models\Basket;
 use App\Models\Order;
 use App\Models\Sale;
+use App\Traits\Saleable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class SaleController extends Controller
 {
+    use Saleable;
+
     public function index()
     {
         $checkboxs = array_filter(request("checkboxs") ?? [], fn ($checkbox) => $checkbox == "true");
 
         $sales = Sale::whereHas("customer", function ($query) {
             $search = request("query");
-            if($search){
+            if ($search) {
                 $query->where("name", "LIKE", "%$search%")
                     ->orWhere("surname", "LIKE", "%$search%")
                     ->orWhere("phone", "LIKE", "%$search%")
                     ->orWhere("email", "LIKE", "%$search%");
             }
-        })->when(request("query"),function($query){
+        })->when(request("query"), function ($query) {
             $query->orWhere("unique_id", "LIKE", "%" . request("query") . "%");
         });
 
@@ -80,7 +83,7 @@ class SaleController extends Controller
 
     public function store(SaleRequest $request)
     {
-        $sale = $this->saveSale($request);
+        $sale = $this->saveSale($request->paymentMethod,);
 
         if ($sale) {
             $this->saveOrder($sale);
@@ -89,54 +92,5 @@ class SaleController extends Controller
         }
 
         return Message::error("Erreur survenue", 400);
-    }
-
-    private function sendMail($sale)
-    {
-        try {
-            $invoice = new InvoiceOfProduct($sale);
-            Mail::to("olvanotjeanclaude@gmail.com")->send($invoice);
-        } catch (\Throwable $th) {
-            Log::info($th->getMessage());
-        }
-    }
-
-    private function saveSale($request)
-    {
-        $lastSale = Sale::orderByDesc("id")->first();
-        $filename = $lastSale ? $lastSale->id + 1 : 1;
-
-        $data =  [
-            "payment_mode" => $request->paymentMethod,
-            "pubg_id" => strtoupper($request->pubg_id),
-            "unique_id" => generateNo(),
-            "invoice_image" => ImageUpload::upload("invoice_$filename", "invoices", $request->file("files")),
-            "user_id" => 0,
-            "customer_id" => auth()->id()
-        ];
-
-        return Sale::create($data);
-    }
-
-    private function saveOrder($sale)
-    {
-        $orders = Basket::ByCustomer()
-            ->get()
-            ->map(function ($basket) use ($sale) {
-                $order = [
-                    "product_unique_id" => $basket->product->unique_id,
-                    "sale_unique_id" => $sale->unique_id,
-                    "price" => $basket->product->price,
-                    "quantity" => $basket->quantity
-                ];
-
-                $newOrder =  Order::create($order);
-
-                return $newOrder->id;
-            });
-
-        Basket::ByCustomer()->delete();
-
-        return $orders;
     }
 }

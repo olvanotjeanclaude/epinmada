@@ -17,22 +17,27 @@ class Sale extends Model
     const STATUS = [
         "paid" => "payé et livré",
         "pending" => "en attente",
-        "cancelled" => "annulé"
+        "cancelled" => "annulé",
+        "completed" => "completed",
+        "failed" => "failed",
     ];
 
     protected $fillable = [
         "status",
         "unique_id",
+        "api_unique_id",
         "payment_mode",
         "amount",
         "invoice_image",
         "status",
         "user_id",
         "customer_id",
-        "note",
-        "transaction"
+        "transaction",
+        "comment",
+        "payment_phone_number",
+        "pubg_id",
+        "reference",
     ];
-
 
     public function customer()
     {

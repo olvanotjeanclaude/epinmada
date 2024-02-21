@@ -37,7 +37,7 @@ class MvolaTransaction
             "debitParty" => [
                 [
                     "key" => "msisdn",
-                    "value" => env("APP_ENV") == "production" ? $this->subscriberPhone : "0343500002"
+                    "value" => env("APP_ENV") == "production" ? $this->subscriberPhone : "0343500003"
                 ]
             ],
             "creditParty" => [
