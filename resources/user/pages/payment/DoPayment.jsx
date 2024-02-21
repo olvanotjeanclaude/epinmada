@@ -1,99 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PageTitle from '../../component/PageTitle'
 import Typography from '@mui/material/Typography'
 import { Box, Card, CardContent, Grid, Stack, TextField } from '@mui/material'
-import UploadInvoice from './UploadInvoice'
-import { useBasket } from '@/user/context/BasketContextProvider'
 import OrderSummary from './OrderSummary'
 import StepPay from '../basket/StepPay'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import path from '@/user/menus/path'
-import { useForm } from 'react-hook-form'
 import PaymentOptions from './PaymentOptions'
-import { useMutation, useQueryClient } from 'react-query'
-import http from '@/common/http'
-import { HandleError } from '@/common/HandleError'
-import Swal from 'sweetalert2'
-import { allErrors } from '@/admin/Helper/Helper'
-import { confirmButton } from '@/admin/Helper/sweetAlert'
-import PaymentPusher from '@/common/component/PaymentPusher'
-import axios from 'axios'
+import usePayment from './usePayment'
 
 export default function DoPayment() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const basketData = useBasket();
-  const baskets = basketData.data?.baskets;
-  const [paymentResult, setPaymentResult] = useState({ isLoading: false, data: null });
-
-  const isBasketHasPUBG = baskets?.filter(({ product }) => {
-    return product.category.name.toLowerCase() == "epin"
-  }).length > 0;
-
-  const { register, handleSubmit, setValue, getValues, formState: { errors, isValid } } = useForm({
-    defaultValues: {
-      pubg_id: "",
-      paymentMethod: "",
-      payment_phone_number: ""
-      // files: null
-    }
-  });
-
-  const payMutation = useMutation({
-    mutationKey: "payMutation",
-    mutationFn: async (data) => await http.post(data.endpoint, data)
-      .then(res => { return res.data })
-      .catch(HandleError.catch)
-  });
-
-  const handleMvolaPayment = data => {
-    const successMessage = {
-      icon: "success",
-      title: "Success",
-      titleText: "Paiement effectué avec succès",
-      ...confirmButton
-    };
-
-    const errorMessage = {
-      icon: "error",
-      title: "Erreur",
-      titleText: "Paiement échoué. Veuillez répéter plus tard.",
-      ...confirmButton
-    };
-
-    payMutation.mutate({ ...data, endpoint: "/mvola/initiate-transaction" }, {
-      onSuccess(data) {
-        const checkPayment = setInterval(async () => {
-          const transaction = await http.get(`mvola/transactions/${data.serverCorrelationId}`)
-            .then(res => res.data)
-            .catch(() => {
-              Swal.fire(errorMessage);
-              clearInterval(checkPayment);
-            });
-            
-          const transactionStatus = transaction?.status;
-
-          switch (transactionStatus) {
-            case "completed":
-              Swal.fire(successMessage);
-              break;
-            case "failed":
-              Swal.fire(errorMessage);
-              break;
-          }
-
-          if (transactionStatus == "completed" || transactionStatus == "failed") {
-            setPaymentResult({ data: transaction, isLoading: false });
-            clearInterval(checkPayment);
-          }
-        }, 5000);
-      },
-      onError(error) {
-        Swal.fire(errorMessage)
-        setPaymentResult({ data: error, isLoading: false });
-      }
-    });
-  }
+  const {
+    setPaymentResult,
+    handleMvolaPayment,
+    baskets,
+    register, setValue, formState: { errors, isValid }, handleSubmit,
+    basketData,
+    isBasketHasPUBG,
+    paymentResult,
+    apiNotReady
+  } = usePayment();
 
   const handlePayment = data => {
     setPaymentResult(prev => ({ ...prev, isLoading: true }));
@@ -101,15 +27,11 @@ export default function DoPayment() {
       case "Mvola":
         handleMvolaPayment(data);
         break;
-
       default:
-        Swal.fire({ icon: "info", title: "Message", titleText: "Payment API not yet ready", ...confirmButton })
-        setPaymentResult(prev => ({ ...prev, isLoading: false }));
+        apiNotReady();
         break;
     }
   }
-
-  const onSubmit = data => { handlePayment(data) }
 
   if (baskets?.length == 0) return <Navigate to={path.popular} />
 
@@ -118,7 +40,7 @@ export default function DoPayment() {
       component="form"
       noValidate
       autoComplete="off"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(handlePayment)}
     >
       <PageTitle title="Payment" />
 

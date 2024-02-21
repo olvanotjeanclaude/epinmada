@@ -2,13 +2,11 @@
 
 namespace App\Traits;
 
-use App\Helpers\ImageUpload;
 use App\Helpers\Message;
 use App\Http\Requests\SaleRequest;
 use App\Mail\InvoiceOfProduct;
 use App\Models\Basket;
 use App\Models\Order;
-use App\Models\Payment;
 use App\Models\Sale;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;

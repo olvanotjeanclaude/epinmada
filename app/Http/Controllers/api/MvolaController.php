@@ -3,17 +3,12 @@
 namespace App\Http\Controllers\api;
 
 use App\Api\Mvola;
-use App\Models\Payment;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Events\MvolaPaymentDone;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaleRequest;
 use App\Models\Basket;
 use App\Models\Sale;
 use App\Traits\Saleable;
-use Illuminate\Support\Facades\Event;
 
 class MvolaController extends Controller
 {
@@ -32,36 +27,9 @@ class MvolaController extends Controller
 
         $data = json_decode($original);
 
-        if (!$data && !is_object($data)) {
-            return response()->json([
-                "type" => "error",
-                "message" => "Unexpected error occure. Please try again later."
-            ]);
-        }
+        if (!$data && !is_object($data)) return;
 
-        $transaction =  [
-            "status" => $data->transactionStatus,
-            "reference" => $data->transactionReference ?? "",
-            "payment_phone_number" => $data->debitParty[0]?->value ?? "",
-            "transaction" => json_encode($data) ?? "",
-            "amount" =>$data->amount??0
-        ];
-
-        Log::info($transaction);
-
-        $sale = Sale::where("api_unique_id", $data->serverCorrelationId)->firstOrFail();
-       
-        $sale->update($transaction);
-
-        if ($data->transactionStatus == "completed") {
-            Log::info("Payment success");
-           
-            $this->saveOrder($sale);
-            $this->sendMail($sale);
-            return $sale;
-        }
-
-        $sale->update(["status" => "failed"]);
+        $this->updateOrCreateSale($data);
     }
 
     public function initiateTransaction(SaleRequest $request)
@@ -77,24 +45,64 @@ class MvolaController extends Controller
         return response()->json($transaction);
     }
 
-
-    public function getTransactionDetail($transID, Request $request)
+    private function updateOrCreateSale(object $data)
     {
-        $response = $this->mvola->getTransactionStatus($transID);
-        return [
-            "status" => $response["status"]??null
+        $transaction =  [
+            "status" => $data->transactionStatus,
+            "reference" => $data->transactionReference ?? "",
+            "payment_phone_number" => $data->debitParty[0]?->value ?? "",
+            "transaction" => json_encode($data) ?? "",
         ];
+
+        $sale = Sale::where("api_unique_id", $data->serverCorrelationId)->first();
+
+        if ($sale) {
+            $sale->update($transaction);
+
+            if ($data->transactionStatus == "completed") {
+                $this->saveOrder($sale);
+                $this->sendMail($sale);
+
+                Log::info("user payment called: " . json_encode($data));
+
+                return $sale;
+            }
+        }
+
+        Log::info("api payment called: " . json_encode($data));
+
+        return Sale::create(array_merge([
+            "amount" =>   $data->amount ?? 0,
+            "api_unique_id" => $data->serverCorrelationId ?? 0,
+            "payment_mode" => "mvola",
+            "unique_id" => generateNo(),
+            "customer_id" => auth()->id() ?? 0,
+            "transaction" => $transaction ? json_encode($transaction) : null
+        ], $transaction));
+    }
+
+
+    public function getTransactionDetail($serverCorrelationId)
+    {
+        $response = $this->mvola->getTransactionStatus($serverCorrelationId);
+
+        if ($response["status"] != "pending") {
+            $transaction = $this->mvola->getTransactionDetail($response["objectReference"]);
+            $transaction["serverCorrelationId"] = $serverCorrelationId;
+
+            $this->updateOrCreateSale((object)$transaction);
+
+            return [
+                "status" => $transaction["transactionStatus"],
+                "serverCorrelationId" => $transaction["serverCorrelationId"]
+            ];
+        }
+
+        return response()->json($response);
     }
 
     public function transactions()
     {
-        $transaction =  [
-            "unique_id" => Str::uuid()->toString(),
-            "status" => "completed",
-            "reference" => (string) random_int(11111111, 99999999),
-            "payment_phone_number" => "0343500003",
-        ];
-
-        return Payment::all();
+        return Sale::all();
     }
 }

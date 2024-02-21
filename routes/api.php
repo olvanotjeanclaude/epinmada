@@ -53,6 +53,9 @@ Route::group(["middleware" => "auth:sanctum"], function () {
   Route::resource("categories", App\Http\Controllers\api\CategoryController::class)->only("index");
 
   Route::resource("sales", App\Http\Controllers\api\SaleController::class);
+  
+  Route::put("/update-payement/{paymentMethod}",[App\Http\Controllers\api\SaleController::class,"updatePayment"]);
+ 
   Route::get("/my-orders", [App\Http\Controllers\api\SaleController::class, "myOrders"]);
   Route::put("/update-sale-status/{unique_id}", [App\Http\Controllers\api\SaleController::class, "updateStatus"]);
 
@@ -67,7 +70,7 @@ Route::group(["middleware" => "auth:sanctum"], function () {
 Route::group(["prefix" => "mvola"], function () {
   Route::post("/initiate-transaction", [\App\Http\Controllers\api\MvolaController::class, "initiateTransaction"]);
   Route::put("/callback", [\App\Http\Controllers\api\MvolaController::class, "callback"]);
-  Route::get("/transactions/{transID}", [\App\Http\Controllers\api\MvolaController::class, "getTransactionDetail"]);
+  Route::get("/transactions/{serverCorrelationId}", [\App\Http\Controllers\api\MvolaController::class, "getTransactionDetail"]);
 });  
 
 Route::get("transactions", [\App\Http\Controllers\api\MvolaController::class, "transactions"]);
