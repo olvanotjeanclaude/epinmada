@@ -26,9 +26,9 @@ export default function SaleShow() {
       {isLoading ? <CircularProgress /> : <Row>
         <Col md={4}>
 
-          <Button startIcon={<PanoramaIcon />} size='large' variant='contained' onClick={() => setOpen(true)}>
+          {sale.invoice_image &&<Button startIcon={<PanoramaIcon />} size='large' variant='contained' onClick={() => setOpen(true)}>
             Voir la facture
-          </Button>
+          </Button>}
 
           <hr />
 

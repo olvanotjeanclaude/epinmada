@@ -27,7 +27,7 @@ class MvolaController extends Controller
 
         $data = json_decode($original);
 
-        if (!$data && !is_object($data)) return;
+        if (!$data && !is_object($data) && !$data->objectReference) return;
 
         $this->updateOrCreateSale($data);
     }
@@ -48,7 +48,7 @@ class MvolaController extends Controller
     private function updateOrCreateSale(object $data)
     {
         $transaction =  [
-            "status" => $data->transactionStatus,
+            "status" => $data->transactionStatus ?? "failed",
             "reference" => $data->transactionReference ?? "",
             "payment_phone_number" => $data->debitParty[0]?->value ?? "",
             "transaction" => json_encode($data) ?? "",
@@ -69,7 +69,7 @@ class MvolaController extends Controller
             }
         }
 
-        Log::info("api payment called: " . json_encode($data));
+        Log::info(json_encode($data));
 
         return Sale::create(array_merge([
             "amount" =>   $data->amount ?? 0,
@@ -86,7 +86,7 @@ class MvolaController extends Controller
     {
         $response = $this->mvola->getTransactionStatus($serverCorrelationId);
 
-        if ($response["status"] != "pending") {
+        if (isset($response["status"]) && $response["status"] != "pending" && $response["objectReference"]) {
             $transaction = $this->mvola->getTransactionDetail($response["objectReference"]);
             $transaction["serverCorrelationId"] = $serverCorrelationId;
 
@@ -103,6 +103,6 @@ class MvolaController extends Controller
 
     public function transactions()
     {
-        return Sale::all();
+        return Sale::orderByDesc("id")->get();
     }
 }

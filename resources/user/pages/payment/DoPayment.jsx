@@ -21,7 +21,7 @@ export default function DoPayment() {
     apiNotReady
   } = usePayment();
 
-  const handlePayment = data => {
+  const handlePayment = (data) => {
     setPaymentResult(prev => ({ ...prev, isLoading: true }));
     switch (data.paymentMethod) {
       case "Mvola":

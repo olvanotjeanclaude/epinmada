@@ -32,7 +32,7 @@ const usePayment = () => {
         return product.category.name.toLowerCase() == "epin"
     }).length > 0;
 
-    const apiNotReady =() =>{
+    const apiNotReady = () => {
         Swal.fire({ icon: "info", title: "Message", titleText: "Payment API not yet ready", ...confirmButton })
         setPaymentResult(prev => ({ ...prev, isLoading: false }));
     }
@@ -48,20 +48,26 @@ const usePayment = () => {
                 payment_phone_number: ""
             }
         });
+    const fetchTransaction = async (data, checkPayment) => {
+        try {
+            const transaction = await http.get(`mvola/transactions/${data.serverCorrelationId}`)
+                .then(res => res.data);
 
-    const fetchTransaction = async (data,checkPayment) => {
-        const transaction = await http.get(`mvola/transactions/${data.serverCorrelationId}`)
-            .then(res => res.data)
-            .catch((e) => {
-                Swal.fire(errorPaymentMessage);
-                clearInterval(checkPayment);
-            });
+            if (transaction?.status === "completed" || transaction?.status === "failed") {
+                if (transaction?.status === "completed") {
+                    queryClient.invalidateQueries("front.baskets");
+                    Swal.fire(successPaymentMessage);
+                } else {
+                    Swal.fire(errorPaymentMessage);
+                }
+            }
 
-        if (transaction?.status == "completed" || transaction?.status == "failed") {
-            setPaymentResult({ data: transaction, isLoading: false });
+            return transaction;
+        } catch (error) {
             clearInterval(checkPayment);
-            queryClient.invalidateQueries("front.baskets");
-            Swal.fire(successPaymentMessage);
+            setPaymentResult({ data: null, isLoading: false });
+            Swal.fire(errorPaymentMessage);
+            return null;
         }
     }
 
@@ -69,11 +75,15 @@ const usePayment = () => {
         payMutation.mutate({ ...data, endpoint: "/mvola/initiate-transaction" }, {
             onSuccess(data) {
                 const checkPayment = setInterval(async () => {
-                    await fetchTransaction(data,checkPayment);
+                    const transaction = await fetchTransaction(data, checkPayment);
+                    if (transaction?.status == "completed" || transaction?.status == "failed") {
+                        clearInterval(checkPayment)
+                        setPaymentResult({ data: transaction, isLoading: false });
+                    }
                 }, 5000);
             },
             onError(error) {
-                Swal.fire(errorMessage)
+                Swal.fire(errorPaymentMessage)
                 setPaymentResult({ data: error, isLoading: false });
             }
         });
@@ -82,10 +92,10 @@ const usePayment = () => {
     return {
         handleMvolaPayment,
         baskets, basketData,
-        paymentResult,setPaymentResult,
+        paymentResult, setPaymentResult,
         isBasketHasPUBG,
         register, handleSubmit, setValue, getValues, errors, isValid,
-        formState: {errors,isValid},
+        formState: { errors, isValid },
         apiNotReady
     }
 }
