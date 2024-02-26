@@ -54,6 +54,11 @@ class MvolaController extends Controller
             "transaction" => json_encode($data) ?? "",
         ];
 
+
+        if (isset($data->objectReference)) {
+            $transaction["object_reference"] = $data->objectReference;
+        }
+
         $sale = Sale::where("api_unique_id", $data->serverCorrelationId)->first();
 
         if ($sale) {
@@ -89,6 +94,7 @@ class MvolaController extends Controller
         if (isset($response["status"]) && $response["status"] != "pending" && $response["objectReference"]) {
             $transaction = $this->mvola->getTransactionDetail($response["objectReference"]);
             $transaction["serverCorrelationId"] = $serverCorrelationId;
+            $transaction["objectReference"] = $response["objectReference"];
 
             $this->updateOrCreateSale((object)$transaction);
 
@@ -104,5 +110,33 @@ class MvolaController extends Controller
     public function transactions()
     {
         return Sale::orderByDesc("id")->get();
+    }
+
+    public function transaction($order)
+    {
+        $sale = Sale::where(function ($query) {
+            $query->where("object_reference", request("order"))
+                ->orWhere("reference", request("order"))
+                ->orWhere("unique_id", request("order"));
+        })->first();
+
+        $transaction =  $this->mvola->getTransactionDetail($sale->object_reference ?? "");
+
+        if($sale){
+            switch ($sale->status) {
+                case 'completed':
+                    return $transaction;
+                case 'failed':
+                    return response()->json([
+                        "type" => "Error",
+                        "message" => "La transaction a échoué"
+                    ]);
+            }
+        }
+
+        return response()->json([
+            "type" => "Error",
+            "message" => "Aucune donnée disponible"
+        ]);
     }
 }

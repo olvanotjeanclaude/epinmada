@@ -1,6 +1,8 @@
+import PaymentVerification from "../sales/PaymentVerification"
+
 function Dashboard() {
   return (
-    <h1>Dashboard ETO</h1>
+    <PaymentVerification />
   )
 }
 

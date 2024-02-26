@@ -7,13 +7,23 @@ export default function OrderStatus({ namespace, status, text }) {
     let badge = <></>;
     let bg, color;
 
+
     switch (capitalizeLetter(status)) {
         case "Paid":
             bg = color = "success";
             break;
+        case "Completed":
+            bg = color = "success";
+                text="Payé";
+            break;
         case "Cancelled":
             bg = "danger";
             color = "error";
+            break;
+        case "Failed":
+            bg = "danger";
+            color = "error";
+            text = "Erreur";
             break;
         case "Pending":
             bg = color = "primary";

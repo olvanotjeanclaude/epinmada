@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string("payment_phone_number", 15);
             $table->string("pubg_id")->nullable();
             $table->string("reference", 20)->nullable();
+            $table->string("object_reference", 20)->nullable();
             $table->unsignedBigInteger("customer_id");
             $table->unsignedBigInteger("user_id")->default(0);
             $table->timestamps();

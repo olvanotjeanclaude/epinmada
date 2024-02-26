@@ -25,6 +25,9 @@ class SaleResource extends JsonResource
             "user" => $this->user,
             "customer" => $this->customer,
             "orders" => OrderResource::collection($this->orders),
+            "reference" =>$this->reference,
+            // "object_reference" =>$this->object_reference,
+            "transaction" =>$this->transaction,
         ];
     }
 }

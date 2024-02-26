@@ -18,8 +18,8 @@ class Sale extends Model
         "paid" => "payé et livré",
         "pending" => "en attente",
         "cancelled" => "annulé",
-        "completed" => "completed",
-        "failed" => "failed",
+        "completed" => "payé",
+        "failed" => "erreur",
     ];
 
     protected $fillable = [
@@ -37,6 +37,7 @@ class Sale extends Model
         "payment_phone_number",
         "pubg_id",
         "reference",
+        "object_reference",
     ];
 
     public function customer()
@@ -62,5 +63,9 @@ class Sale extends Model
        $amount= $this->orders->sum("sub_amount");
 
        return formatPrice($amount);
+    }
+
+    public function getTransactionAttribute($value){
+        return json_decode($value);
     }
 }

@@ -74,6 +74,7 @@ Route::group(["prefix" => "mvola"], function () {
 });  
 
 Route::get("transactions", [\App\Http\Controllers\api\MvolaController::class, "transactions"]);
+Route::get("transaction/{order}", [\App\Http\Controllers\api\MvolaController::class, "transaction"]);
 
 Route::resource("baskets", \App\Http\Controllers\api\front\BasketController::class);
 Route::post("contact-us", [\App\Http\Controllers\api\front\ContactUsController::class, "store"]);

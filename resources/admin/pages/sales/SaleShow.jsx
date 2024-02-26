@@ -8,6 +8,8 @@ import PanoramaIcon from '@mui/icons-material/Panorama';
 import { camelToCapitalized, capitalizeLetter, computeAmount, formatDateTime, } from '@/common/helper';
 import { StatusForm } from './StatusForm';
 import ModalInvoiceImage from './ModalInvoiceImage';
+import PaymentVerification from './PaymentVerification';
+import PaymentDetail from './PaymentDetail';
 
 
 export default function SaleShow() {
@@ -23,16 +25,18 @@ export default function SaleShow() {
     <>
       <PageTitle pageTitle="Ventes" title="Detail du facture" />
 
+      <PaymentVerification sale={sale} isLoading={isLoading} />
+
       {isLoading ? <CircularProgress /> : <Row>
         <Col md={4}>
 
-          {sale.invoice_image &&<Button startIcon={<PanoramaIcon />} size='large' variant='contained' onClick={() => setOpen(true)}>
+          {sale.invoice_image && <Button startIcon={<PanoramaIcon />} size='large' variant='contained' onClick={() => setOpen(true)}>
             Voir la facture
           </Button>}
 
-          <hr />
-
           <StatusForm sale={sale} />
+
+          <PaymentDetail transaction={sale?.transaction} payment_mode={sale?.payment_mode} />
         </Col>
         <Col md={8}>
           <Card>

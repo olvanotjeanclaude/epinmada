@@ -38,3 +38,18 @@ export const computeAmount = (data, format = true) => {
 export const formatAmount = (amount, currency = "Ariary") => {
     return parseFloat(amount).toLocaleString("fr-FR") + " " + currency;
 }
+
+export function formatHumanDateTime(dateString) {
+    const date = new Date(dateString);
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZone: 'Africa/Nairobi'
+    };
+    return date.toLocaleString('fr-FR', options);
+  }
+  

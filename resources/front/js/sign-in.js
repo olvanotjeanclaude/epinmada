@@ -14,6 +14,7 @@ async function postLoginForm(e) {
         email: $("input[type='email']").val(),
         password: $("input[type='password']").val(),
     };
+    
     const redirectTo = localStorage.getItem("redirectTo");
 
     await http.get("/token");
