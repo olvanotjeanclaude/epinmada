@@ -32,13 +32,7 @@ export default function ModalPaymentVerification({ open, setOpen, transaction, p
             >
                 <DialogTitle>Détail de la transaction</DialogTitle>
                 <DialogContent>
-                    <>
-                        {
-                            transaction?.transactionReference ?
-                                <PaymentDetail transaction={transaction} payment_mode={payment_mode} /> :
-                                <Typography>{transaction?.message}</Typography>
-                        }
-                    </>
+                    <PaymentDetail transaction={transaction} payment_mode={payment_mode} />
                     <Button variant='contained' sx={{ float: "right" }} onClick={handleClose} autoFocus>
                         D'accord
                     </Button>

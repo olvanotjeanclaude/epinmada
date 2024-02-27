@@ -44,6 +44,7 @@ export const useShow = () => {
     const { id } = useParams();
     return useQuery({
         queryKey: "showCustomer",
+        cacheTime: 10, // Disable caching
         queryFn: async () => await customerService.show(id)
     })
 }

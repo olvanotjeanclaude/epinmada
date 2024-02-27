@@ -4,7 +4,6 @@ import BasicInfo from './BasicInfo';
 import CustomerOrders from './CustomerOrders';
 import { useShow } from './useCustomers';
 import Error from '@/admin/component/Message/Error';
-import { CircularProgress } from '@mui/material';
 
 export default function CustomerShow() {
   const { data: customer, error, isError, isLoading } = useShow();
@@ -14,14 +13,8 @@ export default function CustomerShow() {
   return (
     <>
       <PageTitle pageTitle="Clients" title="Detail" />
-
-      {
-        isLoading ? <CircularProgress /> :
-          <>
-            <BasicInfo customer={customer} />
-            <CustomerOrders orders={customer.orders} />
-          </>
-      }
+      <BasicInfo customer={customer} isLoading={isLoading} />
+      <CustomerOrders orders={customer?.orders} isLoading={isLoading} />
     </>
   )
 }

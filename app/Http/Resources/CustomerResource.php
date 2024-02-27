@@ -21,6 +21,7 @@ class CustomerResource extends JsonResource
             'surname' => $this->surname,
             'email' => $this->email,
             'phone' => $this->phone,
+            'image' => $this->image,
             'created_at' => $this->created_at,
             "orders" => OrderResource::collection($orders)
         ];

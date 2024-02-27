@@ -1,7 +1,7 @@
 import dateFormat from "dateformat";
 export const formatDateTime = (utcDateString) => {
     try {
-        return dateFormat(utcDateString,"d/mm/yyyy");
+        return dateFormat(utcDateString, "d/mm/yyyy");
     } catch (error) {
         return utcDateString;
     }
@@ -40,16 +40,20 @@ export const formatAmount = (amount, currency = "Ariary") => {
 }
 
 export function formatHumanDateTime(dateString) {
-    const date = new Date(dateString);
-    const options = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      timeZone: 'Africa/Nairobi'
-    };
-    return date.toLocaleString('fr-FR', options);
-  }
-  
+    if (dateString) {
+        const date = new Date(dateString);
+        const result = new Date(date.toISOString().slice(0, -1));
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            //   timeZone: 'Africa/Nairobi'
+        };
+        return result.toLocaleString('fr-FR', options);
+    }
+
+    return dateString;
+}

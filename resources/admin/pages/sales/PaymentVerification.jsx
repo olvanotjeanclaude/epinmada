@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { Card, Form } from 'react-bootstrap'
 import ModalPaymentVerification from './ModalPaymentVerification'
 import { useQuery } from 'react-query';
@@ -15,7 +15,7 @@ export default function PaymentVerification() {
     const [queryKey, setQueryKey] = useState(null);
 
     const fetchTransaction = async () => {
-        return await http.get(`/transaction/${input}`)
+        return await http.get(`/mvola/transaction/${input}`)
             .then(res => res.data)
             .catch(() => {
                 throw "Failed to load";
@@ -34,12 +34,14 @@ export default function PaymentVerification() {
         enabled: queryKey != null,
         refetchOnWindowFocus: false,
         onSuccess(data) {
-            if (data.transactionReference) {
+            setPaymentMode("mvola");
+            const status = data?.transactionStatus;
+            if(status=="failed" || status=="completed"){
                 setTransaction(data);
-                setPaymentMode("mvola");
                 setOpen(true);
             }
             else{
+                setTransaction(null);
                 Swal.fire({
                     title: "Message",
                     icon: "info",
@@ -77,12 +79,12 @@ export default function PaymentVerification() {
                 </Card>
             </Form>
 
-            <ModalPaymentVerification
+            {transaction && <ModalPaymentVerification
                 transaction={transaction}
                 setTransaction={setTransaction}
                 payment_mode={paymentMode}
                 open={open}
-                setOpen={setOpen} />
+                setOpen={setOpen} />}
         </>
     )
 }

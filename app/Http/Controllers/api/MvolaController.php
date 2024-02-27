@@ -114,23 +114,35 @@ class MvolaController extends Controller
 
     public function transaction($order)
     {
+        $transaction =[];
+
         $sale = Sale::where(function ($query) {
             $query->where("object_reference", request("order"))
                 ->orWhere("reference", request("order"))
                 ->orWhere("unique_id", request("order"));
         })->first();
 
-        $transaction =  $this->mvola->getTransactionDetail($sale->object_reference ?? "");
-
-        if($sale){
+        
+        if ($sale) {
+            $transaction =  $this->mvola->getTransactionDetail($sale->object_reference ?? "");
+            $transaction["customer"] = $sale->customer;
+            $transaction["amount"] = $sale->amount;
+           
             switch ($sale->status) {
+                case "pending":
+                    return response()->json([
+                        "type" => "info",
+                        "message" => "En Attente De Paiement"
+                    ]);
+                case 'paid':
+                    return $transaction;
                 case 'completed':
                     return $transaction;
                 case 'failed':
-                    return response()->json([
-                        "type" => "Error",
-                        "message" => "La transaction a échoué"
-                    ]);
+                    $transaction["creationDate"] = $sale->created_at;
+                    $transaction= array_merge($transaction, (array)$sale->transaction??[]);
+
+                    return $transaction;
             }
         }
 

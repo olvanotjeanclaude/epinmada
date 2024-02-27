@@ -71,10 +71,10 @@ Route::group(["prefix" => "mvola"], function () {
   Route::post("/initiate-transaction", [\App\Http\Controllers\api\MvolaController::class, "initiateTransaction"]);
   Route::put("/callback", [\App\Http\Controllers\api\MvolaController::class, "callback"]);
   Route::get("/transactions/{serverCorrelationId}", [\App\Http\Controllers\api\MvolaController::class, "getTransactionDetail"]);
+  Route::get("transaction/{order}", [\App\Http\Controllers\api\MvolaController::class, "transaction"]);
 });  
 
 Route::get("transactions", [\App\Http\Controllers\api\MvolaController::class, "transactions"]);
-Route::get("transaction/{order}", [\App\Http\Controllers\api\MvolaController::class, "transaction"]);
 
 Route::resource("baskets", \App\Http\Controllers\api\front\BasketController::class);
 Route::post("contact-us", [\App\Http\Controllers\api\front\ContactUsController::class, "store"]);

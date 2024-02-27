@@ -2,24 +2,33 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import CustomerOrder from '../orders/CustomerOrder';
-import { Typography } from '@mui/material';
+import {  LinearProgress, Typography } from '@mui/material';
 
-const CustomerOrders = ({ orders }) => {
+const CustomerOrders = ({ orders, isLoading }) => {
 
-  return <>
-    <h4>Commandes</h4>
+  return (
+    <>
+      <h4>Commandes</h4>
 
-    {orders.length == 0 ? <Typography>Pas De commandes!</Typography> : <></>}
-    <Row>
       {
-        orders?.map(order => (
-          <Col sm={6} md={4} xl={3} key={order.id}>
-            <CustomerOrder order={order} />
-          </Col>
-        ))
+        isLoading ? <LinearProgress sx={{mb:2}}/> :
+
+          orders.length > 0 ?
+            <Row>
+              {
+                orders?.map(order => (
+                  <Col sm={6} xl={4} key={order.id}>
+                    <CustomerOrder order={order} />
+                  </Col>
+                ))
+              }
+
+            </Row>
+            :
+             <Typography>Pas De commandes!</Typography>
+
       }
-    </Row>
-  </>
+    </>)
 }
 
 
